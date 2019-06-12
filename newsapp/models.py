@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from django.db import models
 # Create your models here.
 
+
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
@@ -36,7 +37,7 @@ class OrgnizationalInformation(TimeStamp):
     google_analytics_script = models.TextField(null=True, blank=True)
 
     def __str__(self):
-    	return self.name
+        return self.name
 
 
 class Admin(TimeStamp):
@@ -78,72 +79,75 @@ class Editor(TimeStamp):
 
 
 class NewsCategory(TimeStamp):
-	title = models.CharField(max_length=500)
-	slug = models.SlugField(unique=True, null=True, blank=True)
-	image = models.ImageField(upload_to="news/main_category", null=True, blank=True)
-	icon_character = models.CharField(max_length=500, null=True, blank=True)
-	root = models.ForeignKey('self', on_delete=models.SET_NULL,null=True, blank=True)
+    title = models.CharField(max_length=500)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    image = models.ImageField(
+        upload_to="news/main_category", null=True, blank=True)
+    icon_character = models.CharField(max_length=500, null=True, blank=True)
+    root = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, null=True, blank=True)
 
-	def __str__(self):
-		return self.title
+    def __str__(self):
+        return self.title
 
 
 class NewsSubCategory(TimeStamp):
-	title = models.CharField(max_length=500)
-	slug = models.SlugField(unique=True, null=True, blank=True)
-	main_category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE)
-	image = models.ImageField(upload_to="news/sub_category")
-	icon_character = models.CharField(max_length=500, null=True, blank=True)
-	root = models.ForeignKey('self', on_delete=models.SET_NULL,null=True, blank=True)
+    title = models.CharField(max_length=500)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    main_category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="news/sub_category")
+    icon_character = models.CharField(max_length=500, null=True, blank=True)
+    root = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, null=True, blank=True)
 
-	def __str__(self):
-		return self.title
+    def __str__(self):
+        return self.title
 
 
 class News(TimeStamp):
-	title = models.CharField(max_length=500)
-	main_category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE,null=True, blank=True)
-	sub_category = models.ForeignKey(NewsSubCategory, on_delete=models.CASCADE)
-	slug = models.SlugField(unique=True, null=True, blank=True)
-	image = models.ImageField(upload_to="news/news", null=True, blank=True)
-	video_link = models.URLField(max_length=500)
-	content = models.TextField()
-	view_count = models.BigIntegerField(default=0)
-	editor = models.ForeignKey(Editor, on_delete=models.SET_NULL, null=True, blank=True)
+    title = models.CharField(max_length=500)
+    main_category = models.ForeignKey(
+        NewsCategory, on_delete=models.CASCADE, null=True, blank=True)
+    sub_category = models.ForeignKey(NewsSubCategory, on_delete=models.CASCADE)
+    slug = models.SlugField(unique=True, null=True, blank=True)
+    image = models.ImageField(upload_to="news/news", null=True, blank=True)
+    video_link = models.URLField(max_length=500)
+    content = models.TextField()
+    view_count = models.BigIntegerField(default=0)
+    editor = models.ForeignKey(
+        Editor, on_delete=models.SET_NULL, null=True, blank=True)
 
-	def __str__(self):
-		return self.title
-
-
+    def __str__(self):
+        return self.title
 
 
 class Comment(TimeStamp):
-	news = models.ForeignKey(News, on_delete=models.CASCADE)
-	commenter = models.CharField(max_length=500)
-	email = models.EmailField()
-	comment = models.TextField()
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    commenter = models.CharField(max_length=500)
+    email = models.EmailField()
+    comment = models.TextField()
 
-	def __str__(self):
-		return self.commenter
-
+    def __str__(self):
+        return self.commenter
 
 
 class AdvertizementPosition(TimeStamp):
-	position = models.CharField(max_length=500)
-	total_number = models.PositiveIntegerField(default=1)
+    position = models.CharField(max_length=500)
+    total_number = models.PositiveIntegerField(default=1)
 
-	def __str__(self):
-		return self.position
+    def __str__(self):
+        return self.position
 
 
 class Advertizement(TimeStamp):
-	position = models.ForeignKey(AdvertizementPosition, on_delete=models.CASCADE)
-	organization = models.CharField(max_length=500)
-	image = models.ImageField(upload_to="advertizements")
-	link = models.URLField(max_length=500)
-	expiry_date = models.DateTimeField(null=True, blank=True)
-	view_count = models.BigIntegerField(default=1)
-	clicks = models.BigIntegerField(default=1)
+    position = models.ForeignKey(
+        AdvertizementPosition, on_delete=models.CASCADE)
+    organization = models.CharField(max_length=500)
+    image = models.ImageField(upload_to="advertizements")
+    link = models.URLField(max_length=500)
+    expiry_date = models.DateTimeField(null=True, blank=True)
+    view_count = models.BigIntegerField(default=1)
+    clicks = models.BigIntegerField(default=1)
 
-	def __str__(self):
-		return self.organization
+    def __str__(self):
+        return self.organization
