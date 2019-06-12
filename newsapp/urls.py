@@ -4,6 +4,6 @@ from .views import *
 
 app_name = "newsapp"
 urlpatterns = [
-
+	path('base/',ClientBaseView.as_view(),name='clientbase')
 
 ]
