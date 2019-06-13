@@ -98,15 +98,15 @@
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
                         </button>
                      </div>
+                     
                      <div class="collapse navbar-collapse" id="#navbar-collapse-1">
                         <ul class="nav navbar-nav main-nav">
-                           <li class="active"><a href="index.html">News</a></li>
-                           <li><a href="category.html">Mobile</a></li>
-                           <li><a href="blog.html">Tablet</a></li>
-                           <li><a href="blog.html">Gadgets</a></li>
-                           <li><a href="blog.html">Camera</a></li>
-                           <li><a href="blog.html">Design</a></li>
-                           <li class="dropdown m-menu-fw">
+
+                        	{% for category in clientcategorylist %}
+                           <li class="active"><a href="#">{{ category.title }}</a></li>
+                           {% endfor %}	
+
+                              <li class="dropdown m-menu-fw">
                               <a href="#" data-toggle="dropdown" class="dropdown-toggle">More
                               <span><i class="fa fa-angle-down"></i></span></a>
                               <ul class="dropdown-menu">
@@ -155,7 +155,7 @@
             </div>
          </div>
       </section>
-
+<!--- end nav bar----->
 
       {% block content %}
 
@@ -163,6 +163,8 @@
 
 
       {% endblock %}
+<!-----footer-------->
+
       <section id="subscribe_section" class="subscribe_section">
 		<div class="row">
 		<form action="#" method="post" class="form-horizontal">
@@ -342,6 +344,8 @@
    </div>
 </section>
 
+<!----- end footer------->
+
 	<script src="{% static 'clientstatic/js/jquery-2.1.4.min.js' %}" type="b3e345caed10bce54b11409c-text/javascript"></script>
 
 	<script src="{% static 'clientstatic/js/bootstrap.min.js' %}" type="b3e345caed10bce54b11409c-text/javascript"></script>
@@ -352,7 +356,7 @@
 
 	<script src="{% static 'clientstatic/js/script.js' %}" type="b3e345caed10bce54b11409c-text/javascript"></script>
 	
-	<script src="../../../../ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="b3e345caed10bce54b11409c-|49" defer=""></script>
+	<script src="{% static 'clientstatic/../../../../ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js' %}" data-cf-settings="b3e345caed10bce54b11409c-|49" defer=""></script>
 
    </body>
 </html>
