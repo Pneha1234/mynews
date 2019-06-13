@@ -11,16 +11,17 @@ from .models import *
 from django.shortcuts import get_object_or_404
 
 
-class NewsCategoryList(ListView):
-    template_name = 'admintemplates/editorhome.html'
-    model = NewsCategory
-    context_object_name = 'newscategory'
+# class NewsCategoryList(ListView):
+#     template_name = 'admintemplates/editorhome.html'
+#     model = NewsCategory
+#     context_object_name = 'newscategory'
 
-    def get_context_data(self, **kwargs):
+#     def get_context_data(self, **kwargs):
 
-        context = super().get_context_data(**kwargs)
-        context['newslist'] = News.objects.all()
-        return context
-
+#         context = super().get_context_data(**kwargs)
+#         context['newslist'] = News.objects.all()
+#         return context
 
 # Create your views here.
+class ClientBaseView(TemplateView):
+    template_name = 'clienttemplates/clientbase.html'

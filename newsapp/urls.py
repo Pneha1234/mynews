@@ -8,9 +8,9 @@ from django.views.generic.base import TemplateView
 
 app_name = "newsapp"
 urlpatterns = [
-	path('', TemplateView.as_view(template_name='admintemplates/editorhome.html'), name='home'), # new
 
-	
+	path('', TemplateView.as_view(template_name='admintemplates/editorhome.html'), name='home'), # new
+	path('base/',ClientBaseView.as_view(),name='clientbase')
 
 
 ]
