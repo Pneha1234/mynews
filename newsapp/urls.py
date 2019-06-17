@@ -13,7 +13,7 @@ urlpatterns = [
     # editor url
     # editor url
 
-    path('editor/', EditorNewsCategoryView.as_view(), name='home'),
+    path('editor/', EditorNewsCategoryView.as_view(), name='editorhome'),
     path('editor/newscategory', EditorNewsCategoryList.as_view(), name='newscategory'),
     path('editor/newscategoryadd',
          EditorNewsCategoryCreate.as_view(), name='newscategoryadd'),
@@ -36,7 +36,7 @@ urlpatterns = [
     # admin url
 
     path('adminhome/', AdminView.as_view(), name='adminhome'),
-    path('admin/adminadvettizement',
+    path('admin/adminadvettizementposition',
          AdminAdvertizementPositionList.as_view(), name='advertizementposition'),
     path('admin/advertizementpositionadd',
          AdminAdvertizementPositionCreate.as_view(), name='advertizementpositionadd'),
@@ -44,22 +44,27 @@ urlpatterns = [
          AdminAdvertizementPositionUpdate.as_view(), name='advertizementpositionupdate'),
     path('admin/<int:pk>/advertizementpositiondelete',
          AdminAdvertizementPositionDelete.as_view(), name='advertizementpositiondelete'),
+    path('admin/adminadvettizement',
+         AdminAdvertizementList.as_view(), name='advertizement'),
+    path('admin/advertizementadd',
+         AdminAdvertizementCreate.as_view(), name='advertizementadd'),
+    path('admin/<int:pk>/advertizementupdate',
+         AdminAdvertizementUpdate.as_view(), name='advertizementupdate'),
+    path('admin/<int:pk>/advertizementdelete',
+         AdminAdvertizementDelete.as_view(), name='advertizementdelete'),
 
-    #client url
-    path('',ClientHomeView.as_view(),name='clienthome'),
 
+    # client url
+    # client url
+    # client url
+    # client url
 
+    path('', ClientHomeView.as_view(), name='clienthome'),
 
-
-	path('', TemplateView.as_view(template_name='admintemplates/editorhome.html'), name='home'), 
+    path('', TemplateView.as_view(
+        template_name='admintemplates/editorhome.html'), name='home'),
 
 
 
 
 ]
-
-
-	
-
-
-

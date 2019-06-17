@@ -16,12 +16,17 @@
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!-- Extra details for Live View on GitHub Pages -->
   <!-- Canonical SEO -->
+
   <link rel="canonical" href="https://www.sarobartech.com/products/" />
   <!--  Social tags      -->
   <meta name="keywords" content="sarobartech, html dashboard, html css dashboard, web dashboard, bootstrap 4 dashboard, bootstrap 4, css3 dashboard, bootstrap 4 admin, material dashboard bootstrap 4 dashboard, frontend, responsive bootstrap 4 dashboard, material design, material dashboard bootstrap 4 dashboard">
   <meta name="description" content="Marigold Dashboard is a Premium Material Bootstrap 4 Admin with a fresh, new design inspired by Google's Material Design.">
  
   <!--     Fonts and icons     -->
+  <script src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script>
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="{% static 'adminstatic/css/font-awesome.min.css' %}">
   <!-- CSS Files -->
@@ -120,7 +125,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url 'newsapp:advertizement' %}">
               <i class="material-icons">image</i>
               <p> Advertisments </p>
             </a>
@@ -138,7 +143,7 @@
               {% for news in newscategorylist %}
                 <li class="nav-item ">
                   <a class="nav-link" href="{% url 'newsapp:newsdetail' news.slug %}">
-                    
+                    <span class="sidebar-mini">{{ news.icon_character }}</span>
                     <span class="sidebar-normal">{{ news.title }}</span>
 
                   </a>
@@ -306,7 +311,9 @@
 
 
 
+
               <!--   Core JS Files   -->
+
               <script src="{%static 'adminstatic/js/core/jquery.min.js' %}"></script>
               <script src="{%static 'adminstatic/js/core/popper.min.js' %}"></script>
               <script src="{%static 'adminstatic/js/core/bootstrap-material-design.min.js' %}"></script>
@@ -323,7 +330,8 @@
               <script src="{%static 'adminstatic/js/plugins/bootstrap-selectpicker.js' %}"></script>
               <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
               <script src="{%static 'adminstatic/js/plugins/bootstrap-datetimepicker.min.js' %}"></script>
-              <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
+              <!--  DataTables.net Plugin, full documentation here: https://datatables.net/
+                -->
               <script src="{%static 'adminstatic/js/plugins/jquery.dataTables.min.js' %}"></script>
               <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
               <script src="{%static 'adminstatic/js/plugins/bootstrap-tagsinput.js' %}"></script>
@@ -351,6 +359,12 @@
               <script src="{%static 'adminstatic/js/marigold-dashboard.min.js' %}" type="text/javascript"></script>
               <!-- Material Dashboard DEMO methods, don't include it in your project! -->
               <script src="{%static 'adminstatic/demo/demo.js' %}"></script>
+              <script>
+                $(document).ready( function () {
+                $('#datatables').DataTable();
+                } ); 
+
+              </script>
               <script>
                 $(document).ready(function() {
                   $().ready(function() {
@@ -634,6 +648,7 @@
 
                 });
               </script>
+               
 </body>
 
 

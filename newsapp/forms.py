@@ -21,3 +21,9 @@ class AdminAdvertizementPosition(forms.ModelForm):
     class Meta:
         model = AdvertizementPosition
         fields = ['position']
+
+
+class AdminAdvertizement(forms.ModelForm):
+    class Meta:
+        model = Advertizement
+        fields = ['organization', 'image', 'link', 'expiry_date']

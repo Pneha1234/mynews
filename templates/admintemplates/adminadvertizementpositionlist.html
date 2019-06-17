@@ -1,7 +1,6 @@
 {% extends 'admintemplates/adminbase.html' %}
 {% load static %}
 
-
 {% block content %}
 <div class="content">
   <div class="container-fluid">
@@ -12,47 +11,39 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <a href="{% url 'newsapp:advertizementadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
-            <h4 class="card-title">Advertisement Table</h4>
+            <a href="{% url 'newsapp:advertizementpositionadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
+            <h4 class="card-title">Advertizement Position</h4>
           </div>
           <div class="card-body">
             <div class="toolbar">
              <div>
-               
+              
             </div>
           </div>
           <div class="material-datatables">
             <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"style="width:100%">
               <thead>
                 <tr>
-                  <th>Organization</th>
-                  <th>Image</th>
-                  <th>link</th>
-                  <th>expiry_date</th>
-                  
+                  <th>Position</th>
+
                   <th class="disabled-sorting text-right">Actions</th>
                 </tr>
               </thead>
               <tfoot>
                 <tr>
-                 <th>Organization</th>
-                 <th>Image</th>
-                 <th>link</th>
-                 <th>expiry_date</th>
-                 
+                 <th>Position</th>
+
                  <th class="text-right">Actions</th>
                </tr>
              </tfoot>
              <tbody>
-               {% for advertizementlist in advertizementlist %}
+               {% for advertizementposition in advertizementpositionlist %}
                <tr>
-                <td>{{advertizementlist.organization}}</td>
-                <td><img src={{advertizementlist.image.url}} class="img-responsive" style="width:40%"></td>
-                <td>{{advertizementlist.link}}</td>
-                <td>{{advertizementlist.expiry_date}}</td>
+                <td>{{advertizementposition.position}}</td>
                 <td class="text-right">
-                  <a href="{% url 'newsapp:advertizementupdate' advertizementlist.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
-                  <a href="{% url 'newsapp:advertizementdelete' advertizementlist.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
+                  <a href="{% url 'newsapp:advertizementpositionupdate' advertizementposition.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                
+                  <a href="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
                     <i class="material-icons">close</i></a>
                   </button>
 
@@ -60,17 +51,17 @@
                   <div class="modal" id="myModal">
                     <div class="modal-dialog">
                       <div class="modal-content">
-                        
+
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Are You Sure !! You Wanna Delete {{advertizementlist.organization }}</h4>
+                          <h4 class="modal-title">Are You Sure !! You Wanna Delete {{advertizementposition.position }}</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         
                         
                         
                         <!-- Modal footer -->
-                        <form action="{% url 'newsapp:advertizementdelete' advertizementlist.pk %}" method="POST">
+                        <form action="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}" method="POST">
                          {% csrf_token %}
                          <button class="btn">Delete</button>
                        </form>
@@ -80,11 +71,10 @@
                  </div>
                  
                </div>
-
              </td>
            </tr>
            {% endfor %}
-           
+
          </tbody>
        </table>
      </div>
