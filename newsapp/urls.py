@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.conf.urls.static import static
-# from django.contrib.auth import views as auth_views
 from newsapp.views import *
 import django.contrib
 from django.urls import path
@@ -46,7 +45,21 @@ urlpatterns = [
     path('admin/<int:pk>/advertizementpositiondelete',
          AdminAdvertizementPositionDelete.as_view(), name='advertizementpositiondelete'),
 
+    #client url
+    path('',ClientHomeView.as_view(),name='clienthome'),
+
+
+
+
+	path('', TemplateView.as_view(template_name='admintemplates/editorhome.html'), name='home'), 
+
 
 
 
 ]
+
+
+	
+
+
+
