@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<form method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{form.as_p}}
+	<button>login</button>
+	
+</form>
+<br>
+<button><a href="{% url 'newsapp:editorregistration' %}">sign up as editor</a></button>
+<button><a href="{% url 'newsapp:adminregistration' %}">sign up as admin</a></button>
+
+</body>
+</html>

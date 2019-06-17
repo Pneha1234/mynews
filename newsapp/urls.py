@@ -13,7 +13,7 @@ urlpatterns = [
     # editor url
     # editor url
 
-    path('editor/', EditorNewsCategoryView.as_view(), name='home'),
+    path('editor/', EditorNewsCategoryView.as_view(), name='editorhome'),
     path('editor/newscategory', EditorNewsCategoryList.as_view(), name='newscategory'),
     path('editor/newscategoryadd',
          EditorNewsCategoryCreate.as_view(), name='newscategoryadd'),
@@ -29,6 +29,12 @@ urlpatterns = [
          EditorNewsUpdate.as_view(), name='newsupdate'),
     path('editor/<slug:slug>/newsdelete',
          EditorNewsDelete.as_view(), name='newsdelete'),
+    path('editor-registration/',
+         EditorRegistrationView.as_view(), name='editorregistration'),
+    path('login/',
+         LoginView.as_view(), name='login'),
+    path("logout/", LogoutView.as_view(), name="logout"),
+
 
     # admin url
     # admin url
@@ -44,22 +50,19 @@ urlpatterns = [
          AdminAdvertizementPositionUpdate.as_view(), name='advertizementpositionupdate'),
     path('admin/<int:pk>/advertizementpositiondelete',
          AdminAdvertizementPositionDelete.as_view(), name='advertizementpositiondelete'),
+    path('admin-registration/', AdminRegistrationView.as_view(),
+         name='adminregistration'),
 
-    #client url
-    path('',ClientHomeView.as_view(),name='clienthome'),
+    # client url
+    path('', ClientHomeView.as_view(), name='clienthome'),
 
 
 
 
-	path('', TemplateView.as_view(template_name='admintemplates/editorhome.html'), name='home'), 
+    path('', TemplateView.as_view(
+        template_name='admintemplates/editorhome.html'), name='home'),
 
 
 
 
 ]
-
-
-	
-
-
-

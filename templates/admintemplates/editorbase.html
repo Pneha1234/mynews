@@ -96,12 +96,16 @@
                     <span class="sidebar-normal"> Edit Profile </span>
                   </a>
                 </li>
+                {% if request.user.is_authenticated %}
+                  <p>Logged in as : {{request.user}}</p>|
+
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <span class="sidebar-mini"> S </span>
-                    <span class="sidebar-normal"> Log Out </span>
+                  <a class="nav-link" href="{% url 'newsapp:logout' %}">
+                  <span class="sidebar-mini"> S </span>
+                  <span class="sidebar-normal"> logout </span>
                   </a>
                 </li>
+                {% endif %}
               </ul>
             </div>
           </div>
@@ -131,13 +135,12 @@
               <ul class="nav">
               {% for news in newscategorylist %}
                 <li class="nav-item ">
-                  <a class="nav-link" href="{% url 'newsapp:newsdetail' news.slug %}">
+                  <a class="nav-link" href="#">
                     
                     <span class="sidebar-normal">{{ news.title }}</span>
-
                   </a>
                 </li>
-                {% endfor %}
+              {% endfor %}
               </ul>
             </div>
           </li>
@@ -287,7 +290,14 @@
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+
+                  {% if request.user.is_authenticated %}
+                  <p>Logged in as : {{request.user}}</p>|
+
+                
+                  <a class="dropdown-item" href="{% url 'newsapp:logout' %}">logout
+                  </a>
+                  {% endif %}
                 </div>
               </li>
             </ul>
@@ -296,6 +306,8 @@
       </nav>
 
 {% block content %}
+
+
 {% endblock %}
 
 
@@ -313,13 +325,13 @@
               <script src="{%static 'adminstatic/js/plugins/jquery.validate.min.js' %}"></script>
               <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
               <script src="{%static 'adminstatic/js/plugins/jquery.bootstrap-wizard.js' %}"></script>
-              <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+              <!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
               <script src="{%static 'adminstatic/js/plugins/bootstrap-selectpicker.js' %}"></script>
               <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
               <script src="{%static 'adminstatic/js/plugins/bootstrap-datetimepicker.min.js' %}"></script>
               <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
               <script src="{%static 'adminstatic/js/plugins/jquery.dataTables.min.js' %}"></script>
-              <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+              <!--  Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
               <script src="{%static 'adminstatic/js/plugins/bootstrap-tagsinput.js' %}"></script>
               <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
               <script src="{%static 'adminstatic/js/plugins/jasny-bootstrap.min.js' %}"></script>

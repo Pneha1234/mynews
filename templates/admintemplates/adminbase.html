@@ -96,12 +96,17 @@
                     <span class="sidebar-normal"> Edit Profile </span>
                   </a>
                 </li>
+                {% if request.user.is_authenticated %}
+                  <p>Logged in as : {{request.user}}</p>|
+
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    <span class="sidebar-mini"> S </span>
-                    <span class="sidebar-normal"> Log Out </span>
+                  <a class="nav-link" href="{% url 'newsapp:logout' %}">
+                  <span class="sidebar-mini"> S </span>
+                  <span class="sidebar-normal"> logout </span>
                   </a>
                 </li>
+                {% endif %}
+
               </ul>
             </div>
           </div>
@@ -293,7 +298,13 @@
                   <a class="dropdown-item" href="#">Profile</a>
                   <a class="dropdown-item" href="#">Settings</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  {% if request.user.is_authenticated %}
+                  <p>Logged in as : {{request.user}}</p>|
+
+                
+                  <a class="dropdown-item" href="{% url 'newsapp:logout' %}">logout
+                  </a>
+                  {% endif %}
                 </div>
               </li>
             </ul>
