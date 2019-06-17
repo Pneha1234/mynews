@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import *
 from django.views.generic.edit import *
 from newsapp.forms import *
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib. auth import authenticate, login, logout
+from .forms import *
 
 # Editor Views
 # Editor Views
@@ -11,24 +15,34 @@ from .models import *
 # Editor Views
 
 
-class EditorNewsCategoryView(TemplateView):
+class EditorRequiredMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_authenticated and user.groups.filter(name="Editor").exists():
+            pass
+        else:
+            return redirect("/login/")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class EditorNewsCategoryView(EditorRequiredMixin, TemplateView):
     template_name = 'admintemplates/editorhome.html'
 
 
-class EditorNewsCategoryCreate(CreateView):
+class EditorNewsCategoryCreate(EditorRequiredMixin, CreateView):
     template_name = "admintemplates/editornewscategoryadd.html"
     model = NewsCategory
     form_class = NewsForm
     success_url = reverse_lazy('newsapp:newscategory')
 
 
-class EditorNewsCategoryList(ListView):
+class EditorNewsCategoryList(EditorRequiredMixin, ListView):
     template_name = 'admintemplates/editornewscategorylist.html'
     model = NewsCategory
     context_object_name = 'newscategorylist'
 
 
-class EditorNewsCategoryUpdate(UpdateView):
+class EditorNewsCategoryUpdate(EditorRequiredMixin, UpdateView):
     template_name = 'admintemplates/editornewscategoryupdate.html'
     model = NewsCategory
     fields = ['title', 'image', 'icon_character']
@@ -36,8 +50,9 @@ class EditorNewsCategoryUpdate(UpdateView):
     success_url = reverse_lazy('newsapp:newscategory')
 
 
-class EditorNewsCategoryDelete(DeleteView):
+class EditorNewsCategoryDelete(EditorRequiredMixin, DeleteView):
     template_name = "admintemplates/editornewscategorylist.html"
+
     model = NewsCategory
     success_url = reverse_lazy('newsapp:newscategory')
 
@@ -48,7 +63,7 @@ class EditorNewsDetailView(DetailView):
     context_object_name = 'newsdetail'
 
 
-class EditorNewsCreate(CreateView):
+class EditorNewsCreate(EditorRequiredMixin, CreateView):
     template_name = 'admintemplates/editornewsadd.html'
     model = News
     form_class = EditorNewsForm
@@ -56,7 +71,7 @@ class EditorNewsCreate(CreateView):
     success_url = reverse_lazy('newsapp:newsdetail')
 
 
-class EditorNewsUpdate(UpdateView):
+class EditorNewsUpdate(EditorRequiredMixin, UpdateView):
     template_name = 'admintemplates/editornewsupdate.html'
     model = News
     fields = ['title', 'slug', 'image', 'video_link', 'content']
@@ -64,44 +79,121 @@ class EditorNewsUpdate(UpdateView):
     success_url = reverse_lazy('newsapp:newsdetail')
 
 
-class EditorNewsDelete(DeleteView):
+class EditorNewsDelete(EditorRequiredMixin, DeleteView):
     template_name = 'admintemplates/editornewsdetail.html'
     model = News
     success_url = reverse_lazy('newsapp:newsdetail')
 
 
+class EditorRegistrationView(CreateView):
+    template_name = "admintemplates/editorregistration.html"
+    form_class = EditorForm
+    success_url = reverse_lazy('newsapp:login')
+
+    def form_valid(self, form):
+        u_name = form.cleaned_data["username"]
+        p_word = form.cleaned_data["password"]
+        user = User.objects.create_user(u_name, "", p_word)
+        form.instance.user = user
+        return super().form_valid(form)
+
+
+class AdminRegistrationView(CreateView):
+    template_name = "admintemplates/adminregistration.html"
+    form_class = AdminForm
+    success_url = reverse_lazy('newsapp:login')
+
+    def form_valid(self, form):
+        u_name = form.cleaned_data["username"]
+        p_word = form.cleaned_data["password"]
+        user = User.objects.create_user(u_name, "", p_word)
+        form.instance.user = user
+        return super().form_valid(form)
+
+
+class LoginView(FormView):
+    template_name = "admintemplates/login.html"
+    form_class = LoginForm
+    success_url = reverse_lazy('newsapp:editor')
+
+    def form_valid(self, form):
+        u_name = form.cleaned_data["username"]
+        p_word = form.cleaned_data["password"]
+
+        user = authenticate(username=u_name, password=p_word)
+        self.thisuser = user
+
+        if user is not None and user.groups.exists():
+            login(self.request, user)
+
+        else:
+            return render(self.request, self.template_name,
+                          {"error": "username or password didn't match", "form": form})
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        if self.thisuser.groups.filter(name="Editor").exists():
+            return reverse("newsapp:editorhome")
+        elif self.thisuser.groups.filter(name="Admin").exists():
+            return reverse("newsapp:adminhome")
+
+        else:
+            return reverse("newsapp:login")
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect("/login/")
+
+
 # Admin Views
 # Admin Views
 # Admin Views
 # Admin Views
 
-class AdminView(TemplateView):
+class AdminRequiredMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_authenticated and user.groups.filter(name="Admin").exists():
+            pass
+        else:
+            return redirect("/login/")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AdminView(AdminRequiredMixin, TemplateView):
     template_name = 'admintemplates/adminhome.html'
 
 
-class AdminAdvertizementPositionList(ListView):
+class AdminAdvertizementPositionList(AdminRequiredMixin, ListView):
     template_name = 'admintemplates/adminadvertizementpositionlist.html'
+
     model = AdvertizementPosition
     context_object_name = 'advertizementpositionlist'
 
 
-class AdminAdvertizementPositionCreate(CreateView):
+class AdminAdvertizementPositionCreate(AdminRequiredMixin, CreateView):
     template_name = "admintemplates/adminadvertizementpositionadd.html"
+
     model = AdvertizementPosition
     form_class = AdminAdvertizementPosition
     success_url = reverse_lazy('newsapp:advertizementposition')
 
 
-class AdminAdvertizementPositionUpdate(UpdateView):
+class AdminAdvertizementPositionUpdate(AdminRequiredMixin, UpdateView):
     template_name = 'admintemplates/adminadvertizementpositionupdate.html'
+
     model = AdvertizementPosition
     fields = ['position']
     template_name_suffix = '_form'
     success_url = reverse_lazy('newsapp:advertizementposition')
 
 
-class AdminAdvertizementPositionDelete(DeleteView):
+class AdminAdvertizementPositionDelete(AdminRequiredMixin, DeleteView):
     template_name = 'admintemplates/adminadvertizementpositionlist.html'
+
     model = AdvertizementPosition
     success_url = reverse_lazy('newsapp:advertizementposition')
 

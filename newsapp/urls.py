@@ -29,6 +29,12 @@ urlpatterns = [
          EditorNewsUpdate.as_view(), name='newsupdate'),
     path('editor/<slug:slug>/newsdelete',
          EditorNewsDelete.as_view(), name='newsdelete'),
+    path('editor-registration/',
+         EditorRegistrationView.as_view(), name='editorregistration'),
+    path('login/',
+         LoginView.as_view(), name='login'),
+    path("logout/", LogoutView.as_view(), name="logout"),
+
 
     # admin url
     # admin url
@@ -52,7 +58,8 @@ urlpatterns = [
          AdminAdvertizementUpdate.as_view(), name='advertizementupdate'),
     path('admin/<int:pk>/advertizementdelete',
          AdminAdvertizementDelete.as_view(), name='advertizementdelete'),
-
+    path('admin-registration/', AdminRegistrationView.as_view(),
+         name='adminregistration'),
 
     # client url
     # client url
