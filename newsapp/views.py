@@ -24,6 +24,11 @@ class EditorRequiredMixin(object):
             return redirect("/login/")
         return super().dispatch(request, *args, **kwargs)
 
+# NewsCategory View
+# NewsCategory View
+# NewsCategory View
+# NewsCategory View
+
 
 class EditorNewsCategoryView(EditorRequiredMixin, TemplateView):
     template_name = 'admintemplates/editorhome.html'
@@ -56,11 +61,54 @@ class EditorNewsCategoryDelete(EditorRequiredMixin, DeleteView):
     model = NewsCategory
     success_url = reverse_lazy('newsapp:newscategory')
 
+# News SubCategory Views
+# News SUbCategory Views
+# News SubCategory Views
+# News SubCategory Views
 
-class EditorNewsDetailView(DetailView):
-    template_name = "admintemplates/editornewsdetail.html"
-    model = NewsCategory
-    context_object_name = 'newsdetail'
+
+class EditorNewsSubCategoryList(EditorRequiredMixin, ListView):
+    template_name = 'admintemplates/editornewssubcategorylist.html'
+    model = NewsSubCategory
+    context_object_name = 'newssubcategorylist'
+
+
+class EditorNewsSubCategoryCreate(EditorRequiredMixin, CreateView):
+    template_name = "admintemplates/editornewssubcategoryadd.html"
+    model = NewsSubCategory
+    form_class = NewsSubCategoryForm
+    success_url = reverse_lazy('newsapp:newssubcategorylist')
+
+
+class EditorNewsSubCategoryUpdate(EditorRequiredMixin, UpdateView):
+    template_name = 'admintemplates/editornewssubcategoryupdate.html'
+    model = NewsSubCategory
+    fields = ['title', 'main_category', 'image', 'icon_character']
+    template_name_suffix = '_form'
+    success_url = reverse_lazy('newsapp:newssubcategorylist')
+
+
+class EditorNewsSubCategoryDelete(EditorRequiredMixin, DeleteView):
+    template_name = "admintemplates/editornewssubcategorylist.html"
+    model = NewsSubCategory
+    success_url = reverse_lazy('newsapp:newssubcategorylist')
+
+
+# News Views
+# News Views
+# News Views
+# News Views
+
+class EditorNewsList(EditorRequiredMixin, ListView):
+    template_name = 'admintemplates/editornewslist.html'
+    model = News
+    context_object_name = 'newslist'
+
+
+# class EditorNewsDetailView(DetailView):
+#     template_name = "admintemplates/editornewsdetail.html"
+#     model = NewsCategory
+#     context_object_name = 'newsdetail'
 
 
 class EditorNewsCreate(EditorRequiredMixin, CreateView):
@@ -68,21 +116,22 @@ class EditorNewsCreate(EditorRequiredMixin, CreateView):
     model = News
     form_class = EditorNewsForm
     context_object_name = 'newscreate'
-    success_url = reverse_lazy('newsapp:newsdetail')
+    success_url = reverse_lazy('newsapp:newslist')
 
 
 class EditorNewsUpdate(EditorRequiredMixin, UpdateView):
     template_name = 'admintemplates/editornewsupdate.html'
     model = News
-    fields = ['title', 'slug', 'image', 'video_link', 'content']
+    fields = ['title', 'main_category', 'sub_category',
+              'image', 'video_link', 'content']
     template_name_suffix = '_form'
-    success_url = reverse_lazy('newsapp:newsdetail')
+    success_url = reverse_lazy('newsapp:newslist')
 
 
 class EditorNewsDelete(EditorRequiredMixin, DeleteView):
     template_name = 'admintemplates/editornewsdetail.html'
     model = News
-    success_url = reverse_lazy('newsapp:newsdetail')
+    success_url = reverse_lazy('newsapp:newslist')
 
 
 class EditorRegistrationView(CreateView):

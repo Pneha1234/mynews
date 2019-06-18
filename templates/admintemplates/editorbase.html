@@ -126,31 +126,21 @@
               <p> News Category </p>
             </a>
           </li>
-          
-          <li class="nav-item ">
-            <a class="nav-link" data-toggle="collapse" href="#formsExamples">
-              <i class="material-icons">apps</i>
-              <p> News
-                <b class="caret"></b>
-              </p>
+           <li class="nav-item ">
+            <a class="nav-link" href="{% url 'newsapp:newssubcategorylist' %}">
+              <i class="material-icons">image</i>
+              <p> News SubCategory </p>
             </a>
-            <div class="collapse" id="formsExamples">
-              <ul class="nav">
-              {% for news in newscategorylist %}
-                <li class="nav-item ">
-
-                  <a class="nav-link" href="{% url 'newsapp:newsdetail' news.slug %}">
-                    <span class="sidebar-mini">{{ news.icon_character }}</span>
-
-                  <a class="nav-link" href="#">
-                    
-                    <span class="sidebar-normal">{{ news.title }}</span>
-                  </a>
-                </li>
-              {% endfor %}
-              </ul>
-            </div>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'newsapp:newslist' %}">
+              <i class="material-icons">image</i>
+              <p> News List </p>
+            </a>
+          </li>
+
+          
+         
           <li class="nav-item ">
             <a class="nav-link" data-toggle="collapse" href="#tablesExamples">
               <i class="material-icons">grid_on</i>
