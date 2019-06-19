@@ -302,10 +302,17 @@ class ClientHomeView(ListView):
 
 
 class ClientNewsDetailView(DetailView):
-    template_name = 'clienttemplates/newsdetail'
+    template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
-    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
+        return context
 
 
 class SubscriberView(SuccessMessageMixin, CreateView):
