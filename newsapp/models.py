@@ -151,3 +151,10 @@ class Advertizement(TimeStamp):
 
     def __str__(self):
         return self.organization
+
+
+class Subscriber(TimeStamp):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email

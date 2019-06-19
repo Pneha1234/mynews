@@ -3,7 +3,7 @@ from .models import *
 
 
 admin.site.register([
-	OrgnizationalInformation,Admin, Editor, NewsCategory, NewsSubCategory, 
-	News, Comment, AdvertizementPosition, Advertizement,
+    OrgnizationalInformation, Admin, Editor, NewsCategory, NewsSubCategory,
+    News, Comment, AdvertizementPosition, Advertizement,Subscriber,
 
 ])

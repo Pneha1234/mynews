@@ -8,7 +8,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from .forms import *
-
+from django.http import JsonResponse
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
+from django.conf import settings
 # Editor Views
 # Editor Views
 # Editor Views
@@ -202,4 +205,29 @@ class ClientHomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
+        context['subform'] = SubscriberForm
         return context
+
+
+class SubscriberView(SuccessMessageMixin, CreateView):
+    template_name = "clienttemplates/error.html"
+    form_class = SubscriberForm
+    success_url = reverse_lazy('newsapp:home')
+    success_message = "thank you for subscribing"
+
+    def form_valid(self, form):
+        email = form.cleaned_data["email"]
+        if Subscriber.objects.filter(email=email).exists():
+            return render(self.request, ("clienttemplates/error.html"), {"error": "subscriber already exist"})
+        send_mail("Subscription mail", "Thank you for Subscribing our news site",
+                  settings.EMAIL_HOST_USER, [email, ], fail_silently=False),
+        return super().form_valid(form)
+
+
+class SubscriberCheckView(View):
+    def get(self, request):
+        email = request.GET.get("email")
+        if Subscriber.objects.filter(email=email).exists():
+            return JsonResponse({"error": "error"})
+        else:
+            return JsonResponse({"error": "success"})

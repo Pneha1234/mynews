@@ -55,7 +55,8 @@ urlpatterns = [
 
     # client url
     path('', ClientHomeView.as_view(), name='clienthome'),
-
+    path('subscriber/', SubscriberView.as_view(), name='subscriber'),
+    path("subscriber/check/", SubscriberCheckView.as_view(), name="subscribercheck"),
 
 
 
