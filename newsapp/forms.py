@@ -15,13 +15,27 @@ class EditorNewsForm(forms.ModelForm):
 
     class Meta:
         model = News
-        fields = ['title', 'slug', 'image', 'video_link', 'content']
+        fields = ['title', 'main_category', 'sub_category',
+                  'image', 'video_link', 'content', 'editor']
+
+
+class NewsSubCategoryForm(forms.ModelForm):
+
+    class Meta:
+        model = NewsSubCategory
+        fields = ['title', 'main_category', 'image', 'icon_character']
 
 
 class AdminAdvertizementPosition(forms.ModelForm):
     class Meta:
         model = AdvertizementPosition
         fields = ['position']
+
+
+class AdminAdvertizement(forms.ModelForm):
+    class Meta:
+        model = Advertizement
+        fields = ['organization', 'image', 'link', 'expiry_date']
 
 
 class EditorForm(forms.ModelForm):

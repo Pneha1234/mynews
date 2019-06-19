@@ -1,11 +1,6 @@
-{% extends 'admintemplates/adminbase.html' %}
 
 {% block content %}
 
-<div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
 <form method="post" action="" >
     {% csrf_token %}
 
@@ -14,10 +9,4 @@
     <input type="submit" value="Confirm">
 
 </form>
-</div>
-</div>
-</div>
-</div>
-
-
 {% endblock %}

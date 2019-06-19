@@ -11,8 +11,8 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <a href="{% url 'newsapp:newscategoryadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
-              <h4 class="card-title">News Category</h4>
+              <a href="{% url 'newsapp:newssubcategoryadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
+              <h4 class="card-title">News SubCategory</h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -25,29 +25,32 @@
                 <thead>
                   <tr>
                     <th>Title</th>
-                    <th>Image</th>
-                    <th>Icon Character</th>
+                    <th>main_category</th>
+                    <th>image</th>
+                    <th>icon_character</th>
                     <th class="disabled-sorting text-right">Actions</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                   <th>Title</th>
-                   <th>Image</th>
-                   <th>Icon Character</th>
+                    <th>Title</th>
+                    <th>main_category</th>
+                    <th>image</th>
+                    <th>icon_character</th>
                    <th class="text-right">Actions</th>
                  </tr>
                </tfoot>
                <tbody>
-                 {% for newscategories in newscategorylist %}
+                 {% for newssubcategory in newssubcategorylist %}
                  <tr>
-                  <td>{{newscategories.title}}</td>
-                  <td><img src="{{newscategories.image.url}}" class="img-responsive" style="width:20%"></td>
-                  <td>{{newscategories.icon_character}}</td>
+                  <td>{{newssubcategory.title}}</td>
+                  <td>{{newssubcategory.main_category}}</td>
+                  <td><img src="{{newssubcategory.image.url}}" class="img-responsive" style="width:30%"></td>
+                  <td>{{newssubcategory.icon_character}}</td>
                   <td class="text-right">
-                    <a href="{% url 'newsapp:newscategoryupdate' newscategories.slug %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                    <a href="{% url 'newsapp:newssubcategoryupdate' newssubcategory.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                     
-                    <a href="{% url 'newsapp:newscategorydelete' newscategories.slug %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
+                    <a href="{% url 'newsapp:newssubcategorydelete' newssubcategory.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
                       <i class="material-icons">close</i></a>
                     </button>
 
@@ -65,7 +68,7 @@
                           
                           
                           <!-- Modal footer -->
-                          <form action="{% url 'newsapp:newscategorydelete' newscategories.slug %}" method="POST">
+                          <form action="{% url 'newsapp:newssubcategorydelete' newssubcategory.pk %}" method="POST">
                            {% csrf_token %}
                            <button class="btn">Delete</button>
                          </form>
