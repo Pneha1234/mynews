@@ -97,8 +97,6 @@ class NewsSubCategory(TimeStamp):
     main_category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="news/sub_category")
     icon_character = models.CharField(max_length=500, null=True, blank=True)
-    root = models.ForeignKey(
-        'self', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -107,11 +105,11 @@ class NewsSubCategory(TimeStamp):
 class News(TimeStamp):
     title = models.CharField(max_length=500)
     main_category = models.ForeignKey(
-        NewsCategory, on_delete=models.CASCADE, null=True, blank=True)
+        NewsCategory, on_delete=models.CASCADE)
     sub_category = models.ForeignKey(NewsSubCategory, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="news/news", null=True, blank=True)
-    video_link = models.URLField(max_length=500)
+    video_link = models.URLField(max_length=500, null=True, blank=True)
     content = models.TextField()
     view_count = models.BigIntegerField(default=0)
     editor = models.ForeignKey(
@@ -151,3 +149,10 @@ class Advertizement(TimeStamp):
 
     def __str__(self):
         return self.organization
+
+
+class Subscriber(TimeStamp):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email

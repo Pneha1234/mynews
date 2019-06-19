@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="{% static 'adminstatic/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    
+
+
+<body class="container">
+<nav class="navbar navbar-inverse" style="background-color: black; height: 100px">
+  <div class="container-fluid">
+    <div class="navbar-header" style="padding-left: 35%; color: white;padding-top: 20px">
+    	<h2>Admin management</h2>
+    </div>
+  </div>
+</nav>
+<div style="padding-left: 35%">
+
+	<div class="imgcontainer">
+    	<img style="height: 200px;padding-left: 20px" src="{% static 'adminstatic/img/login-avator.png' %}" alt="Avatar" class="avatar">
+	</div>
+  	
+
+	{{error}}
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form.as_p}}
+		<button style="background-color: #7298C4;color: white"> login</button>
+		
+		
+	</form>
+
+<br>
+<button style="background-color: #B8C7D8"><a href="{% url 'newsapp:editorregistration' %}">sign up as editor</a></button>
+<button style="background-color: #B8C7D8"><a href="{% url 'newsapp:adminregistration' %}">sign up as admin</a></button>
+</div>
+
+</body>
+</html>
