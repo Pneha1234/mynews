@@ -290,7 +290,28 @@ class ClientHomeView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
+        context['maincategorylist'] = NewsCategory.objects.all()
+        context['topviewednews'] = News.objects.order_by('view_count')
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['hotnews'] = News.objects.order_by('created_at')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
+        context['advertiselist'] = Advertizement.objects.all()
         context['subform'] = SubscriberForm
+        return context
+
+
+class ClientNewsDetailView(DetailView):
+    template_name = 'clienttemplates/clientnewsdetail.html'
+    model = News
+    context_object_name = 'clientnewsdetail'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
         return context
 
 
