@@ -298,7 +298,7 @@ class SubscriberView(SuccessMessageMixin, CreateView):
     template_name = "clienttemplates/error.html"
     form_class = SubscriberForm
     success_url = reverse_lazy('newsapp:home')
-    success_message = "thank you for subscribing"
+    success_message = "Thank you for subscribing"
 
     def form_valid(self, form):
         email = form.cleaned_data["email"]
