@@ -124,7 +124,6 @@ class EditorNewsCreate(EditorRequiredMixin, CreateView):
 def load_subcategories(request):
     category_id = request.GET.get('main_category')
     print(category_id)
-    
     sub_category= NewsSubCategory.objects.filter(
         main_category_id=category_id).order_by('title')
     print(sub_category)

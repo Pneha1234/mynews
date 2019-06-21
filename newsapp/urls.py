@@ -8,6 +8,21 @@ from newsapp import views
 app_name = "newsapp"
 urlpatterns = [
 
+
+    # client url
+    # client url
+    # client url
+    # client url
+    # path('base/',ClientBaseView.as_view(),name='clientbase'),
+    path('', ClientHomeView.as_view(), name='clienthome'),
+    # path('news/<int:pk>/detail/',
+    #      ClientNewsDetailView.as_view(), name='clientnewsdetail'),
+
+     path('', TemplateView.as_view(
+        template_name='admintemplates/editorhome.html'), name='home'),
+    # path('subscriber/', SubscriberView.as_view(), name='subscriber'),
+
+    # path("subscriber/check/", SubscriberCheckView.as_view(), name="subscribercheck"),
     # editor url
     # editor url
     # editor url
@@ -100,20 +115,6 @@ urlpatterns = [
          AdminAdvertizementDelete.as_view(), name='advertizementdelete'),
     path('admin-registration/', AdminRegistrationView.as_view(),
          name='adminregistration'),
-
-
-
-    # client url
-    # client url
-    # client url
-    # client url
-
-    path('', ClientHomeView.as_view(), name='clienthome'),
-
-    path('', TemplateView.as_view(
-        template_name='admintemplates/editorhome.html'), name='home'),
-
-
 
 
 ]
