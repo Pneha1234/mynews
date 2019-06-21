@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from .forms import *
 
+
 # Editor Views
 # Editor Views
 # Editor Views
@@ -50,6 +51,7 @@ class EditorNewsCategoryList(EditorRequiredMixin, ListView):
 class EditorNewsCategoryUpdate(EditorRequiredMixin, UpdateView):
     template_name = 'admintemplates/editornewscategoryupdate.html'
     model = NewsCategory
+
     fields = ['title', 'image', 'icon_character']
     template_name_suffix = '_form'
     success_url = reverse_lazy('newsapp:newscategory')
@@ -105,10 +107,10 @@ class EditorNewsList(EditorRequiredMixin, ListView):
     context_object_name = 'newslist'
 
 
-# class EditorNewsDetailView(DetailView):
-#     template_name = "admintemplates/editornewsdetail.html"
-#     model = NewsCategory
-#     context_object_name = 'newsdetail'
+class EditorNewsDetailView(DetailView):
+    template_name = "admintemplates/editornewsdetail.html"
+    model = News
+    context_object_name = 'newsdetail'
 
 
 class EditorNewsCreate(EditorRequiredMixin, CreateView):
@@ -119,17 +121,27 @@ class EditorNewsCreate(EditorRequiredMixin, CreateView):
     success_url = reverse_lazy('newsapp:newslist')
 
 
+def load_subcategories(request):
+    category_id = request.GET.get('main_category')
+    print(category_id)
+    
+    sub_category= NewsSubCategory.objects.filter(
+        main_category_id=category_id).order_by('title')
+    print(sub_category)
+    return render(request, 'admintemplates/subcategory_dropdown_list_options.html', {'sub_category': sub_category})
+
+
 class EditorNewsUpdate(EditorRequiredMixin, UpdateView):
     template_name = 'admintemplates/editornewsupdate.html'
     model = News
     fields = ['title', 'main_category', 'sub_category',
               'image', 'video_link', 'content']
-    template_name_suffix = '_form'
+    tform_class = EditorNewsForm
     success_url = reverse_lazy('newsapp:newslist')
 
 
 class EditorNewsDelete(EditorRequiredMixin, DeleteView):
-    template_name = 'admintemplates/editornewsdetail.html'
+    template_name = 'admintemplatesajax/load-subcategories//editornewsdetail.html'
     model = News
     success_url = reverse_lazy('newsapp:newslist')
 

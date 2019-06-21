@@ -2,8 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from newsapp.views import *
 import django.contrib
-from django.urls import path
-
+from django.urls import include, path
+from newsapp import views
 
 app_name = "newsapp"
 urlpatterns = [
@@ -42,8 +42,10 @@ urlpatterns = [
          EditorNewsSubCategoryUpdate.as_view(), name='newssubcategoryupdate'),
     path('editor/<int:pk>/newssubcategorydelete/',
          EditorNewsSubCategoryDelete.as_view(), name='newssubcategorydelete'),
-    # path('editor/<slug:slug>/newsdetail',
-    #      EditorNewsDetailView.as_view(), name='newsdetail'),
+    path('editor/<int:pk>/newsdetail',
+         EditorNewsDetailView.as_view(), name='newsdetail'),
+    path('ajax/load-subcategories/',views.load_subcategories,
+         name='load_subcategories'),
 
     # editor news view
     # editor news view
@@ -56,7 +58,6 @@ urlpatterns = [
          EditorNewsUpdate.as_view(), name='newsupdate'),
     path('editor/<int:pk>/newsdelete/',
          EditorNewsDelete.as_view(), name='newsdelete'),
-    
     path('editor-registration/',
          EditorRegistrationView.as_view(), name='editorregistration'),
     path('login/',

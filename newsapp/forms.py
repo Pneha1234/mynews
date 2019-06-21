@@ -10,13 +10,10 @@ class NewsForm(forms.ModelForm):
         model = NewsCategory
         fields = ['title', 'image', 'slug', 'icon_character']
 
-
-class EditorNewsForm(forms.ModelForm):
-
-    class Meta:
-        model = News
-        fields = ['title', 'main_category', 'sub_category',
-                  'image', 'video_link', 'content', 'editor']
+    def __init__(self, *args, **kwargs):
+        super(NewsForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 
 class NewsSubCategoryForm(forms.ModelForm):
@@ -25,17 +22,51 @@ class NewsSubCategoryForm(forms.ModelForm):
         model = NewsSubCategory
         fields = ['title', 'main_category', 'image', 'icon_character']
 
+    def __init__(self, *args, **kwargs):
+        super(NewsSubCategoryForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class EditorNewsForm(forms.ModelForm):
+
+    class Meta:
+        model = News
+        fields = ['title', 'main_category', 'sub_category',
+                  'image', 'video_link', 'content', 'editor']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['sub_category'].queryset = NewsSubCategory.objects.none()
+
+        if 'main_category' in self.data:
+            
+            category_id = int(self.data.get('main_category'))
+            self.fields['sub_category'].queryset = NewsSubCategory.objects.filter(
+                main_category_id=category_id).order_by('title')
+            
+
 
 class AdminAdvertizementPosition(forms.ModelForm):
     class Meta:
         model = AdvertizementPosition
         fields = ['position']
 
+    def __init__(self, *args, **kwargs):
+        super(AdminAdvertizementPosition, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
 
 class AdminAdvertizement(forms.ModelForm):
     class Meta:
         model = Advertizement
         fields = ['organization', 'image', 'link', 'expiry_date']
+
+    def __init__(self, *args, **kwargs):
+        super(AdminAdvertizement, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 
 class EditorForm(forms.ModelForm):
