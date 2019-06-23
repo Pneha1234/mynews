@@ -135,28 +135,38 @@
               <p> Advertisments </p>
             </a>
           </li>
-          
           <li class="nav-item ">
-            <a class="nav-link" data-toggle="collapse" href="#formsExamples">
-              <i class="material-icons">apps</i>
-              <p> News
-                <b class="caret"></b>
-              </p>
+            <a class="nav-link" href="{% url 'newsapp:organizationinformationlist' %}">
+              <i class="material-icons">grid_on</i>
+              <p> Organizational Information </p>
             </a>
-            <div class="collapse" id="formsExamples">
-              <ul class="nav">
-              {% for news in newscategorylist %}
-                <li class="nav-item ">
-                  <a class="nav-link" href="{% url 'newsapp:newsdetail' news.slug %}">
-                    <span class="sidebar-mini">{{ news.icon_character }}</span>
-                    <span class="sidebar-normal">{{ news.title }}</span>
-
-                  </a>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'newsapp:adminnewscategory' %}">
+              <i class="material-icons">grid_on</i>
+              <p> News Category </p>
+            </a>
+          </li>
+           <li class="nav-item ">
+            <a class="nav-link" href="{% url 'newsapp:adminnewssubcategorylist' %}">
+              <i class="material-icons">grid_on</i>
+              <p> News SubCategory </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'newsapp:adminnewslist' %}">
+              <i class="material-icons">image</i>
+              <p> News </p>
+            </a>
+          </li>
+           <li class="nav-item ">
+            <a class="nav-link" href="{% url 'newsapp:editorlist' %}">
+              <i class="material-icons">image</i>
+              <p> Editor </p>
+            </a>
+          </li>
+          
+         
           <li class="nav-item ">
             <a class="nav-link" data-toggle="collapse" href="#tablesExamples">
               <i class="material-icons">grid_on</i>

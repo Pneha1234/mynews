@@ -38,13 +38,10 @@ class EditorNewsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['sub_category'].queryset = NewsSubCategory.objects.none()
-
         if 'main_category' in self.data:
-            
             category_id = int(self.data.get('main_category'))
             self.fields['sub_category'].queryset = NewsSubCategory.objects.filter(
                 main_category_id=category_id).order_by('title')
-            
 
 
 class AdminAdvertizementPosition(forms.ModelForm):
@@ -67,6 +64,13 @@ class AdminAdvertizement(forms.ModelForm):
         super(AdminAdvertizement, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
+
+
+class AdminOrgnizationalInformation(forms.ModelForm):
+    class Meta:
+        model = OrgnizationalInformation
+        fields = ['name', 'logo', 'address', 'slogan', 'contact_no',
+                  'alt_contact_no', 'email', 'about_us', 'privacy_policy']
 
 
 class EditorForm(forms.ModelForm):
@@ -130,9 +134,3 @@ class AdminForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
-
-
-class SubscriberForm(forms.ModelForm):
-    class Meta:
-        model = Subscriber
-        fields = ["email"]

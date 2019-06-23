@@ -124,7 +124,7 @@ class EditorNewsCreate(EditorRequiredMixin, CreateView):
 def load_subcategories(request):
     category_id = request.GET.get('main_category')
     print(category_id)
-    sub_category= NewsSubCategory.objects.filter(
+    sub_category = NewsSubCategory.objects.filter(
         main_category_id=category_id).order_by('title')
     print(sub_category)
     return render(request, 'admintemplates/subcategory_dropdown_list_options.html', {'sub_category': sub_category})
@@ -210,7 +210,7 @@ class LogoutView(View):
 
 # Admin Views
 # Admin Views
-# Admin Views
+# Admin View
 # Admin Views
 
 class AdminRequiredMixin(object):
@@ -221,6 +221,11 @@ class AdminRequiredMixin(object):
         else:
             return redirect("/login/")
         return super().dispatch(request, *args, **kwargs)
+
+# admin advertizementposition view
+# admin advertizementposition view
+# admin advertizementposition view
+# admin advertizementposition view
 
 
 class AdminView(AdminRequiredMixin, TemplateView):
@@ -257,6 +262,11 @@ class AdminAdvertizementPositionDelete(AdminRequiredMixin, DeleteView):
     model = AdvertizementPosition
     success_url = reverse_lazy('newsapp:advertizementposition')
 
+# admin advertizement view
+# admin advertizement view
+# admin advertizement view
+# admin advertizement view
+
 
 class AdminAdvertizementList(ListView):
     template_name = 'admintemplates/adminadvertizementlist.html'
@@ -284,11 +294,181 @@ class AdminAdvertizementDelete(DeleteView):
     model = Advertizement
     success_url = reverse_lazy('newsapp:advertizement')
 
+# admin organization views
+# admin organization views
+# admin organization views
+# admin organization views
+
+
+class AdminOrganizationInformationList(ListView):
+    template_name = 'admintemplates/adminorganizationinformationlist.html'
+    model = OrgnizationalInformation
+    context_object_name = 'organizationinformationlist'
+
+
+class AdminOrganizationInformationDetail(DetailView):
+    template_name = 'admintemplates/adminorganizationinformationdetail.html'
+    model = OrgnizationalInformation
+    context_object_name = 'organizationinformationdetail'
+
+
+class AdminOrganizationInformationUpdate(UpdateView):
+    template_name = 'admintemplates/adminorganizationinformationupdate.html'
+    model = OrgnizationalInformation
+    fields = ['name', 'logo', 'address', 'slogan', 'contact_no',
+              'alt_contact_no', 'email', 'about_us', 'privacy_policy']
+
+    template_name_suffix = '_form'
+    success_url = reverse_lazy('newsapp:organizationinformationlist')
+
+# admin newscategory views
+# admin newscategory views
+# admin newscategory views
+# admin newscategory views
+
+
+class AdminNewsCategoryCreate(CreateView):
+    template_name = "admintemplates/adminnewscategoryadd.html"
+    model = NewsCategory
+    form_class = NewsForm
+    success_url = reverse_lazy('newsapp:adminnewscategorylist')
+
+
+class AdminNewsCategoryList(ListView):
+    template_name = 'admintemplates/adminnewscategorylist.html'
+    model = NewsCategory
+    context_object_name = 'adminnewscategorylist'
+
+
+class AdminNewsCategoryUpdate(UpdateView):
+    template_name = 'admintemplates/adminnewscategoryupdate.html'
+    model = NewsCategory
+
+    fields = ['title', 'image', 'icon_character']
+    template_name_suffix = '_form'
+    success_url = reverse_lazy('newsapp:adminnewscategorylist')
+
+
+class AdminNewsCategoryDelete(EditorRequiredMixin, DeleteView):
+    template_name = "admintemplates/adminnewscategorylist.html"
+
+    model = NewsCategory
+    success_url = reverse_lazy('newsapp:adminnewscategorylist')
+
+# admin newssubcategory views
+# admin newssubcategory views
+# admin newssubcategory views
+# admin newssubcategory views
+
+
+class AdminNewsSubCategoryList(ListView):
+    template_name = 'admintemplates/adminnewssubcategorylist.html'
+    model = NewsSubCategory
+    context_object_name = 'adminnewssubcategorylist'
+
+
+class AdminNewsSubCategoryCreate(CreateView):
+    template_name = "admintemplates/adminnewssubcategoryadd.html"
+    model = NewsSubCategory
+    form_class = NewsSubCategoryForm
+    success_url = reverse_lazy('newsapp:adminnewssubcategorylist')
+
+
+class AdminNewsSubCategoryUpdate(UpdateView):
+    template_name = 'admintemplates/adminnewssubcategoryupdate.html'
+    model = NewsSubCategory
+    fields = ['title', 'main_category', 'image', 'icon_character']
+    template_name_suffix = '_form'
+    success_url = reverse_lazy('newsapp:adminnewssubcategorylist')
+
+
+class AdminNewsSubCategoryDelete(DeleteView):
+    template_name = "admintemplates/adminnewssubcategorylist.html"
+    model = NewsSubCategory
+    success_url = reverse_lazy('newsapp:adminnewssubcategorylist')
+
+# admin news views
+# admin news views
+# admin news views
+# admin news views
+
+
+class AdminNewsList(ListView):
+    template_name = 'admintemplates/adminnewslist.html'
+    model = News
+    context_object_name = 'adminnewslist'
+
+
+class AdminNewsDetailView(DetailView):
+    template_name = "admintemplates/adminnewsdetail.html"
+    model = News
+    context_object_name = 'adminnewsdetail'
+
+
+class AdminNewsCreate(CreateView):
+    template_name = 'admintemplates/adminnewsadd.html'
+    model = News
+    form_class = EditorNewsForm
+    context_object_name = 'newscreate'
+    success_url = reverse_lazy('newsapp:adminnewslist')
+
+
+class AdminNewsUpdate(EditorRequiredMixin, UpdateView):
+    template_name = 'admintemplates/adminnewsupdate.html'
+    model = News
+    fields = ['title', 'main_category', 'sub_category',
+              'image', 'video_link', 'content']
+    tform_class = EditorNewsForm
+    success_url = reverse_lazy('newsapp:adminnewslist')
+
+
+class AdminNewsDelete(EditorRequiredMixin, DeleteView):
+    template_name = 'admintemplates/adminnewslist.html'
+    model = News
+    success_url = reverse_lazy('newsapp:adminnewslist')
+
+
+# admin editor View
+# admin editor View
+# admin editor View
+# admin editor View
+
+class EditorList(ListView):
+    template_name = 'admintemplates/admineditorlist.html'
+    model = Editor
+    context_object_name = 'admineditorlist'
+
+
+class EditorCreate(CreateView):
+    template_name = 'admintemplates/admineditoradd.html'
+    model = Editor
+    form_class = EditorForm
+    context_object_name = 'admineditorcreate'
+    success_url = reverse_lazy('newsapp:editorlist')
+
+
+class EditorUpdate(UpdateView):
+    template_name = 'admintemplates/admineditorupdate.html'
+    model = Editor
+    fields = ["user",
+              "full_name", "contact_no", "address", "email", "image", "about"]
+    tform_class = EditorForm
+    success_url = reverse_lazy('newsapp:editorlist')
+
+class EditorDelete(DeleteView):
+    template_name = 'admintemplates/admineditorlist.html'
+    model = Editor
+    success_url = reverse_lazy('newsapp:editorlist')
+
+
+
+
 
 # client views
 # client views
 # client views
 # client views
+
 
 class ClientHomeView(ListView):
     template_name = 'clienttemplates/clienthome.html'

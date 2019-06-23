@@ -1,4 +1,5 @@
-  {% extends 'admintemplates/editorbase.html' %}
+{% extends 'admintemplates/adminbase.html' %}
+
   {% load static %}
 
   {% block content %}
@@ -11,62 +12,43 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <a href="{% url 'newsapp:newsadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
+              <a href="{% url 'newsapp:adminnewscategoryadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
               <h4 class="card-title">News Category</h4>
             </div>
             <div class="card-body">
               <div class="toolbar">
                <div>
                 
-               </div>
-             </div>
-             <div class="material-datatables">
+              </div>
+            </div>
+            <div class="material-datatables">
               <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"style="width:100%">
                 <thead>
                   <tr>
                     <th>Title</th>
-                    <th>main_category</th>
-                    <th>sub_category</th>
-                    <th>image</th>
-                    <th>video_link</th>
-                    
+                    <th>Image</th>
+                    <th>Icon Character</th>
                     <th class="disabled-sorting text-right">Actions</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
-                    <th>Title</th>
-                    <th>main_category</th>
-                    <th>sub_category</th>
-                    <th>image</th>
-                    <th>video_link</th>
-                    
-                    <th class="text-right">Actions</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                 {% for news in newslist %}
+                   <th>Title</th>
+                   <th>Image</th>
+                   <th>Icon Character</th>
+                   <th class="text-right">Actions</th>
+                 </tr>
+               </tfoot>
+               <tbody>
+                 {% for newscategories in adminnewscategorylist %}
                  <tr>
-                  <td>{{news.title}}</td>
-                  <td>{{news.main_category}}</td>
-                  <td>{{news.sub_category}}</td>
-                  <td>
-                    {% if news.image %}
-                    <img src="{{news.image.url}}" class="img-responsive" style="width:60%">
-                    {% else %}
-                    No Image
-                    {% endif %}
-                  </td>
-                  <td>{% if news.video_link %}{{news.video_link}}
-                    {% else %}
-                    No Video
-                    {% endif %}
-                  </td>
-                  
+                  <td>{{newscategories.title}}</td>
+                  <td><img src="{{newscategories.image.url}}" class="img-responsive" style="width:20%"></td>
+                  <td>{{newscategories.icon_character}}</td>
                   <td class="text-right">
-                    <a href="{% url 'newsapp:newsupdate' news.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
-                    <a href="{% url 'newsapp:newsdetail' news.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">info</i></a>
-                    <a href="{% url 'newsapp:newsdelete' news.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
+                    <a href="{% url 'newsapp:adminnewscategoryupdate' newscategories.slug %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                    
+                    <a href="{% url 'newsapp:adminnewscategorydelete' newscategories.slug %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
                       <i class="material-icons">close</i></a>
                     </button>
 
@@ -84,7 +66,7 @@
                           
                           
                           <!-- Modal footer -->
-                          <form action="{% url 'newsapp:newsdelete' news.pk %}" method="POST">
+                          <form action="{% url 'newsapp:adminnewscategorydelete' newscategories.slug %}" method="POST">
                            {% csrf_token %}
                            <button class="btn">Delete</button>
                          </form>
