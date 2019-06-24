@@ -58,7 +58,7 @@ class AdminAdvertizementPosition(forms.ModelForm):
 class AdminAdvertizement(forms.ModelForm):
     class Meta:
         model = Advertizement
-        fields = ['organization', 'image', 'link', 'expiry_date']
+        fields = ['organization', 'image', 'link']
 
     def __init__(self, *args, **kwargs):
         super(AdminAdvertizement, self).__init__(*args, **kwargs)

@@ -3,21 +3,24 @@
 {% block content %}
 
 <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
 
-<form method="post" action="" >
-    {% csrf_token %}
 
-    {{form.as_p}}
+				<form method="post" action="" >
+					{% csrf_token %}
 
-    <input type="submit" value="Update">
+					{{form.as_p}}
 
-</form>
-</div>
-</div>
-</div>
+					<input type="submit" value="Update">
+
+
+				</form>
+				
+			</div>
+		</div>
+	</div>
 </div>
 
 

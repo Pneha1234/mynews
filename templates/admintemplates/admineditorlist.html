@@ -7,6 +7,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+       
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
             <div class="card-icon">
@@ -18,7 +19,7 @@
           <div class="card-body">
             <div class="toolbar">
              <div>
-               
+
              </div>
            </div>
            <div class="material-datatables">
@@ -58,6 +59,7 @@
                 <td>{{editorlist.address}}</td>
                 <td>{{editorlist.email}}</td>
                 <td><img src={{editorlist.image.url}} class="img-responsive" style="width:40%"></td>
+                <td>{{editorlist.about}}</td>
                 <td class="text-right">
                   <a href="{% url 'newsapp:editorupdate' editorlist.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                   <a href="{% url 'newsapp:editordelete' editorlist.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
@@ -68,7 +70,7 @@
                     <div class="modal" id="myModal">
                       <div class="modal-dialog">
                         <div class="modal-content">
-                          
+
                           <!-- Modal Header -->
                           <div class="modal-header">
                             <h4 class="modal-title">Are You Sure !! You Wanna Delete {{advertizementlist.organization }}</h4>

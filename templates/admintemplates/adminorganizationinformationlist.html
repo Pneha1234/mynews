@@ -7,6 +7,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
+       
         <div class="card">
           <div class="card-header card-header-primary card-header-icon">
             <div class="card-icon">
@@ -48,7 +49,7 @@
                 </tr>
               </tfoot>
               <tbody>
-               {% for information in organizationinformationlist %}
+               {% for information in organizationinformationlist%}
                <tr>
                 <td>{{information.name}}</td>
                 <td><img src={{information.logo.url}} class="img-responsive" style="width:40%"></td>
@@ -57,7 +58,7 @@
                 <td>{{information.slogan}}</td>
                 <td>{{information.email}}</td>
                 <td class="text-right">
-                  <a href="{% url 'newsapp:organizationinformationdetail' information.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">info</i></a>
+                 
                   <a href="{% url 'newsapp:organizationinformationupdate' information.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
 
 
