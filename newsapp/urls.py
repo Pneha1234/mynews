@@ -13,12 +13,22 @@ urlpatterns = [
     path('', ClientHomeView.as_view(), name='clienthome'),
     path('news/<int:pk>/detail/',
          ClientNewsDetailView.as_view(), name='clientnewsdetail'),
+    path('category/<int:pk>/detail/', ClientCategoryDetailView.as_view(),
+         name='clientcategorydetail'),
+    path('news/popular/list/', PopularNewsListView.as_view(),
+         name='popularnewslist'),
+    path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
+         name='mostcommentednewslist'),
 
-     path('', TemplateView.as_view(
-        template_name='admintemplates/editorhome.html'), name='home'),
+
+    path('', TemplateView.as_view(
+         template_name='admintemplates/editorhome.html'), name='home'),
     path('subscriber/', SubscriberView.as_view(), name='subscriber'),
 
-    path("subscriber/check/", SubscriberCheckView.as_view(), name="subscribercheck"),
+    path("subscriber/check/", SubscriberCheckView.as_view(),
+         name="subscribercheck"),
+    path('commentcreate/<int:pk>/',
+         CommentCreateView.as_view(), name='commentcreate'),
     # editor url
     # editor url
     # editor url

@@ -282,15 +282,21 @@ class AdminAdvertizementDelete(DeleteView):
 # client views
 # client views
 
-class ClientHomeView(ListView):
+class ClientMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = NewsCategory.objects.all()
+        return context
+
+
+class ClientHomeView(ClientMixin, TemplateView):
     template_name = 'clienttemplates/clienthome.html'
-    model = NewsCategory
-    context_object_name = 'clientcategorylist'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
-        context['maincategorylist'] = NewsCategory.objects.all()
+        context['clientcategorylist'] = NewsCategory.objects.all()
         context['topviewednews'] = News.objects.order_by('view_count')
         context['popularnews'] = News.objects.order_by('-view_count')
         context['hotnews'] = News.objects.order_by('created_at')
@@ -301,7 +307,23 @@ class ClientHomeView(ListView):
         return context
 
 
-class ClientNewsDetailView(DetailView):
+class CommentCreateView(ClientMixin, CreateView):
+    template_name = 'clienttemplates/commentcreate.html'
+    form_class = CommentForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        news_id = self.kwargs['pk']
+        news = News.objects.get(id=news_id)
+        form.instance.news = news
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        news_id = self.kwargs['pk']
+        return '/news/' + str(news_id) + '/detail/'
+
+
+class ClientNewsDetailView(ClientMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
@@ -312,6 +334,56 @@ class ClientNewsDetailView(DetailView):
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         context['newseditor'] = Editor.objects.all()
+        context['commentform'] = CommentForm
+        context['commentlist'] = Comment.objects.all()
+        context['relatednewslist'] = News.objects.filter(
+            main_category=self.object.main_category).exclude(slug=self.object.slug)
+        print(context['relatednewslist'])
+        # form = CommentForm(self.request.POST or None)
+        # if form.is_valid():
+        #     form.save()
+        #     return render(self.request, 'newsapp:clienthome', {"form": form })
+        return context
+
+
+class ClientCategoryDetailView(ClientMixin, DetailView):
+    template_name = 'clienttemplates/clientcategorydetail.html'
+    model = NewsCategory
+    context_object_name = 'clientcategorydetail'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
+        return context
+
+
+class PopularNewsListView(ClientMixin, ListView):
+    template_name = 'clienttemplates/clientpopularnewslist.html'
+    model = News
+    context_object_name = 'popularnewslist'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        return context
+
+
+class MostCommentedNewsListView(ClientMixin, ListView):
+    template_name = 'clienttemplates/clientmostcommentednewslist.html'
+    model = News
+    context_object_name = 'mostcommentednewslist'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = News.objects.order_by('-comment')
         return context
 
 
