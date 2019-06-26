@@ -1,6 +1,7 @@
-{% extends 'admintemplates/editorbase.html' %}
-
+{% extends 'admintemplates/adminbase.html' %}
 {% block content %}
+
+
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
@@ -11,14 +12,13 @@
 							<i class="material-icons">assignment</i>
 						</div>
 						<div>
-							<h3>Add NewsSubCategory</h3>
-
-							<form method="post" enctype="multipart/form-data">
+							<h1>hello</h1>
+							<form method="post" action="" >
 								{% csrf_token %}
 
 								{{form.as_p}}
 
-								<input type="submit" value="Save">
+								<input type="submit" value="Update">
 
 							</form>
 						</div>
@@ -28,6 +28,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 
 {% endblock %}

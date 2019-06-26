@@ -2,13 +2,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from newsapp.views import *
 import django.contrib
-from django.urls import path
-
+from django.urls import include, path
+from newsapp import views
 
 app_name = "newsapp"
 urlpatterns = [
 
 
+    # client url
+    # client url
+    # client url
+    # client url
     # path('base/',ClientBaseView.as_view(),name='clientbase'),
     path('', ClientHomeView.as_view(), name='clienthome'),
     path('news/<int:pk>/detail/',
@@ -25,10 +29,18 @@ urlpatterns = [
          template_name='admintemplates/editorhome.html'), name='home'),
     path('subscriber/', SubscriberView.as_view(), name='subscriber'),
 
-    path("subscriber/check/", SubscriberCheckView.as_view(),
-         name="subscribercheck"),
+    # path("subscriber/check/", SubscriberCheckView.as_view(),
+    #      name="subscribercheck"),
     path('commentcreate/<int:pk>/',
          CommentCreateView.as_view(), name='commentcreate'),
+    # path('news/<int:pk>/detail/',
+    #      ClientNewsDetailView.as_view(), name='clientnewsdetail'),
+
+    path('', TemplateView.as_view(
+         template_name='admintemplates/editorhome.html'), name='home'),
+    # path('subscriber/', SubscriberView.as_view(), name='subscriber'),
+
+    # path("subscriber/check/", SubscriberCheckView.as_view(), name="subscribercheck"),
     # editor url
     # editor url
     # editor url
@@ -63,21 +75,22 @@ urlpatterns = [
          EditorNewsSubCategoryUpdate.as_view(), name='newssubcategoryupdate'),
     path('editor/<int:pk>/newssubcategorydelete/',
          EditorNewsSubCategoryDelete.as_view(), name='newssubcategorydelete'),
-    # path('editor/<slug:slug>/newsdetail',
-    #      EditorNewsDetailView.as_view(), name='newsdetail'),
 
-    # editor news view
-    # editor news view
-    # editor news view
-    # editor news view
 
+    # editor news
+    # editor news
+    # editor news
+    # editor news
+    path('editor/<int:pk>/newsdetail',
+         EditorNewsDetailView.as_view(), name='newsdetail'),
+    path('ajax/load-subcategories/', views.load_subcategories,
+         name='load_subcategories'),
     path('editor/newsadd/',
          EditorNewsCreate.as_view(), name='newsadd'),
     path('editor/<int:pk>/newsupdate/',
          EditorNewsUpdate.as_view(), name='newsupdate'),
     path('editor/<int:pk>/newsdelete/',
          EditorNewsDelete.as_view(), name='newsdelete'),
-
     path('editor-registration/',
          EditorRegistrationView.as_view(), name='editorregistration'),
     path('login/',
@@ -90,10 +103,10 @@ urlpatterns = [
     # admin url
     # admin url
 
-    # admin advertizementposition view
-    # admin advertizementposition view
-    # admin advertizementposition view
-    # admin advertizementposition view
+    # admin advertizementposition
+    # admin advertizementposition
+    # admin advertizementposition
+    # admin advertizementposition
 
     path('adminhome/', AdminView.as_view(), name='adminhome'),
     path('admin/adminadvetizementposition',
@@ -105,10 +118,10 @@ urlpatterns = [
     path('admin/<int:pk>/advertizementpositiondelete',
          AdminAdvertizementPositionDelete.as_view(), name='advertizementpositiondelete'),
 
-    # admin advertizement view
-    # admin advertizement view
-    # admin advertizement view
-    # admin advertizement view
+    # admin advertizement
+    # admin advertizement
+    # admin advertizement
+    # admin advertizement
 
     path('admin/adminadvettizement',
          AdminAdvertizementList.as_view(), name='advertizement'),
@@ -121,9 +134,79 @@ urlpatterns = [
     path('admin-registration/', AdminRegistrationView.as_view(),
          name='adminregistration'),
 
+    # admin organizationinformation
+    # admin organizationinformation
+    # admin organizationinformation
+    # admin organizationinformation
+    path('admin/organizationinformation',
+         AdminOrganizationInformationList.as_view(), name='organizationinformationlist'),
 
-    # client url
-    # client url
-    # client url
-    # client url
+    path('admin/<int:pk>/organizationinformationdetail',
+         AdminOrganizationInformationDetail.as_view(), name='organizationinformationdetail'),
+    path('admin/<int:pk>/organizationinformationupdate',
+         AdminOrganizationInformationUpdate.as_view(), name='organizationinformationupdate'),
+
+    # admin newscategory
+    # admin newscategory
+    # admin newscategory
+    # admin newscategory
+
+    path('admin/newscategory/',
+         AdminNewsCategoryList.as_view(), name='adminnewscategory'),
+    path('admin/newscategoryadd',
+         AdminNewsCategoryCreate.as_view(), name='adminnewscategoryadd'),
+    path('admin/<slug:slug>/newscategoryupdate/',
+         AdminNewsCategoryUpdate.as_view(), name='adminnewscategoryupdate'),
+    path('admin/<slug:slug>/newscategorydelete/',
+         AdminNewsCategoryDelete.as_view(), name='adminnewscategorydelete'),
+
+    # admin newssubcategory
+    # admin newssubcategory
+    # admin newssubcategory
+    # admin newssubcategory
+
+    path('admin/newssubcategorylist/',
+         AdminNewsSubCategoryList.as_view(), name='adminnewssubcategorylist'),
+    path('admin/newssubcategoryadd',
+         AdminNewsSubCategoryCreate.as_view(), name='adminnewssubcategoryadd'),
+    path('admin/<int:pk>/newssubcategoryupdate/',
+         AdminNewsSubCategoryUpdate.as_view(), name='adminnewssubcategoryupdate'),
+    path('admin/<int:pk>/newssubcategorydelete/',
+         AdminNewsSubCategoryDelete.as_view(), name='adminnewssubcategorydelete'),
+
+
+    # admin news
+    # admin news
+    # admin news
+    # admin news
+
+    path('admin/newslist',
+         AdminNewsList.as_view(), name='adminnewslist'),
+    path('admin/<int:pk>/newsdetail',
+         AdminNewsDetailView.as_view(), name='adminnewsdetail'),
+    path('admin/newsadd/',
+         AdminNewsCreate.as_view(), name='adminnewsadd'),
+    path('admin/<int:pk>/newsupdate/',
+         AdminNewsUpdate.as_view(), name='adminnewsupdate'),
+    path('admin/<int:pk>/newsdelete/',
+         AdminNewsDelete.as_view(), name='adminnewsdelete'),
+
+    # admin editor
+    # admin editor
+    # admin editor
+    # admin editor
+    path('admin/editorlist',
+         EditorList.as_view(), name='editorlist'),
+
+    path('admin/editorcreate',
+         EditorCreate.as_view(), name='editoradd'),
+    path('admin/<int:pk>/editorupdate/',
+         EditorUpdate.as_view(), name='editorupdate'),
+    path('admin/<int:pk>/editordelete/',
+         EditorDelete.as_view(), name='editordelete'),
+
+
+
+
+
 ]

@@ -51,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'newsproject.urls'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 TEMPLATES = [
     {

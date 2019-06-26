@@ -1,4 +1,4 @@
-{% extends 'admintemplates/editorbase.html' %}
+{% extends 'admintemplates/adminbase.html' %}
 {% load static %}
 
 {% block content %}
@@ -42,9 +42,9 @@
              <tbody>
                
                <tr>
-                <td>{{newsdetail.title}}</td>
-                <td><img src="{{newsdetail.image.url}}" class="img-responsive" style="width:20%"></td>
-                <td>{{newsdetail.content}}</td>
+                <td>{{adminnewsdetail.title}}</td>
+                <td><img src="{{adminnewsdetail.image.url}}" class="img-responsive" style="width:20%"></td>
+                <td>{{adminnewsdetail.content}}</td>
                 <td class="text-right">
                   <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
 
