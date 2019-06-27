@@ -96,6 +96,7 @@ urlpatterns = [
     path('login/',
          LoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(), name="logout"),
+    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(), name="edit-user-profile"),
 
 
     # admin url
@@ -205,7 +206,13 @@ urlpatterns = [
     path('admin/<int:pk>/editordelete/',
          EditorDelete.as_view(), name='editordelete'),
 
+    # admin admin
+    # admin admin
+    # admin admin
+    # admin admin
 
+    path('admin/adminlist',
+         AdminList.as_view(), name='adminlist'),
 
 
 

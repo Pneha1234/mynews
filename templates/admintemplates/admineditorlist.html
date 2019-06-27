@@ -58,7 +58,9 @@
                 <td>{{editorlist.contact_no}}</td>
                 <td>{{editorlist.address}}</td>
                 <td>{{editorlist.email}}</td>
+                {% if editorlist.image %}
                 <td><img src={{editorlist.image.url}} class="img-responsive" style="width:40%"></td>
+                {%%}
                 <td>{{editorlist.about}}</td>
                 <td class="text-right">
                   <a href="{% url 'newsapp:editorupdate' editorlist.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
