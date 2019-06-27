@@ -74,14 +74,14 @@
 
 					<div class="row">
 						<div class="col-md-6">
-							{% for relatednews in relatednewslist %}
+							{% for relatednews in relatednewslist|slice:':3' %}
 							<div class="media">
 								<div class="media-left">
-									<a href="#"><img class="media-object" src="assets/img/cat-mobi-sm1.jpg" alt="Generic placeholder image"></a>
+									<a href="#"><img class="media-object" src="{{ relatednews.image.url }}" style = "height:200px; width:200px;" alt="Generic placeholder image"></a>
 								</div>
 								<div class="media-body">
 									<span class="tag purple"><a href="category.html" target="_self">{{ relatednews.main_category }}</a></span>
-									<h3 class="media-heading"><a href="single.html" target="_self">{{ relatednews.title }}</a></h3>
+									<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' relatednews.pk %}" target="_self">{{ relatednews.title }}</a></h3>
 									<span class="mediea-date"><a href="#">{{ relatednews.created_at }}</a>, by: <a href="#">{{ relatednews.editor }}</a></span>
 									<div class="media_social">
 										<span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span>
@@ -90,7 +90,8 @@
 								</div>
 							</div>
 							{% endfor %}
-							<div class="media">
+							
+							<!-- <div class="media">
 								<div class="media-left">
 									<a href="#"><img class="media-object" src="assets/img/cat-mobi-sm3.jpg" alt="Generic placeholder image"></a>
 								</div>
@@ -105,24 +106,26 @@
 									</div>
 								</div>
 							</div>
+ -->						
 						</div>
 						<div class="col-md-6">
+							{% for relatednews in relatednewslist|slice:'3:' %}
 							<div class="media">
 								<div class="media-left">
-									<a href="#"><img class="media-object" src="assets/img/cat-mobi-sm2.jpg" alt="Generic placeholder image"></a>
+									<a href="#"><img class="media-object" src="{{ relatednews.image.url }}" style = "height:200px; width:200px;" alt="Generic placeholder image"></a>
 								</div>
 								<div class="media-body">
-									<span class="tag purple"><a href="category.html" target="_self">Mobile</a></span>
-									<h3 class="media-heading"><a href="single.html" target="_self">Iphone 6 launches white & Grey
-									colors handset</a></h3>
-									<span class="media-date"><a href="#">10Aug- 2015</a>, by: <a href="#">Eric joan</a></span>
+									<span class="tag purple"><a href="category.html" target="_self">{{ relatednews.main_category }}</a></span>
+									<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' relatednews.pk %}" target="_self">{{ relatednews.title }}</a></h3>
+									<span class="media-date"><a href="#">{{ relatednews.created_at }}</a>, by: <a href="#">{{ relatednews.editor }}</a></span>
 									<div class="media_social">
 										<span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span>
 										<span><a href="#"><i class="fa fa-comments-o"></i>4</a> Comments</span>
 									</div>
 								</div>
 							</div>
-							<div class="media">
+							{% endfor %}
+							<!-- <div class="media">
 								<div class="media-left">
 									<a href="#"><img class="media-object" src="assets/img/cat-mobi-sm4.jpg" alt="Generic placeholder image"></a>
 								</div>
@@ -136,7 +139,7 @@
 										<span><a href="#"><i class="fa fa-comments-o"></i>4</a> Comments</span>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -254,7 +257,7 @@
 						</div>
 						<div class="media-body">
 							<h3 class="media-heading">
-								<a href="single.html" target="_self"> {{ news.title |truncatechars:60 }}</a>
+								<a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self"> {{ news.title |truncatechars:60 }}</a>
 							</h3> <span class="media-date"><a href="#">{{ news.created_at }}</a>, by: <a href="#">{{ news.editor }}</a></span>
 							<div class="widget_article_social">
 								<span>
