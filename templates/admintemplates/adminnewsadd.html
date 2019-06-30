@@ -31,7 +31,16 @@
 </div>
 
 <script>
+	$(document).ready(function() {
+    $('#id_main_category').select2();
+
+    
+});
+</script>
+
+<script>
 	$("#id_main_category").change(function () {
+		alert('1');
       var url = $("#EditorNewsForm").attr("subcategories-url");  
       var maincategory_id = $(this).val()
       // alert(maincategory_id); 
