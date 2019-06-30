@@ -173,14 +173,28 @@
 
       {% endblock %}
 <!-----footer-------->
-   <div class="row" style="padding-left: 35%; height: 70px">
-      <form method="POST"   action="#" style="font-size: 20px">
-       {% csrf_token %}
-       <p id="errorp"></p>
-       {{subform.as_p}}
-       <button id="mybtn">Subscribe</button>
+
+<section id="subscribe_section" class="subscribe_section">
+   <div class="row">
+      <form   action="/subscriber/" method="post" class="form-horizontal">
+         {% csrf_token %}
+         <div class="form-group form-group-lg">
+            <label class="col-sm-6 control-label" for="formGroupInputLarge">
+               <h1><span class="red-color">Sign up</span> for the latest news</h1>
+            </label>
+            <div class="col-sm-3">
+               {{subform.email}}
+               <!-- <input type="text" id="subscribe" name="subscribe" class="form-control input-lg" -->
+            </div>
+            <div class="col-sm-1">
+               <input type="submit" value="Sign Up" class="btn btn-large pink">
+            </div>
+            <div class="col-sm-2"></div>
+         </div>
       </form>
    </div>
+</section>
+
 
 
    <section id="footer_section" class="footer_section">
@@ -363,6 +377,9 @@
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+   <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3"></script>
 
 
    <script>

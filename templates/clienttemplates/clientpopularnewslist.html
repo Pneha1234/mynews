@@ -81,7 +81,7 @@
 						</div>
 
 						<div class="category_article_title">
-							<h5><a href="single.html" target="_blank">{{ news.title|truncatechars:35 }} </a></h5>
+							<h5><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_blank">{{ news.title|truncatechars:35 }} </a></h5>
 						</div>
 
 						<div class="article_date">
