@@ -111,8 +111,8 @@
                      <div class="collapse navbar-collapse" id="#navbar-collapse-1">
                         <ul class="nav navbar-nav main-nav">
 
-                        	{% for category in clientcategorylist %}
-                           <li class="active"><a href="#">{{ category.title }}</a></li>
+                        	{% for category in categories %}
+                           <li class="active"><a href="{% url 'newsapp:clientcategorydetail' category.pk %}">{{ category.title }}</a></li>
                            {% endfor %}	
 
                               <li class="dropdown m-menu-fw">

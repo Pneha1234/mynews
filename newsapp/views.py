@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
+
 from .forms import *
 
 
@@ -209,6 +210,16 @@ class LogoutView(View):
         return redirect("/login/")
 
 
+class EditUserProfileView(UpdateView):
+    model = Admin
+    form_class = AdminForm
+    template_name = "admintemplates/user_profile.html"
+    context_object_name = 'userprofile'
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("admintemplates/adminhome.html")
+
+
 # Admin Views
 # Admin Views
 # Admin View
@@ -240,7 +251,7 @@ class AdminAdvertizementPositionList(AdminRequiredMixin, ListView):
     context_object_name = 'advertizementpositionlist'
 
 
-class AdminAdvertizementPositionCreate(AdminRequiredMixin,SuccessMessageMixin, CreateView):
+class AdminAdvertizementPositionCreate(AdminRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "admintemplates/adminadvertizementpositionadd.html"
 
     model = AdvertizementPosition
@@ -259,7 +270,7 @@ class AdminAdvertizementPositionUpdate(SuccessMessageMixin, UpdateView):
     success_message = 'Update is successfully saved!!!!'
 
 
-class AdminAdvertizementPositionDelete(AdminRequiredMixin,SuccessMessageMixin, DeleteView):
+class AdminAdvertizementPositionDelete(AdminRequiredMixin, SuccessMessageMixin, DeleteView):
     template_name = 'admintemplates/adminadvertizementpositionlist.html'
 
     model = AdvertizementPosition
@@ -278,7 +289,7 @@ class AdminAdvertizementList(ListView):
     context_object_name = 'advertizementlist'
 
 
-class AdminAdvertizementCreate(SuccessMessageMixin,CreateView):
+class AdminAdvertizementCreate(SuccessMessageMixin, CreateView):
     template_name = "admintemplates/adminadvertizementadd.html"
     model = Advertizement
     form_class = AdminAdvertizement
@@ -286,7 +297,7 @@ class AdminAdvertizementCreate(SuccessMessageMixin,CreateView):
     success_message = 'Created successfully !!!!'
 
 
-class AdminAdvertizementUpdate(SuccessMessageMixin,UpdateView):
+class AdminAdvertizementUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'admintemplates/adminadvertizementupdate.html'
     model = Advertizement
     fields = ['organization', 'image', 'link', 'expiry_date']
@@ -295,7 +306,7 @@ class AdminAdvertizementUpdate(SuccessMessageMixin,UpdateView):
     success_message = 'Update is successfully saved!!!!'
 
 
-class AdminAdvertizementDelete(SuccessMessageMixin,DeleteView):
+class AdminAdvertizementDelete(SuccessMessageMixin, DeleteView):
     template_name = 'admintemplates/adminadvertizementlist.html'
     model = Advertizement
     success_url = reverse_lazy('newsapp:advertizement')
@@ -319,7 +330,7 @@ class AdminOrganizationInformationDetail(DetailView):
     context_object_name = 'informationdetail'
 
 
-class AdminOrganizationInformationUpdate(SuccessMessageMixin,UpdateView):
+class AdminOrganizationInformationUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'admintemplates/adminorganizationinformationupdate.html'
     model = OrgnizationalInformation
     fields = ['name', 'logo', 'address', 'slogan', 'contact_no',
@@ -335,12 +346,13 @@ class AdminOrganizationInformationUpdate(SuccessMessageMixin,UpdateView):
 # admin newscategory views
 
 
-class AdminNewsCategoryCreate(SuccessMessageMixin,CreateView):
+class AdminNewsCategoryCreate(SuccessMessageMixin, CreateView):
     template_name = "admintemplates/adminnewscategoryadd.html"
     model = NewsCategory
     form_class = NewsForm
     success_url = reverse_lazy('newsapp:adminnewscategory')
     success_message = 'Created successfully !!!!'
+
 
 class AdminNewsCategoryList(ListView):
     template_name = 'admintemplates/adminnewscategorylist.html'
@@ -348,7 +360,7 @@ class AdminNewsCategoryList(ListView):
     context_object_name = 'adminnewscategorylist'
 
 
-class AdminNewsCategoryUpdate(SuccessMessageMixin,UpdateView):
+class AdminNewsCategoryUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'admintemplates/adminnewscategoryupdate.html'
     model = NewsCategory
 
@@ -358,7 +370,7 @@ class AdminNewsCategoryUpdate(SuccessMessageMixin,UpdateView):
     success_message = 'Update is successfully saved!!!!'
 
 
-class AdminNewsCategoryDelete(SuccessMessageMixin,DeleteView):
+class AdminNewsCategoryDelete(SuccessMessageMixin, DeleteView):
     template_name = "admintemplates/adminnewscategorylist.html"
 
     model = NewsCategory
@@ -377,7 +389,7 @@ class AdminNewsSubCategoryList(ListView):
     context_object_name = 'adminnewssubcategorylist'
 
 
-class AdminNewsSubCategoryCreate(SuccessMessageMixin,CreateView):
+class AdminNewsSubCategoryCreate(SuccessMessageMixin, CreateView):
     template_name = "admintemplates/adminnewssubcategoryadd.html"
     model = NewsSubCategory
     form_class = NewsSubCategoryForm
@@ -385,7 +397,7 @@ class AdminNewsSubCategoryCreate(SuccessMessageMixin,CreateView):
     success_message = 'Created successfully !!!!'
 
 
-class AdminNewsSubCategoryUpdate(SuccessMessageMixin,UpdateView):
+class AdminNewsSubCategoryUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'admintemplates/adminnewssubcategoryupdate.html'
     model = NewsSubCategory
     fields = ['title', 'main_category', 'image', 'icon_character']
@@ -394,7 +406,7 @@ class AdminNewsSubCategoryUpdate(SuccessMessageMixin,UpdateView):
     success_message = 'Update is successfully saved!!!!'
 
 
-class AdminNewsSubCategoryDelete(SuccessMessageMixin,DeleteView):
+class AdminNewsSubCategoryDelete(SuccessMessageMixin, DeleteView):
     template_name = "admintemplates/adminnewssubcategorylist.html"
     model = NewsSubCategory
     success_url = reverse_lazy('newsapp:adminnewssubcategorylist')
@@ -418,7 +430,7 @@ class AdminNewsDetailView(DetailView):
     context_object_name = 'adminnewsdetail'
 
 
-class AdminNewsCreate(SuccessMessageMixin,CreateView):
+class AdminNewsCreate(SuccessMessageMixin, CreateView):
     template_name = 'admintemplates/adminnewsadd.html'
     model = News
     form_class = EditorNewsForm
@@ -437,7 +449,7 @@ class AdminNewsUpdate(SuccessMessageMixin, UpdateView):
     success_message = 'Update is successfully saved!!!!'
 
 
-class AdminNewsDelete(SuccessMessageMixin,DeleteView):
+class AdminNewsDelete(SuccessMessageMixin, DeleteView):
     template_name = 'admintemplates/adminnewslist.html'
     model = News
     success_url = reverse_lazy('newsapp:adminnewslist')
@@ -455,7 +467,7 @@ class EditorList(ListView):
     context_object_name = 'admineditorlist'
 
 
-class EditorCreate(SuccessMessageMixin,CreateView):
+class EditorCreate(SuccessMessageMixin, CreateView):
     template_name = 'admintemplates/admineditoradd.html'
     model = Editor
     form_class = EditorForm
@@ -463,7 +475,7 @@ class EditorCreate(SuccessMessageMixin,CreateView):
     success_url = reverse_lazy('newsapp:editorlist')
 
 
-class EditorUpdate(SuccessMessageMixin,UpdateView):
+class EditorUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'admintemplates/admineditorupdate.html'
     model = Editor
     fields = ["user",
@@ -473,12 +485,19 @@ class EditorUpdate(SuccessMessageMixin,UpdateView):
     success_message = 'Update is successfully saved!!!!'
 
 
-class EditorDelete(SuccessMessageMixin,DeleteView):
+class EditorDelete(SuccessMessageMixin, DeleteView):
     template_name = 'admintemplates/admineditorlist.html'
     model = Editor
     success_url = reverse_lazy('newsapp:editorlist')
     success_message = 'Deleted  successfully !!!!'
 
+# admin adminlist views
+
+
+class AdminList(ListView):
+    template_name = 'admintemplates/adminlist.html'
+    model = Admin
+    context_object_name = 'adminlist'
 
 # client views
 # client views
@@ -486,12 +505,136 @@ class EditorDelete(SuccessMessageMixin,DeleteView):
 # client views
 
 
-class ClientHomeView(ListView):
+class ClientMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = NewsCategory.objects.all()
+        return context
+
+
+# class ClientHomeView(ClientMixin, TemplateView):
+
+
+class ClientHomeView(ClientMixin, TemplateView):
     template_name = 'clienttemplates/clienthome.html'
-    model = NewsCategory
-    context_object_name = 'clientcategorylist'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
+        context['clientcategorylist'] = NewsCategory.objects.all()
+        context['topviewednews'] = News.objects.order_by('view_count')
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['hotnews'] = News.objects.order_by('created_at')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
+        context['advertiselist'] = Advertizement.objects.all()
+        context['subform'] = SubscriberForm
         return context
+
+
+class CommentCreateView(ClientMixin, CreateView):
+    template_name = 'clienttemplates/commentcreate.html'
+    form_class = CommentForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        news_id = self.kwargs['pk']
+        news = News.objects.get(id=news_id)
+        form.instance.news = news
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        news_id = self.kwargs['pk']
+        return '/news/' + str(news_id) + '/detail/'
+
+
+class ClientNewsDetailView(ClientMixin, DetailView):
+    template_name = 'clienttemplates/clientnewsdetail.html'
+    model = News
+    context_object_name = 'clientnewsdetail'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
+        context['commentform'] = CommentForm
+        context['commentlist'] = Comment.objects.all()
+        context['relatednewslist'] = News.objects.filter(
+            main_category=self.object.main_category).exclude(slug=self.object.slug)
+        print(context['relatednewslist'])
+        # form = CommentForm(self.request.POST or None)
+        # if form.is_valid():
+        #     form.save()
+        #     return render(self.request, 'newsapp:clienthome', {"form": form })
+        return context
+
+
+class ClientCategoryDetailView(ClientMixin, DetailView):
+    template_name = 'clienttemplates/clientcategorydetail.html'
+    model = NewsCategory
+    context_object_name = 'clientcategorydetail'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['newseditor'] = Editor.objects.all()
+        return context
+
+
+class PopularNewsListView(ClientMixin, ListView):
+    template_name = 'clienttemplates/clientpopularnewslist.html'
+    model = News
+    context_object_name = 'popularnewslist'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = Comment.objects.order_by('-comment')
+        return context
+
+
+class MostCommentedNewsListView(ClientMixin, ListView):
+    template_name = 'clienttemplates/clientmostcommentednewslist.html'
+    model = News
+    context_object_name = 'mostcommentednewslist'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['advertiselist'] = Advertizement.objects.all()
+        context['popularnews'] = News.objects.order_by('-view_count')
+        context['mostcommented'] = News.objects.order_by('-comment')
+        return context
+
+
+class SubscriberView(SuccessMessageMixin, CreateView):
+    template_name = "clienttemplates/error.html"
+    form_class = SubscriberForm
+    success_url = reverse_lazy('newsapp:home')
+    success_message = "thank you for subscribing"
+
+    def form_valid(self, form):
+        email = form.cleaned_data["email"]
+        if Subscriber.objects.filter(email=email).exists():
+            return render(self.request, ("clienttemplates/error.html"), {"error": "subscriber already exist"})
+        send_mail("Subscription mail", "Thank you for Subscribing our news site",
+                  settings.EMAIL_HOST_USER, [email, ], fail_silently=False),
+        return super().form_valid(form)
+
+
+# class SubscriberCheckView(View):
+#     def get(self, request):
+#         email = request.GET.get("email")
+#         if Subscriber.objects.filter(email=email).exists():
+#             return JsonResponse({"error": "error"})
+#         else:
+#             return JsonResponse({"error": "success"})
+# =======
+#         return context
+# >>>>>>> 0b3aff4775079aa1f8bdbb467d7928a84b7bdd8d

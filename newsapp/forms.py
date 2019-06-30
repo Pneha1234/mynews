@@ -1,5 +1,4 @@
 from django import forms
-
 from newsapp.models import *
 from .models import *
 
@@ -134,3 +133,27 @@ class AdminForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput)
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+
+
+
+
+##############
+##########
+######
+####
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["commenter", "email", "comment"]
+
+
+class SubscriberForm(forms.ModelForm):
+    class Meta:
+        model = Subscriber
+        fields = ["email"]
+
+
