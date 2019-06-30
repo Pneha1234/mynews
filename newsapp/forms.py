@@ -9,6 +9,14 @@ class NewsForm(forms.ModelForm):
         model = NewsCategory
         fields = ['title', 'image', 'slug', 'icon_character']
 
+        widgets ={
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter title...'
+                }),
+           }
+    
+
     def __init__(self, *args, **kwargs):
         super(NewsForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -155,5 +163,11 @@ class SubscriberForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ["email"]
+        widgets = {
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control input-lg',
+                'placeholder': 'Please enter your email...'
+                })
+        }
 
 
