@@ -1,0 +1,31 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% block content %}
+<section id="entity_section" class="entity_section">
+<div class="container">
+	<div class="row">
+		{% for news in searchednews %}
+		<div class="col-md-8">
+			<div class="entity_wrapper">
+				<div class="entity_title">
+					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}</a></h1>
+				</div>
+
+				<div class="entity_content">
+					{{news.content|truncatechars:'100'}}
+				</div>
+			</div>
+		</div>
+		{% empty %}
+		<h1>no news found</h1>
+{% endfor %}
+
+	</div>
+</div>
+</section>
+<!-- {% for news in searchednews %}
+<h1>{{news.title}}</h1>
+<h2>{{news.content}}</h2>
+{% empty %}
+<h1>notfound</h1>
+{% endfor %}
+{% endblock %} -->

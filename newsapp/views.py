@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
+from django.db.models import Q
 
 from .forms import *
 
@@ -530,7 +531,7 @@ class ClientMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = NewsCategory.objects.all()
+        context['categories'] = NewsCategory.objects.filter(root=None)
         context['subform'] = SubscriberForm
         return context
 
@@ -545,7 +546,7 @@ class ClientHomeView(ClientMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
         context['clientcategorylist'] = NewsCategory.objects.all()
-        context['topviewednews'] = News.objects.order_by('view_count')
+        context['topviewednews'] = News.objects.order_by('-view_count')
         context['popularnews'] = News.objects.order_by('-view_count')
         context['hotnews'] = News.objects.order_by('created_at')
         context['mostcommented'] = Comment.objects.order_by('-comment')
@@ -553,6 +554,18 @@ class ClientHomeView(ClientMixin, TemplateView):
         context['advertiselist'] = Advertizement.objects.all()
         context['subform'] = SubscriberForm
         return context
+
+class SearchView(TemplateView):
+    template_name='clienttemplates/searchresult.html'
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        keyword=self.request.GET.get('search')
+        print(keyword,'***********')
+        news=News.objects.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(main_category__title__icontains=keyword))
+        context['searchednews']=news
+        return context
+
+
 
 
 class CommentCreateView(ClientMixin, CreateView):
@@ -580,13 +593,13 @@ class ClientNewsDetailView(ClientMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
-        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['latestnews'] = News.objects.order_by('-id')
         context['newseditor'] = Editor.objects.all()
         context['commentform'] = CommentForm
         context['commentlist'] = Comment.objects.all()
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
-        print(context['relatednewslist'])
+        print(context['relatednewslist'],'*************************')
         # form = CommentForm(self.request.POST or None)
         # if form.is_valid():
         #     form.save()
@@ -650,13 +663,3 @@ class SubscriberView(SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-# class SubscriberCheckView(View):
-#     def get(self, request):
-#         email = request.GET.get("email")
-#         if Subscriber.objects.filter(email=email).exists():
-#             return JsonResponse({"error": "error"})
-#         else:
-#             return JsonResponse({"error": "success"})
-# =======
-#         return context
-# >>>>>>> 0b3aff4775079aa1f8bdbb467d7928a84b7bdd8d
