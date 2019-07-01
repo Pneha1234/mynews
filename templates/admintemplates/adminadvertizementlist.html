@@ -1,6 +1,8 @@
 {% extends 'admintemplates/adminbase.html' %}
 {% load static %}
-
+{% block advertizement %}
+nav-item active
+{% endblock %}
 
 {% block content %}
 <div class="content">
@@ -48,7 +50,10 @@
                {% for advertizementlist in advertizementlist %}
                <tr>
                 <td>{{advertizementlist.organization}}</td>
-                <td><img src={{advertizementlist.image.url}} class="img-responsive" style="width:40%"></td>
+                
+                <td>{% if advertizementlist.image %}<img src={{advertizementlist.image.url}} class="img-responsive" style="width:40%">{% else %}
+                  No Image
+                {% endif %}</td>
                 <td>{{advertizementlist.link}}</td>
                 <td>{{advertizementlist.expiry_date}}</td>
                 <td class="text-right">

@@ -2,21 +2,33 @@
 
 {% block content %}
 <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card">
+					<div class="card-header card-header-primary card-header-icon">
+						<div class="card-icon">
+							<i class="material-icons">assignment</i>
+						</div>
+						<div>
+							<h3>Add Editor</h3>
 
-				<form method="post" enctype="multipart/form-data">
-				    {% csrf_token %}
 
-				    {{form.as_p}}
+							<form method="post" enctype="multipart/form-data">
+								{% csrf_token %}
 
-				    <input type="submit" value="Save">
+								{{form.as_p}}
 
-				</form>
+								<input type="submit" value="Save">
+
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 {% endblock %}

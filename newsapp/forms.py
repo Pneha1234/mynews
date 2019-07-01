@@ -9,13 +9,21 @@ class NewsForm(forms.ModelForm):
         model = NewsCategory
         fields = ['title', 'image', 'slug', 'icon_character']
 
-        widgets ={
+        widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'enter title...'
-                }),
-           }
-    
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+            'slug': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'icon_character': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
     # def __init__(self, *args, **kwargs):
     #     super(NewsForm, self).__init__(*args, **kwargs)
@@ -29,10 +37,26 @@ class NewsSubCategoryForm(forms.ModelForm):
         model = NewsSubCategory
         fields = ['title', 'main_category', 'image', 'icon_character']
 
-    def __init__(self, *args, **kwargs):
-        super(NewsSubCategoryForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+    # def __init__(self, *args, **kwargs):
+    #     super(NewsSubCategoryForm, self).__init__(*args, **kwargs)
+    #     for field_name, field in self.fields.items():
+    #         field.widget.attrs['class'] = 'form-control'
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter title...'
+            }),
+            'main_category': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+
+            'icon_character': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
 
 class EditorNewsForm(forms.ModelForm):
@@ -40,7 +64,30 @@ class EditorNewsForm(forms.ModelForm):
     class Meta:
         model = News
         fields = ['title', 'main_category', 'sub_category',
-                  'image', 'video_link', 'content', 'editor']
+                  'image', 'video_link', 'content']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter title...'
+            }),
+            'main_category': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'sub_category': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+            'video_link': forms.URLInput(attrs={
+                'class': 'form-control',
+            }),
+
+            'content': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+          
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -56,10 +103,12 @@ class AdminAdvertizementPosition(forms.ModelForm):
         model = AdvertizementPosition
         fields = ['position']
 
-    def __init__(self, *args, **kwargs):
-        super(AdminAdvertizementPosition, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+        widgets = {
+            'position': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter position...'
+            }),
+        }
 
 
 class AdminAdvertizement(forms.ModelForm):
@@ -87,8 +136,33 @@ class EditorForm(forms.ModelForm):
 
     class Meta:
         model = Editor
-        fields = ["username", "password", "confirm_password",
-                  "full_name", "contact_no", "address", "email", "image", "about"]
+        fields = [
+            "full_name", "contact_no", "address", "email", "image", "about"]
+        widgets = {
+
+
+
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter full name...'
+            }),
+            'contact_no': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email': forms.URLInput(attrs={
+                'class': 'form-control',
+            }),
+
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+            'about': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
@@ -143,10 +217,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-
-
-
-
 ##############
 ##########
 ######
@@ -167,7 +237,5 @@ class SubscriberForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={
                 'class': 'form-control input-lg',
                 'placeholder': 'Please enter your email...'
-                })
+            })
         }
-
-

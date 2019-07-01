@@ -183,6 +183,7 @@ urlpatterns = [
 
     path('admin/newslist',
          AdminNewsList.as_view(), name='adminnewslist'),
+
     path('admin/<int:pk>/newsdetail',
          AdminNewsDetailView.as_view(), name='adminnewsdetail'),
     path('admin/newsadd/',
@@ -198,7 +199,8 @@ urlpatterns = [
     # admin editor
     path('admin/editorlist',
          EditorList.as_view(), name='editorlist'),
-
+    path('admin/editor',
+         EditorDashboardList.as_view(), name='editor'),
     path('admin/editorcreate',
          EditorCreate.as_view(), name='editoradd'),
     path('admin/<int:pk>/editorupdate/',

@@ -114,6 +114,9 @@ class News(TimeStamp):
     view_count = models.BigIntegerField(default=0)
     editor = models.ForeignKey(
         Editor, on_delete=models.SET_NULL, null=True, blank=True)
+    admin = models.ForeignKey(
+        Admin, on_delete=models.SET_NULL, null=True, blank=True)
+
 
     def __str__(self):
         return self.title

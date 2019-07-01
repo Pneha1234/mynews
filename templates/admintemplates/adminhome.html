@@ -1,7 +1,10 @@
 {% extends 'admintemplates/adminbase.html' %}
 {% load static %}
-
+{% block home %}
+nav-item active
+{% endblock %}
 {% block content %}
+
 <div class="content">
         <div class="content">
           <div class="container-fluid">
@@ -12,7 +15,7 @@
                     <div class="card-icon">
                       <i class="material-icons"></i>
                     </div>
-                    <h4 class="card-title">Global Sales by Top Locations</h4>
+                    <h4 class="card-title">Editors</h4>
                   </div>
                   <div class="card-body ">
                     <div class="row">
@@ -20,12 +23,13 @@
                         <div class="table-responsive table-sales">
                           <table class="table">
                             <tbody>
+                              {% for editor in admineditor %}
                               <tr>
                                 <td>
                                   <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/US.png' %}" </div>
+                                    <img src="{%static 'adminstatic/img/flags/US.png' %}" ></div>
                                 </td>
-                                <td>USA</td>
+                                <td>{{editor.full_name}}</td>
                                 <td class="text-right">
                                   2.920
                                 </td>
@@ -33,62 +37,11 @@
                                   53.23%
                                 </td>
                               </tr>
+                              {% endfor %}
                               <tr>
                                 <td>
                                   <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/DE.png' %}" </div>
-                                </td>
-                                <td>Germany</td>
-                                <td class="text-right">
-                                  1.300
-                                </td>
-                                <td class="text-right">
-                                  20.43%
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/AU.png' %}" </div>
-                                </td>
-                                <td>Australia</td>
-                                <td class="text-right">
-                                  760
-                                </td>
-                                <td class="text-right">
-                                  10.35%
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/GB.png' %}" </div>
-                                </td>
-                                <td>United Kingdom</td>
-                                <td class="text-right">
-                                  690
-                                </td>
-                                <td class="text-right">
-                                  7.87%
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/RO.png' %}" </div>
-                                </td>
-                                <td>Romania</td>
-                                <td class="text-right">
-                                  600
-                                </td>
-                                <td class="text-right">
-                                  5.94%
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/BR.png' %}" </div>
+                                    <img src="{%static 'adminstatic/img/flags/BR.png' %}"> </div>
                                 </td>
                                 <td>Brasil</td>
                                 <td class="text-right">
@@ -112,7 +65,12 @@
                         </div>
                         <!-- <button type="button" class="btn btn-round btn-default dropdown-toggle btn-link" data-toggle="dropdown">
 7 days
+
 </button> -->
+hello
+{% for editor in admineditor %}
+<p>{{editor.full_name}}</p>
+{% endfor %}
                         <div class="row">
                           <div class="col-md-4">
                             <div class="card card-chart">

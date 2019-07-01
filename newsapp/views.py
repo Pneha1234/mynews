@@ -122,6 +122,14 @@ class EditorNewsCreate(EditorRequiredMixin, CreateView):
     context_object_name = 'newscreate'
     success_url = reverse_lazy('newsapp:newslist')
 
+    def form_valid(self, form):
+        user = self.request.user.editor.id
+        print(user)
+        editor = Editor.objects.get(id=user)
+        print(editor)
+        form.instance.editor = editor
+        return super().form_valid(form)
+
 
 def load_subcategories(request):
     category_id = request.GET.get('main_category')
@@ -365,6 +373,7 @@ class AdminNewsCategoryUpdate(SuccessMessageMixin, UpdateView):
     model = NewsCategory
 
     fields = ['title', 'image', 'icon_character']
+
     template_name_suffix = '_form'
     success_url = reverse_lazy('newsapp:adminnewscategory')
     success_message = 'Update is successfully saved!!!!'
@@ -438,6 +447,14 @@ class AdminNewsCreate(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('newsapp:adminnewslist')
     success_message = 'Created successfully !!!!'
 
+    def form_valid(self, form):
+        user = self.request.user.admin.id
+        print(user)
+        editor = Admin.objects.get(id=user)
+        print(editor)
+        form.instance.admin = editor
+        return super().form_valid(form)
+
 
 class AdminNewsUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'admintemplates/adminnewsupdate.html'
@@ -460,6 +477,10 @@ class AdminNewsDelete(SuccessMessageMixin, DeleteView):
 # admin editor View
 # admin editor View
 # admin editor View
+class EditorDashboardList(ListView):
+    template_name = 'admintemplates/admineditorlist.html'
+    model = Editor
+    context_object_name = 'admineditor'
 
 class EditorList(ListView):
     template_name = 'admintemplates/admineditorlist.html'
