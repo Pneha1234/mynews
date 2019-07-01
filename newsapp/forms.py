@@ -157,6 +157,12 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["commenter", "email", "comment"]
+        widgets={
+        'commenter':forms.TextInput(attrs={'class':'form-control','placeholder':'name'}),
+        'email':forms.EmailInput(attrs={'class':'form-control','placeholder':'email'}),
+        'comment':forms.Textarea(attrs={'class':'form-control','placeholder':'comment'}),
+
+        }
 
 
 class SubscriberForm(forms.ModelForm):

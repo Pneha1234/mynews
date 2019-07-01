@@ -23,6 +23,7 @@ urlpatterns = [
          name='popularnewslist'),
     path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
          name='mostcommentednewslist'),
+    path('search/',SearchView.as_view(),name='searched'),
 
 
     path('', TemplateView.as_view(

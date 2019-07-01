@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
+from django.db.models import Q
 
 from .forms import *
 
@@ -533,6 +534,18 @@ class ClientHomeView(ClientMixin, TemplateView):
         context['subform'] = SubscriberForm
         return context
 
+class SearchView(TemplateView):
+    template_name='clienttemplates/searchresult.html'
+    def get_context_data(self,**kwargs):
+        context=super().get_context_data(**kwargs)
+        keyword=self.request.GET.get('search')
+        print(keyword,'***********')
+        news=News.objects.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(main_category__title__icontains=keyword))
+        context['searchednews']=news
+        return context
+
+
+
 
 class CommentCreateView(ClientMixin, CreateView):
     template_name = 'clienttemplates/commentcreate.html'
@@ -559,13 +572,13 @@ class ClientNewsDetailView(ClientMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
-        context['mostcommented'] = Comment.objects.order_by('-comment')
+        context['latestnews'] = News.objects.order_by('-id')
         context['newseditor'] = Editor.objects.all()
         context['commentform'] = CommentForm
         context['commentlist'] = Comment.objects.all()
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
-        print(context['relatednewslist'])
+        print(context['relatednewslist'],'*************************')
         # form = CommentForm(self.request.POST or None)
         # if form.is_valid():
         #     form.save()
