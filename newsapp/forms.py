@@ -17,10 +17,10 @@ class NewsForm(forms.ModelForm):
            }
     
 
-    def __init__(self, *args, **kwargs):
-        super(NewsForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+    # def __init__(self, *args, **kwargs):
+    #     super(NewsForm, self).__init__(*args, **kwargs)
+    #     for field_name, field in self.fields.items():
+    #         field.widget.attrs['class'] = 'form-control'
 
 
 class NewsSubCategoryForm(forms.ModelForm):
