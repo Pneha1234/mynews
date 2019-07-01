@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% block home %}active{% endblock %}
+
 {% block content %}
 
 
@@ -19,7 +21,7 @@
 					<div class="feature_article_inner">
 						<div class="tag_lg red"><a href="">Hot News</a></div>
 						<div class="feature_article_title">
-							<h1><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }} </a></h1>
+							<h1><a  href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }} </a></h1>
 						</div>
 
 						<div class="feature_article_date"><a href="#" target="_self">{{ news.editor }}</a>,<a href="#" target="_self">{{ news.created_at }}</a></div>
@@ -29,7 +31,9 @@
 						</div>
 
 						<div class="article_social">
-							<span><i class="fa fa-share-alt"></i><a href="#">424</a>Shares</span>
+							<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+
+							<!-- <span><i class="fa fa-share-alt"></i><a href="#">424</a>Shares</span> -->
 							<span><i class="fa fa-comments-o"></i><a href="#">4</a>Comments</span>
 						</div>
 					</div>
@@ -38,33 +42,32 @@
 			</div>
 			
 			<div class="col-md-5">	
-
-				<div class="feature_static_wrapper">
-					{% for news in topviewednews|slice:":2" %}	
+					{% for news in topviewednews|slice:":2" %}
+				<div class="feature_static_wrapper">		
 					<div class="feature_article_img">
-						<img class="img-responsive" src="{{ news.image.url }}"  style = "height:300px" alt="feature-top">
+						<img class="img-responsive" src="{{ news.image.url }}"  style = "height:284px" alt="feature-top">
 					</div>
-
-					<div class="feature_article_inner">
+					<div class="feature_article_inner" >
 						<div class="tag_lg purple"><a href="#">Top Viewed</a></div>
 						<div class="feature_article_title">
-							<h1><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title |truncatechars:50}}</a></h1>
+							<h1><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title |truncatechars:40}}</a></h1>
 						</div>
 
 						<div class="feature_article_date"><a href="#" target="_self">{{ news.editor}}</a>,<a href="#" target="_self">{{ news.created_at }}</a></div>
 
 						<div class="feature_article_content">
-							{{ news.content |truncatechars:50}}
+							{{ news.content |truncatechars:40}}
 						</div>
 
 						<div class="article_social">
-							<span><i class="fa fa-share-alt"></i><a href="#">424</a>Shares</span>
+							<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+							<!-- <span><i class="fa fa-share-alt"></i><a href="#">424</a>Shares</span> -->
 							<span><i class="fa fa-comments-o"></i><a href="#">4</a>Comments</span>
 						</div>
 					</div>
-					{% endfor %}
 				</div>
-
+				<br>
+				{% endfor %}
 			</div>
 		</section>
 
@@ -96,7 +99,7 @@
 									<div class="col-md-6">
 										<span class="tag purple">{{ news.main_category }}</span>
 										<div class="category_article_title">
-											<h2><a href="single.html" target="_self">{{ news.title }}</a></h2>
+											<h2><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }}</a></h2>
 										</div>
 
 										<div class="category_article_date"><a href="#">{{ news.created_at }}</a>, by: <a href="#">{{ news.editor }}</a></div>
@@ -106,7 +109,8 @@
 										</div>
 
 										<div class="media_social">
-											<span><a href="#"><i class="fa fa-share-alt"></i>424 </a> Shares</span>
+											<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+											<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424 </a> Shares</span> -->
 											<span><i class="fa fa-comments-o"></i><a href="#">4</a> Comments</span>
 										</div>
 
@@ -128,7 +132,8 @@
 												<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{news.title}}</a></h3>
 												<span class="media-date"><a href="#">{{news.created_at}}</a>, by: <a href="#">{{news.editor}}</a></span>
 												<div class="media_social">
-													<span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span>
+													<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+													<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span> -->
 													<span><a href="#"><i class="fa fa-comments-o"></i>4</a> Comments</span>
 												</div>
 											</div>
@@ -147,7 +152,8 @@
 												<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{news.title}}</a></h3>
 												<span class="media-date"><a href="#">{{news.created_at}}</a>, by: <a href="#">{{news.editor}}</a></span>
 												<div class="media_social">
-													<span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span>
+													<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+													<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span> -->
 													<span><a href="#"><i class="fa fa-comments-o"></i>4</a> Comments</span>
 												</div>
 											</div>
@@ -198,7 +204,8 @@
 												</div>
 
 												<div class="media_social">
-													<span><a href="#"><i class="fa fa-share-alt"></i>424 </a> Shares</span>
+													<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+													<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424 </a> Shares</span> -->
 													<span><i class="fa fa-comments-o"></i><a href="#">4</a> Comments</span>
 												</div>
 											</div>
@@ -235,9 +242,10 @@
 										<a href="single.html" target="_self"> {{ news.title |truncatechars:60 }}</a>
 									</h3> <span class="media-date"><a href="#">{{ news.created_at }}</a>, by: <a href="#">{{ news.editor }}</a></span>
 									<div class="widget_article_social">
-										<span>
+										<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i class="fa fa-share-alt" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"></i></a>Shares</span>
+										<!-- <span>
 											<a href="single.html" target="_self"> <i class="fa fa-share-alt"></i>424</a> Shares
-										</span>
+										</span> -->
 										<span>
 											<a href="single.html" target="_self"><i class="fa fa-comments-o"></i>4</a> Comments
 										</span>
@@ -266,7 +274,7 @@
 						</div>
 
 
-						<div class="widget m30">
+						<!-- <div class="widget m30">
 							<div class="widget_title widget_black">
 								<h2><a href="#">Most Commented</a></h2>
 							</div>
@@ -289,10 +297,10 @@
 							{% endfor %}
 							<p class="widget_divider"><a href="{% url 'newsapp:mostcommentednewslist' %}" target="_self">More News&nbsp;&nbsp;&raquo; </a></p>
 						</div>
+ -->
 
 
-
-						{% for company in advertiselist %}
+						<!-- {% for company in advertiselist %}
 						{% if forloop.counter == 1 %}
 						<div class="widget hidden-xs m30">
 							<img class="img-responsive widget_img" src="{{ company.image.url }}" alt="add_one">
@@ -318,7 +326,7 @@
 							{% endfor %}
 						</div>
 
-
+ -->
 						<div class="widget hidden-xs m30">
 							{% for company in advertiselist|slice:'2:' %}
 

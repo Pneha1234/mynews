@@ -509,7 +509,7 @@ class ClientMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = NewsCategory.objects.all()
+        context['categories'] = NewsCategory.objects.filter(root=None)
         context['subform'] = SubscriberForm
         return context
 
@@ -524,7 +524,7 @@ class ClientHomeView(ClientMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
         context['clientcategorylist'] = NewsCategory.objects.all()
-        context['topviewednews'] = News.objects.order_by('view_count')
+        context['topviewednews'] = News.objects.order_by('-view_count')
         context['popularnews'] = News.objects.order_by('-view_count')
         context['hotnews'] = News.objects.order_by('created_at')
         context['mostcommented'] = Comment.objects.order_by('-comment')
@@ -629,13 +629,3 @@ class SubscriberView(SuccessMessageMixin, CreateView):
         return super().form_valid(form)
 
 
-# class SubscriberCheckView(View):
-#     def get(self, request):
-#         email = request.GET.get("email")
-#         if Subscriber.objects.filter(email=email).exists():
-#             return JsonResponse({"error": "error"})
-#         else:
-#             return JsonResponse({"error": "success"})
-# =======
-#         return context
-# >>>>>>> 0b3aff4775079aa1f8bdbb467d7928a84b7bdd8d
