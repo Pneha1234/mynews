@@ -483,6 +483,7 @@ class EditorDashboardList(ListView):
     model = Editor
     context_object_name = 'admineditor'
 
+
 class EditorList(ListView):
     template_name = 'admintemplates/admineditorlist.html'
     model = Editor
@@ -536,10 +537,18 @@ class ClientMixin(object):
         return context
 
 
+class OrganizationMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['organizations'] = OrgnizationalInformation.objects.all()
+        return context
+
+
 # class ClientHomeView(ClientMixin, TemplateView):
 
 
-class ClientHomeView(ClientMixin, TemplateView):
+class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
     template_name = 'clienttemplates/clienthome.html'
 
     def get_context_data(self, **kwargs):
@@ -555,20 +564,21 @@ class ClientHomeView(ClientMixin, TemplateView):
         context['subform'] = SubscriberForm
         return context
 
+
 class SearchView(TemplateView):
-    template_name='clienttemplates/searchresult.html'
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
-        keyword=self.request.GET.get('search')
-        print(keyword,'***********')
-        news=News.objects.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(main_category__title__icontains=keyword))
-        context['searchednews']=news
+    template_name = 'clienttemplates/searchresult.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        keyword = self.request.GET.get('search')
+        print(keyword, '***********')
+        news = News.objects.filter(Q(title__icontains=keyword) | Q(
+            content__icontains=keyword) | Q(main_category__title__icontains=keyword))
+        context['searchednews'] = news
         return context
 
 
-
-
-class CommentCreateView(ClientMixin, CreateView):
+class CommentCreateView(ClientMixin, OrganizationMixin, CreateView):
     template_name = 'clienttemplates/commentcreate.html'
     form_class = CommentForm
     success_url = '/'
@@ -584,13 +594,17 @@ class CommentCreateView(ClientMixin, CreateView):
         return '/news/' + str(news_id) + '/detail/'
 
 
-class ClientNewsDetailView(ClientMixin, DetailView):
+class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        news_id = self.kwargs["pk"]
+        clientnewsdetail = News.objects.get(id=news_id)
+        clientnewsdetail.view_count += 1
+        clientnewsdetail.save()
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['latestnews'] = News.objects.order_by('-id')
@@ -599,22 +613,17 @@ class ClientNewsDetailView(ClientMixin, DetailView):
         context['commentlist'] = Comment.objects.all()
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
-        print(context['relatednewslist'],'*************************')
-        # form = CommentForm(self.request.POST or None)
-        # if form.is_valid():
-        #     form.save()
-        #     return render(self.request, 'newsapp:clienthome', {"form": form })
         return context
 
 
-class ClientCategoryDetailView(ClientMixin, DetailView):
+class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientcategorydetail.html'
     model = NewsCategory
     context_object_name = 'clientcategorydetail'
-    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['rootcategorylist'] = NewsCategory.objects.filter(root= not None)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
@@ -622,7 +631,7 @@ class ClientCategoryDetailView(ClientMixin, DetailView):
         return context
 
 
-class PopularNewsListView(ClientMixin, ListView):
+class PopularNewsListView(ClientMixin, OrganizationMixin, ListView):
     template_name = 'clienttemplates/clientpopularnewslist.html'
     model = News
     context_object_name = 'popularnewslist'
@@ -635,7 +644,7 @@ class PopularNewsListView(ClientMixin, ListView):
         return context
 
 
-class MostCommentedNewsListView(ClientMixin, ListView):
+class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
     template_name = 'clienttemplates/clientmostcommentednewslist.html'
     model = News
     context_object_name = 'mostcommentednewslist'
@@ -648,7 +657,7 @@ class MostCommentedNewsListView(ClientMixin, ListView):
         return context
 
 
-class SubscriberView(SuccessMessageMixin, CreateView):
+class SubscriberView(SuccessMessageMixin,OrganizationMixin, CreateView):
     template_name = "clienttemplates/error.html"
     form_class = SubscriberForm
     success_url = reverse_lazy('newsapp:home')
@@ -661,5 +670,3 @@ class SubscriberView(SuccessMessageMixin, CreateView):
         send_mail("Subscription mail", "Thank you for Subscribing our news site",
                   settings.EMAIL_HOST_USER, [email, ], fail_silently=False),
         return super().form_valid(form)
-
-

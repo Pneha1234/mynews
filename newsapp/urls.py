@@ -17,7 +17,7 @@ urlpatterns = [
     path('', ClientHomeView.as_view(), name='clienthome'),
     path('news/<int:pk>/detail/',
          ClientNewsDetailView.as_view(), name='clientnewsdetail'),
-    path('category/<int:pk>/detail/', ClientCategoryDetailView.as_view(),
+    path('news/category/<int:pk>/detail/', ClientCategoryDetailView.as_view(),
          name='clientcategorydetail'),
     path('news/popular/list/', PopularNewsListView.as_view(),
          name='popularnewslist'),
