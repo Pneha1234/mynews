@@ -13,8 +13,7 @@
             <div class="card-icon">
               <i class="material-icons">assignment</i>
             </div>
-            <a href="{% url 'newsapp:editoradd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
-            <h4 class="card-title">Editor Table</h4>
+            <a href="{% url 'newsapp:editoradd'%}" class="btn btn-link btn-warning btn-just-icon edit " style ='margin-left:87%; margin-top:30px; margin-right: 2px;'><i class="material-icons" style="font-size:50px;">add_box</i></a>
           </div>
           <div class="card-body">
             <div class="toolbar">
@@ -31,7 +30,7 @@
                   <th>contact_no</th>
                   <th>address</th>
                   <th>email</th>
-                  <th>image</th>
+                  
                   <th>about</th>
                   
                   <th class="disabled-sorting text-right">Actions</th>
@@ -44,7 +43,7 @@
                  <th>contact_no</th>
                  <th>address</th>
                  <th>email</th>
-                 <th>image</th>
+                 
                  <th>about</th>
                  
                  <th class="text-right">Actions</th>
@@ -58,11 +57,7 @@
                 <td>{{editorlist.contact_no}}</td>
                 <td>{{editorlist.address}}</td>
                 <td>{{editorlist.email}}</td>
-                {% if editorlist.image %}
-                <td><img src={{editorlist.image.url}} class="img-responsive" style="width:40%"></td>
-                {% else %}
-                    No Image
-                    {% endif %}
+               
                 
                 <td>{{editorlist.about}}</td>
                 <td class="text-right">

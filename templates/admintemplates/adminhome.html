@@ -23,13 +23,13 @@ nav-item active
                         <div class="table-responsive table-sales">
                           <table class="table">
                             <tbody>
-                              {% for editor in admineditor %}
+                              {% for editor in editorname %}
                               <tr>
                                 <td>
                                   <div class="flag">
-                                    <img src="{%static 'adminstatic/img/flags/US.png' %}" ></div>
+                                    <img src="{{editor.image.url}}" ></div>
                                 </td>
-                                <td>{{editor.full_name}}</td>
+                                <td><a href="{% url 'newsapp:newslist' editor.id %}">{{editor.full_name}}</a></td>
                                 <td class="text-right">
                                   2.920
                                 </td>
@@ -67,10 +67,6 @@ nav-item active
 7 days
 
 </button> -->
-hello
-{% for editor in admineditor %}
-<p>{{editor.full_name}}</p>
-{% endfor %}
                         <div class="row">
                           <div class="col-md-4">
                             <div class="card card-chart">

@@ -4,6 +4,7 @@ from django.views.generic import *
 from django.views.generic.edit import *
 from newsapp.forms import *
 from .models import *
+from .mixin import SuperUserMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -249,8 +250,21 @@ class AdminRequiredMixin(object):
 # admin advertizementposition view
 
 
-class AdminView(AdminRequiredMixin, TemplateView):
+class AdminView(AdminRequiredMixin, ListView):
     template_name = 'admintemplates/adminhome.html'
+    model = Admin
+    context_object_name = 'editorname'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['newslist'] = News.objects.all()
+    #     return context
+
+
+class AdminDetailView(AdminRequiredMixin, DetailView):
+    template_name = 'admintemplates/adminnews.html'
+    model = Admin
+    context_object_name = 'newslist'
 
 
 class AdminAdvertizementPositionList(AdminRequiredMixin, ListView):
@@ -433,6 +447,11 @@ class AdminNewsList(ListView):
     model = News
     context_object_name = 'adminnewslist'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['active'] = 'news_list'
+        return context
+
 
 class AdminNewsDetailView(DetailView):
     template_name = "admintemplates/adminnewsdetail.html"
@@ -482,6 +501,7 @@ class EditorDashboardList(ListView):
     template_name = 'admintemplates/admineditorlist.html'
     model = Editor
     context_object_name = 'admineditor'
+
 
 class EditorList(ListView):
     template_name = 'admintemplates/admineditorlist.html'
@@ -555,17 +575,18 @@ class ClientHomeView(ClientMixin, TemplateView):
         context['subform'] = SubscriberForm
         return context
 
+
 class SearchView(TemplateView):
-    template_name='clienttemplates/searchresult.html'
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
-        keyword=self.request.GET.get('search')
-        print(keyword,'***********')
-        news=News.objects.filter(Q(title__icontains=keyword) | Q(content__icontains=keyword) | Q(main_category__title__icontains=keyword))
-        context['searchednews']=news
+    template_name = 'clienttemplates/searchresult.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        keyword = self.request.GET.get('search')
+        print(keyword, '***********')
+        news = News.objects.filter(Q(title__icontains=keyword) | Q(
+            content__icontains=keyword) | Q(main_category__title__icontains=keyword))
+        context['searchednews'] = news
         return context
-
-
 
 
 class CommentCreateView(ClientMixin, CreateView):
@@ -599,7 +620,7 @@ class ClientNewsDetailView(ClientMixin, DetailView):
         context['commentlist'] = Comment.objects.all()
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
-        print(context['relatednewslist'],'*************************')
+        print(context['relatednewslist'], '*************************')
         # form = CommentForm(self.request.POST or None)
         # if form.is_valid():
         #     form.save()
@@ -661,5 +682,3 @@ class SubscriberView(SuccessMessageMixin, CreateView):
         send_mail("Subscription mail", "Thank you for Subscribing our news site",
                   settings.EMAIL_HOST_USER, [email, ], fail_silently=False),
         return super().form_valid(form)
-
-
