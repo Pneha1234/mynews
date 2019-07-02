@@ -324,7 +324,7 @@
 			{% for  news in  latestnews|slice:4 %}
 			<div class="media">
 				<div class="media-left">
-					<a href="#"><img class="media-object" src="{% static 'clientstatic/img/pop_right1.jpg' %}" alt="Generic placeholder image"></a>
+					<a href="#"><img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" class="img-responsive" width="200"></a>
 				</div>
 				<div class="media-body">
 					<h3 class="media-heading">
