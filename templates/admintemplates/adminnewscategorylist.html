@@ -1,6 +1,9 @@
 {% extends 'admintemplates/adminbase.html' %}
 
 {% load static %}
+{% block news %}
+nav-item active
+{% endblock %} 
 
 {% block content %}
 <div class="content">
@@ -44,7 +47,9 @@
                {% for newscategories in adminnewscategorylist %}
                <tr>
                 <td>{{newscategories.title}}</td>
-                <td><img src="{{newscategories.image.url}}" class="img-responsive" style="width:20%"></td>
+                <td>{% if newscategories.image.image %}<img src="{{newscategories.image.url}}" class="img-responsive" style="width:20%">{% else %}
+                No Image
+                {% endif %}</td>
                 <td>{{newscategories.icon_character}}</td>
                 <td class="text-right">
                   <a href="{% url 'newsapp:adminnewscategoryupdate' newscategories.slug %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>

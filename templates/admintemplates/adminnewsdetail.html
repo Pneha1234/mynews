@@ -1,8 +1,58 @@
 {% extends 'admintemplates/adminbase.html' %}
 {% load static %}
 
+{% block new %}nav-item active{% endblock %}
 {% block content %}
-<div class="content">
+
+    <div class="row">
+      <div class="col-md-11">
+        <div class="card card-product">
+          <div class="card-header card-header-image" data-header-animation="true">
+            <a href="#pablo">
+              {% if adminnewsdetail.image %}
+              <img class="img" src="{{adminnewsdetail.image.url}}">
+            </a>
+            {% else %}
+            No Image
+            {% endif %}
+          </div>
+          <div class="card-body">
+            <div class="card-actions text-center">
+              <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                <i class="material-icons">build</i> Fix Header!
+              </button>
+              <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="View">
+                <i class="material-icons">art_track</i>
+              </button>
+              <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Edit">
+                <i class="material-icons">edit</i>
+              </button>
+              <button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">
+                <i class="material-icons">close</i>
+              </button>
+            </div>
+            <h4 class="card-title">
+              <a href="#pablo">{{adminnewsdetail.title}}</a>
+            </h4>
+            <div class="card-description">
+              {{adminnewsdetail.content}}
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="price">
+              <h4></h4>
+            </div>
+            <div class="stats">
+              <p class="card-category"><i class="material-icons">account_box</i>{{adminnewsdetail.admin}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- <div class="content">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
@@ -28,6 +78,7 @@
                   <th>Title</th>
                   <th>Image</th>
                   <th>Content</th>
+                  <th>Editor</th>
                   <th class="disabled-sorting text-right">Actions</th>
                 </tr>
               </thead>
@@ -36,6 +87,7 @@
                  <th>Title</th>
                  <th>Image</th>
                  <th>Content</th>
+                 <th>Editor</th>
                  <th class="text-right">Actions</th>
                </tr>
              </tfoot>
@@ -43,8 +95,14 @@
                
                <tr>
                 <td>{{adminnewsdetail.title}}</td>
-                <td><img src="{{adminnewsdetail.image.url}}" class="img-responsive" style="width:20%"></td>
+                
+                  <td>{% if adminnewsdetail.image %}<img src="{{adminnewsdetail.image.url}}" class="img-responsive" style="width:20%">
+                {% else %}
+                    No Image
+                {% endif %}
+                </td>
                 <td>{{adminnewsdetail.content}}</td>
+                <td>{{adminnewsdetail.admin}}</td>
                 <td class="text-right">
                   <a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
 
@@ -55,20 +113,20 @@
                   </button>
 
                   <!-- The Modal -->
-                  <div class="modal" id="myModal">
+                 <!--  <div class="modal" id="myModal">
                     <div class="modal-dialog">
-                      <div class="modal-content">
+                      <div class="modal-content"> -->
 
                         <!-- Modal Header -->
-                        <div class="modal-header">
+                        <!-- <div class="modal-header">
                           <h4 class="modal-title">Are You Sure !! You Wanna Delete {{news.title}}</h4>
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
+ -->
 
 
-
-                        <!-- Modal footer -->
-                        <form action="#" method="POST">
+                       <!-- <!--  <!-- Modal footer -->
+                        <!-- <form action="#" method="POST">
                          {% csrf_token %}
                          <button class="btn">Delete</button>
                        </form>
@@ -84,15 +142,15 @@
 
          </tbody>
        </table>
-     </div>
-   </div>
+     </div> -->
+   <!-- </div> -->
    <!-- end content-->
- </div>
+ <!-- </div> -->
  <!--  end card  -->
-</div>
+<!-- </div> -->
 <!-- end col-md-12 -->
-</div>
+<!-- </div> -->
 <!-- end row -->
-</div>
-</div>
+<!-- </div>  -->
+<!-- </div> -->
 {% endblock %}

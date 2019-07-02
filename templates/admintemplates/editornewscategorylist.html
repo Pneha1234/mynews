@@ -42,7 +42,10 @@
                  {% for newscategories in newscategorylist %}
                  <tr>
                   <td>{{newscategories.title}}</td>
-                  <td><img src="{{newscategories.image.url}}" class="img-responsive" style="width:20%"></td>
+                  <td>{% if newscategories.image %}<img src="{{newscategories.image.url}}" class="img-responsive" style="width:20%">{% else %}
+                    no image
+                    {% endif %}
+                  </td>
                   <td>{{newscategories.icon_character}}</td>
                   <td class="text-right">
                     <a href="{% url 'newsapp:newscategoryupdate' newscategories.slug %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>

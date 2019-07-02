@@ -1,6 +1,6 @@
 {% extends 'admintemplates/adminbase.html' %}
 {% load static %}
-
+{% block admin %}nav-item active{% endblock %}
 
 {% block content %}
 <div class="content">
@@ -61,8 +61,8 @@
                 {% if list.image %}
                 <td><img src={{list.image.url}} class="img-responsive" style="width:40%"></td>
                 {% else %}
-                    No Image
-                    {% endif %}
+                No Image
+                {% endif %}
                 <td>{{list.about}}</td>
                 
                 
