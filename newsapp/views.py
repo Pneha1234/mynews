@@ -610,7 +610,7 @@ class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
         context['latestnews'] = News.objects.order_by('-id')
         context['newseditor'] = Editor.objects.all()
         context['commentform'] = CommentForm
-        context['commentlist']=Comment.objects.all().order_by('-id')
+        context['commentlist'] = Comment.objects.all().order_by('-id')
         context['commentlist1'] = str(Comment.objects.all().count())
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
@@ -634,13 +634,10 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
         return context
 
 
-class EditorNewsDetailView(ClientMixin,OrganizationMixin,DetailView):
+class EditorDetailView(ClientMixin, OrganizationMixin, DetailView):
     template_name = 'clienttemplates/editordetail.html'
     model = Editor
     context_object_name = 'editordetail'
-
-
-
 
 
 class ClientSubcategoryDetailView(ClientMixin, DetailView):

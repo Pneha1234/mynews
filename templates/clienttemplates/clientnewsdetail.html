@@ -12,22 +12,15 @@
 	<div class="row">
 		<div class="col-md-8">
 			<div class="entity_wrapper">
-				<p class='text-left'>Created_at{{clientnewsdetail.created_at}}</p>
 				<div class="entity_title">
 
-					<h1> Title:{{clientnewsdetail.title}}</h1>
+					<h1> {{clientnewsdetail.title}}</h1>
 			
 				</div>
-		
-
-
-
-				<div class="entity_meta">
-				
-				<h5>editor name:{{clientnewsdetail.editor.full_name}}</h5>
+				<div>
+					<p class='text-left' style="display: inline-block;">{{clientnewsdetail.created_at|date}}
+					<span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></p>
 				</div>
-			
-
 			<!-- 	<div class="entity_rating">
 					<i class="fa fa-star"></i>
 					<i class="fa fa-star"></i>
@@ -54,53 +47,11 @@
 
 				<div class="entity_thumb">
 					<!-- <img class="img-responsive" src="{% static 'clientstatic/img/category_img_top.jpg' %}" alt="feature-top"> -->
-					<img src={{clientnewsdetail.image.url}} class="img-responsive">
+					<img src={{clientnewsdetail.image.url}} class="img-responsive" style="width: 100%; object-fit: contain;">
 				</div>
-
-
 				<div class="entity_content">
-					<p>
-					<!-- 	But I must explain to you how all this mistaken idea of denouncing pleasure and praising
-						pain was born and I will give you a complete account of the system, and expound the
-						actual teachings of the great explorer of the truth, the master-builder of human
-						happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure,
-						but because those who do not know how to pursue pleasure rationally encounter
-						consequences that are extremely painful.
-					</p>
-					<p>
-						Nor again is there anyone who loves or pursues or desires to obtain pain of itself,
-						because it is pain, but because occasionally circumstances occur in which toil and pain
-						can procure him some great pleasure. To take a trivial example, which of us ever
-						undertakes laborious physical exercise, except to obtain some advantage from it?
-					</p>
-					<blockquote class="pull-left">But I must explain to you how all this mistaken idea of denouncing pleasure
-					</blockquote>
-					<p> But who has any right to find fault with a man who chooses to enjoy a pleasure that has
-						no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
-						On the other hand, we denounce with righteous indignation and dislike men who are so
-						beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire,
-						that they cannot foresee.Nor again is there anyone who loves or pursues or desires to
-						obtain pain of itself, because it is pain, but because occasionally circumstances occur
-						in which toil and pain can procure him some great pleasure. To take a trivial example,
-						which of us ever undertakes laborious physical exercise, except to obtain some advantage
-						from it? Nor again is there anyone who loves or pursues or desires to obtain pain of
-						itself, because it is pain, but because occasionally circumstances occur in which toil
-						and pain can procure him some great pleasure. To take a trivial example, which of us
-						ever
-					</p>
-					<p>
-						But I must explain to you how all this mistaken idea of denouncing pleasure and praising
-						pain was born and I will give you a complete account of the system, and expound the
-						actual teachings of the great explorer of the truth, the master-builder of human
-						happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure,
-						but because those who do not know how to pursue pleasure rationally encounter
-						consequences that are extremely painful.
-					</p> -->
-					<h1>Description</h1>
 					{{clientnewsdetail.content}}
 				</div>
-
-
 			</div>
 
 			<div class="related_news">
@@ -130,10 +81,10 @@
 					{% endfor %}
 				</div>
 			</div>
-
+<!-- 
 			<div class="widget_advertisement">
 				<img class="img-responsive" src="{% static 'clientstatic/img/category_advertisement.jpg' %}" alt="feature-top">
-			</div>
+			</div> -->
 
 			<div class="readers_comment">
 				<div class="entity_inner__title header_purple">
@@ -151,7 +102,7 @@
 						<h2 class="media-heading">{{comment.commenter}}</h2>
 						{{comment.comment}}
 						<div class="entity_vote">
-						<a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+						<i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
 						<a href="#"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a>
 
 						
@@ -207,12 +158,21 @@
 	{% for news in popularnews %}
 	<div class="media">
 		<div class="media-left">
-			<img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" width="200">
+			<img class="media-object" src="{{news.image.url}}" alt="{{news.title}}" width="200">
 		</div>
 		<div class="media-body">
 			<h3 class="media-heading">
 				{{news.title}}
-			</h3> <span class="media-date">{{news.created_at}} by:  <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{news.editor}}</a></span>
+			</h3>
+			<p>{{news.content|striptags|truncatechars:'40'}}</p>
+			<span class="media-date">{{news.created_at|date}}  
+				{% if not news.editor %}
+				{% else %}
+				<br>
+				by:
+				<a href="{% url 'newsapp:editornewsdetail' news.editor_id %}">{{news.editor}}</a>
+				{% endif %}
+			</span>
 			<div class="widget_article_social">
 				
 			</div>
@@ -303,10 +263,10 @@
 			</div>
 			<p class="widget_divider"><a href="#" target="_self">More News&nbsp;&raquo;</a></p>
 		</div> -->
-
+<!-- 
 		<div class="widget hidden-xs m30">
 			<img class="img-responsive widget_img" src="{% static 'clientstatic/img/right_add6.jpg' %}" alt="add_one">
-		</div>
+		</div> -->
 
 		<div class="widget m30">
 			<div class="widget_title widget_black">
@@ -315,7 +275,7 @@
 			{% for  news in  latestnews|slice:4 %}
 			<div class="media">
 				<div class="media-left">
-					<a href="#"><img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" class="img-responsive" width="200"></a>
+					<img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" class="img-responsive" width="200">
 				</div>
 				<div class="media-body">
 					<h3 class="media-heading">

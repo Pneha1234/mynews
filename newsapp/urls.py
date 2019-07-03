@@ -23,9 +23,11 @@ urlpatterns = [
          name='popularnewslist'),
     path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
          name='mostcommentednewslist'),
-    path('search/',SearchView.as_view(),name='searched'),
-    path('client/subcategory/<int:pk>/detail/',ClientSubcategoryDetailView.as_view(),name='clientsubcategory'),
-    path('editor/<int:pk>/detail/',EditorNewsDetailView.as_view(),name='editornewsdetail'),
+    path('search/', SearchView.as_view(), name='searched'),
+    path('client/subcategory/<int:pk>/detail/',
+         ClientSubcategoryDetailView.as_view(), name='clientsubcategory'),
+    path('editor/<int:pk>/detail/',
+         EditorDetailView.as_view(), name='editornewsdetail'),
 
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
@@ -99,7 +101,8 @@ urlpatterns = [
     path('login/',
          LoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(), name="edit-user-profile"),
+    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(),
+         name="edit-user-profile"),
 
 
     # admin url
