@@ -23,7 +23,11 @@ urlpatterns = [
          name='popularnewslist'),
     path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
          name='mostcommentednewslist'),
-    path('search/', SearchView.as_view(), name='searched'),
+
+    path('editor/news/list/', EditorNewsListView.as_view(),
+         name='editornewslist'),
+    path('search/',SearchView.as_view(),name='searched'),
+
 
 
     path('', TemplateView.as_view(
@@ -179,7 +183,7 @@ urlpatterns = [
 
     path('admin/newslist',
          AdminNewsList.as_view(), name='adminnewslist'),
-
+    path('admin/newslist/<int:pk>/', AdminDetailView.as_view(), name='newslist'),
     path('admin/<int:pk>/newsdetail',
          AdminNewsDetailView.as_view(), name='adminnewsdetail'),
     path('admin/newsadd/',

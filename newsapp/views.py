@@ -6,6 +6,8 @@ from newsapp.forms import *
 from .models import *
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+from .mixin import SuperUserMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from django.db.models import Q
@@ -107,10 +109,19 @@ class EditorNewsSubCategoryDelete(EditorRequiredMixin, DeleteView):
 # News Views
 # News Views
 
-class EditorNewsList(EditorRequiredMixin, ListView):
+
+class EditorNewsList(ListView):
     template_name = 'admintemplates/editornewslist.html'
     model = News
     context_object_name = 'newslist'
+
+    def get_queryset(self):
+        news = News.verified.all()
+        title = self.request.GET.get('title')
+        if title:
+            news = news.filter(title=title)
+
+        return news
 
 
 class EditorNewsDetailView(DetailView):
@@ -252,8 +263,16 @@ class AdminRequiredMixin(object):
 # admin advertizementposition view
 
 
-class AdminView(AdminRequiredMixin, TemplateView):
+class AdminView(AdminRequiredMixin, ListView):
     template_name = 'admintemplates/adminhome.html'
+    model = Admin
+    context_object_name = 'editorname'
+
+
+class AdminDetailView(AdminRequiredMixin, DetailView):
+    template_name = 'admintemplates/adminnews.html'
+    model = Admin
+    context_object_name = 'newslist'
 
 
 class AdminAdvertizementPositionList(AdminRequiredMixin, ListView):
@@ -434,7 +453,6 @@ class AdminNewsSubCategoryDelete(SuccessMessageMixin, DeleteView):
 class AdminNewsList(ListView):
     template_name = 'admintemplates/adminnewslist.html'
     model = News
-    context_object_name = 'adminnewslist'
 
 
 class AdminNewsDetailView(DetailView):
@@ -475,6 +493,9 @@ class AdminNewsDelete(SuccessMessageMixin, DeleteView):
     model = News
     success_url = reverse_lazy('newsapp:adminnewslist')
     success_message = 'Deleted successfully !!!!'
+
+    def get(self, *a, **kw):
+        return self.delete(*a, **kw)
 
 
 # admin editor View
@@ -537,6 +558,7 @@ class ClientMixin(object):
         context = super().get_context_data(**kwargs)
         context['categories'] = NewsCategory.objects.filter(root=None)
         context['subform'] = SubscriberForm
+        context['latestnews'] = News.objects.order_by('-id')
         return context
 
 
@@ -547,7 +569,20 @@ class OrganizationMixin(object):
         context['organizations'] = OrgnizationalInformation.objects.all()
         return context
 
+class EditorMixin(object):
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['editornewslist'] = News.objects.all()
+        return context
+
+
+class RootNewsMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rootnewslist'] = News.objects.filter(root = self.object.root)
+        return context
 # class ClientHomeView(ClientMixin, TemplateView):
 
 
@@ -568,7 +603,13 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class SearchView(TemplateView):
+class EditorNewsListView(ClientMixin, OrganizationMixin, EditorMixin, ListView):
+    template_name = 'clienttemplates/editornewslist.html'
+    model = Editor
+    context_object_name = 'editornewslist'
+
+
+class SearchView(ClientMixin, OrganizationMixin,TemplateView):
     template_name = 'clienttemplates/searchresult.html'
 
     def get_context_data(self, **kwargs):
@@ -616,6 +657,13 @@ class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
         context['commentlist'] = Comment.objects.all()
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
+
+        print(context['relatednewslist'], '*************************')
+        # form = CommentForm(self.request.POST or None)
+        # if form.is_valid():
+        #     form.save()
+        #     return render(self.request, 'newsapp:clienthome', {"form": form })
+
         return context
 
 
@@ -626,8 +674,8 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rootcategorylist'] = NewsCategory.objects.filter(
-            root=not None)
+
+        context['rootcategorylist'] = NewsCategory.objects.filter(root = self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
