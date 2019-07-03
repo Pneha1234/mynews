@@ -42,7 +42,6 @@
 
 
    <div id="main-wrapper">
-
       </div>
          <div class="uc-mobile-menu-pusher">
             <div class="content-wrapper">
@@ -68,11 +67,11 @@
                            <div class="col-md-4">
                               <div class="logo">
                               {% for organization in organizations %}
-                                  <a><img src="{{ organization.logo.url }}" style = "height:100px; width:225px;" alt="Tech NewsLogo"></a>
+                                  <a><img src="{{ organization.logo.url }}" style = "height:100px; width:200px;" alt="Tech NewsLogo"></a>
                               {% endfor %}
                               </div>
                            </div>
-
+<!-- 
                            <div class="col-md-4">
                               <div class="right_section">
                                  <ul class="nav navbar-nav">
@@ -101,7 +100,7 @@
                                     </li>
                                  </ul>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
 
@@ -127,7 +126,7 @@
                                              <div class="m-menu-content">
                                                 <ul class="col-sm-12">
                                                    {% for root in category.newscategory_set.all %}
-                                                   <li><a {% if root.title == clientcategorydetail.title %} class='active'{% endif %} href="{% url 'newsapp:clientcategorydetail' category.pk %}">{{ root.title }}</a></li>
+                                                   <li><a {% if root.title == clientcategorydetail.title %} class='active'{% endif %} href="{% url 'newsapp:clientcategorydetail' root.pk %}">{{ root.title }}</a></li>
                                                    {% endfor %} 
                                                 </ul>
                                              </div>
@@ -139,6 +138,23 @@
                                     {% endif %}
                                     {% endfor %}   
                                   </ul>
+                                  <ul class="nav-cta hidden-xs">
+                                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-search" style="padding-top:13px;"></i></a>
+                                       <ul class="dropdown-menu">
+                                          <li>
+                                             <div class="head-search">
+                                                <form role="form" action="{% url 'newsapp:searched' %}">
+                                                   <div class="input-group">
+                                                      <input type="text" class="form-control" placeholder="Type Something" name='search'> <span class="input-group-btn">
+                                                      <button type="submit" class="btn btn-primary">Search
+                                                       </button></span>
+                                                   </div>
+                                                </form>
+                                             </div>
+                                          </li>
+                                       </ul>
+                                    </li>
+                                 </ul>
                               </div>
                            </div>
                         </nav>
@@ -162,7 +178,7 @@
                      {% csrf_token %}
                      <div class="form-group form-group-lg">
                         <label class="col-sm-6 control-label" for="formGroupInputLarge">
-                           <h1><span class="red-color">Sign up</span> for the latest news</h1>
+                           <h1><span class="red-color">Sign up</span> for the subscription</h1>
                         </label>
                         <div class="col-sm-3">
                            {{subform.email}}
@@ -183,19 +199,20 @@
                <div class="container">
                   <hr class="footer-top">
                   <div class="row">
+                   {% for organization in organizations %}  
                      <div class="col-md-3">
                         <div class="footer_widget_title">
-                           <h3><a href="category.html" target="_self">About Tech</a></h3>
+                           <h3><a href="category.html" target="_self">{{ organization.name }}</a></h3>
                         </div>
                         <div class="logo footer-logo">
                            <a title="fontanero" href="index.html">
-                              <img src="{% static 'clientstatic/img/tech_about.jpg' %}" alt="technews">
+                              <img src="{{ organization.logo.url}}" style = "height:180px; width:230px;" alt="technews">
                            </a>
-                           <p>Competently conceptualize go forward testing procedures and B2B expertise. Phosfluorescently
-                              cultivate principle-centered methods.of empowerment through fully researched.
+                           <p>{{ organization.about_us }}
                            </p>
                         </div>
                      </div>
+                     {% endfor %}
                      <div class="col-md-3">
                         <div class="footer_widget_title">
                            <h3><a href="category.html" target="_self">Discover</a></h3>
@@ -203,43 +220,44 @@
                         <div class="row">
                            <div class="col-xs-4">
                               <ul class="list-unstyled left">
-                                 <li><a href="#">Mobile</a></li>
-                                 <li><a href="#">Tablet</a></li>
-                                 <li><a href="#">Gadgets</a></li>
-                                 <li><a href="#">Design</a></li>
-                                 <li><a href="#">Camera</a></li>
-                                 <li><a href="#">Apps</a></li>
+                                 <li><a href="#">National</a></li>
+                                 <li><a href="#">Science</a></li>
+                                 <li><a href="#">Technology</a></li>
+                                 <li><a href="#">Sports</a></li>
+                                 <li><a href="#">World</a></li>
+                                <!--  <li><a href="#">Apps</a></li>
                                  <li><a href="#">Login</a></li>
                                  <li><a href="#">About Us</a></li>
                                  <li><a href="#">Membership</a></li>
                                  <li><a href="#">Blog</a></li>
                                  <li><a href="#">Job</a></li>
-                                 <li><a href="#">SiteMap</a></li>
+                                 <li><a href="#">SiteMap</a></li> -->
                               </ul>
                            </div>
                            <div class="col-xs-8">
                               <ul class="list-unstyled">
                                  <li><a href="#">Contact Us</a></li>
                                  <li><a href="#">Newsletter Alerts</a></li>
-                                 <li><a href="#">Podcast</a></li>
-                                 <li><a href="#">Sms Subscription</a></li>
+                                 <!-- <li><a href="#">Podcast</a></li> -->
+                                 <!-- <li><a href="#">Sms Subscription</a></li> -->
                                  <li><a href="#">Advertisement Policy</a></li>
-                                 <li><a href="#">Report Technical issue</a></li>
-                                 <li><a href="#">Complaints and Corrections</a></li>
+                                 <!-- <li><a href="#">Report Technical issue</a></li> -->
+                                 <!-- <li><a href="#">Complaints and Corrections</a></li> -->
                                  <li><a href="#">Terms and Conditions</a></li>
                                  <li><a href="#">Privacy Policy</a></li>
-                                 <li><a href="#">Cookie Policy</a></li>
+                                 <!-- <li><a href="#">Cookie Policy</a></li>
                                  <li><a href="#">Securedrop</a></li>
-                                 <li><a href="#">Archives</a></li>
+                                 <li><a href="#">Archives</a></li> -->
                               </ul>
                            </div>
                         </div>
                      </div>
                      <div class="col-md-3">
                         <div class="footer_widget_title">
-                           <h3><a href="#" target="_self">Editor Picks</a></h3>
+                           <h3><a href="#" target="_self">Latest News</h3>
                         </div>
-                        <div class="media">
+                   
+                       <!--  <div class="media">
                            <div class="media-left">
                               <a href="#"><img class="media-object" src="{% static 'clientstatic/img/editor_pic1.jpg' %}" alt="Generic placeholder image"></a>
                            </div>
@@ -255,8 +273,8 @@
                                  <i class="fa fa-star-half-full"></i>
                               </span>
                            </div>
-                        </div>
-                        <div class="media">
+                        </div> -->
+                       <!--  <div class="media">
                            <div class="media-left">
                               <a href="#"><img class="media-object" src="{% static 'clientstatic/img/editor_pic2.jpg' %}" alt="Generic placeholder image"></a>
                            </div>
@@ -272,24 +290,27 @@
                                  <i class="fa fa-star-half-full"></i>
                               </span>
                            </div>
-                        </div>
+                        </div> -->
+                           {% for newslist in latestnews|slice:'4' %}
                         <div class="media">
                            <div class="media-left">
-                              <a href="#"><img class="media-object" src="{% static 'clientstatic/img/editor_pic3.jpg'%}" alt="Generic placeholder image"></a>
+                              <a href="#"><img class="media-object" src="{{ newslist.image.url}}" style = "height:40px; width:30px;" alt="Generic placeholder image" class='img-responsive'></a>
                            </div>
                            <div class="media-body">
+                              <span class="tag purple"><a href="category.html" target="_self">{{ newslist.main_category}}</a></span>
                               <h3 class="media-heading">
-                                 <a href="single.html">Apple launches photo-centric wrist watch for Android</a>
+                                 <a href="single.html">{{ newslist.title }}</a>
                               </h3>
-                              <span class="rating">
+                           <!--    <span class="rating">
                                  <i class="fa fa-star"></i>
                                  <i class="fa fa-star"></i>
                                  <i class="fa fa-star"></i>
                                  <i class="fa fa-star"></i>
                                  <i class="fa fa-star-half-full"></i>
-                              </span>
+                              </span> -->
                            </div>
                         </div>
+                           {% endfor %}
                      </div>
                      <div class="col-md-3">
                         <div class="footer_widget_title">
@@ -327,10 +348,10 @@
                               </div>
                            </div>
                            <div class="col-sm-6">
-                              <p>&copy; Copyright 2016-Tech News . Design by: <a href="https://uicookies.com/">uiCookies</a> </p>
+                              <p>&copy; Copyright 2019-Sarobar News . Design by: <a href="https://uicookies.com/">uiCookies</a> </p>
                            </div>
                            <div class="col-sm-3">
-                              <p>Technology News Magazine</p>
+                              <p>Sarobar News Magazine</p>
                            </div>
                         </div>
                      </div>

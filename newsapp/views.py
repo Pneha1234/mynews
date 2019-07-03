@@ -534,6 +534,7 @@ class ClientMixin(object):
         context = super().get_context_data(**kwargs)
         context['categories'] = NewsCategory.objects.filter(root=None)
         context['subform'] = SubscriberForm
+        context['latestnews'] = News.objects.order_by('-id')
         return context
 
 
@@ -544,7 +545,20 @@ class OrganizationMixin(object):
         context['organizations'] = OrgnizationalInformation.objects.all()
         return context
 
+class EditorMixin(object):
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['editornewslist'] = News.objects.all()
+        return context
+
+
+class RootNewsMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['rootnewslist'] = News.objects.filter(root = self.object.root)
+        return context
 # class ClientHomeView(ClientMixin, TemplateView):
 
 
@@ -565,7 +579,13 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class SearchView(TemplateView):
+class EditorNewsListView(ClientMixin, OrganizationMixin, EditorMixin, ListView):
+    template_name = 'clienttemplates/editornewslist.html'
+    model = Editor
+    context_object_name = 'editornewslist'
+
+
+class SearchView(ClientMixin, OrganizationMixin,TemplateView):
     template_name = 'clienttemplates/searchresult.html'
 
     def get_context_data(self, **kwargs):
@@ -623,7 +643,7 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rootcategorylist'] = NewsCategory.objects.filter(root= not None)
+        context['rootcategorylist'] = NewsCategory.objects.filter(root = self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
