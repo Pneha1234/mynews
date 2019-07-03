@@ -565,7 +565,7 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class SearchView(TemplateView):
+class SearchView(ClientMixin, TemplateView):
     template_name = 'clienttemplates/searchresult.html'
 
     def get_context_data(self, **kwargs):
@@ -594,7 +594,7 @@ class CommentCreateView(ClientMixin, OrganizationMixin, CreateView):
         return '/news/' + str(news_id) + '/detail/'
 
 
-class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
+class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
@@ -610,9 +610,11 @@ class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
         context['latestnews'] = News.objects.order_by('-id')
         context['newseditor'] = Editor.objects.all()
         context['commentform'] = CommentForm
-        context['commentlist'] = Comment.objects.all()
+        context['commentlist']=Comment.objects.all().order_by('-id')
+        context['commentlist1'] = str(Comment.objects.all().count())
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
+
         return context
 
 
@@ -623,12 +625,28 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rootcategorylist'] = NewsCategory.objects.filter(root= not None)
+        context['rootcategorylist'] = NewsCategory.objects.filter(
+            root=not None)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         context['newseditor'] = Editor.objects.all()
         return context
+
+
+class EditorNewsDetailView(ClientMixin,OrganizationMixin,DetailView):
+    template_name = 'clienttemplates/editordetail.html'
+    model = Editor
+    context_object_name = 'editordetail'
+
+
+
+
+
+class ClientSubcategoryDetailView(ClientMixin, DetailView):
+    template_name = 'clienttemplates/clientsubcategorydetail.html'
+    model = NewsSubCategory
+    context_object_name = 'clientsubcategorydetail'
 
 
 class PopularNewsListView(ClientMixin, OrganizationMixin, ListView):
@@ -657,7 +675,7 @@ class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
         return context
 
 
-class SubscriberView(SuccessMessageMixin,OrganizationMixin, CreateView):
+class SubscriberView(SuccessMessageMixin, OrganizationMixin, CreateView):
     template_name = "clienttemplates/error.html"
     form_class = SubscriberForm
     success_url = reverse_lazy('newsapp:home')

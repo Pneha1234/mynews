@@ -24,7 +24,8 @@ urlpatterns = [
     path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
          name='mostcommentednewslist'),
     path('search/',SearchView.as_view(),name='searched'),
-
+    path('client/subcategory/<int:pk>/detail/',ClientSubcategoryDetailView.as_view(),name='clientsubcategory'),
+    path('editor/<int:pk>/detail/',EditorNewsDetailView.as_view(),name='editornewsdetail'),
 
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
@@ -62,6 +63,7 @@ urlpatterns = [
     path('editor/<slug:slug>/newscategorydelete/',
          EditorNewsCategoryDelete.as_view(), name='newscategorydelete'),
     path('editor/newslist/', EditorNewsList.as_view(), name='newslist'),
+
 
     # editor NewsSubCategory
     # editor NewsSubCategory

@@ -117,7 +117,7 @@
 
                               <div class="collapse navbar-collapse ">
                                  <ul class="nav navbar-nav main-nav">
-                                    <li ><a class="{% block home %}{% endblock %}" href="{% url 'newsapp:clienthome'%}"> Home </a> </li>
+                                    <li ><a class="{% block home %}{% endblock %}" href="{% url 'newsapp:clienthome' %}"> Home </a> </li>
                                     {% for category in categories %}
                                     {% if category.newscategory_set.count != 0 %}
                                     <li class="dropdown"><a {% if category.title == clientcategorydetail.title %} class='active'{% endif %} href="" data-toggle="dropdown" class="dropdown-toggle">{{ category.title }}
@@ -127,7 +127,7 @@
                                              <div class="m-menu-content">
                                                 <ul class="col-sm-12">
                                                    {% for root in category.newscategory_set.all %}
-                                                   <li><a {% if root.title == clientcategorydetail.title %} class='active'{% endif %} href="{% url 'newsapp:clientcategorydetail' category.pk %}">{{ root.title }}</a></li>
+                                                   <li><a {% if root.title == clientcategorydetail.title %} class='active'{% endif %} href="{% url 'newsapp:clientcategorydetail' category.pk %}">{{root.title}}</a></li>
                                                    {% endfor %} 
                                                 </ul>
                                              </div>

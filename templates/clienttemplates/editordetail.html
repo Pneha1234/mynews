@@ -1,0 +1,24 @@
+{% extends 'clienttemplates/clientbase.html' %}
+{% block content %}
+<div class="container">
+<div class="entity_content">
+
+<h1> EDITOR DETAIL  INFORMATION</h1>
+<div>
+<h1>fullname:{{ editordetail.full_name }}</h1>
+<hr>
+<h2>address:{{editordetail.address}}</h2>
+<hr>
+<h3><img src="{{ editordetail.image.url }}"></h3>
+<hr>
+<h1 class="text-darak">about:{{editordetail.about}}</h1>
+<hr>
+<h1>email:{{editordetail.email}}</h1>
+</div>
+</div>
+</div>
+
+
+
+
+{% endblock %}
