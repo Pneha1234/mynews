@@ -370,25 +370,26 @@
 
 
       <script>
-         $("#id_email").on("keyup",function(){
-         // e.preventDefault():
-         var email=$(this).val();
-         $.ajax({
-           url:"#",
-           data:{
-            'email':email
-         },
-         dataType: 'json',
-         success:function(data){
-            if(data.error=="error"){
-             alert("subscriber already exists");
-             $("#mybtn").attr("disabled",true);}
-             else{
-                $("#mybtn").removeAttr("disabled");
-             }
-          }
-       })
-      })
+         $("#id_email").on("keyup",function(e){
+         e.preventDefault():
+         var email=$(this).val()
+         alert(email);
+       //   $.ajax({
+       //     url:"#",
+       //     data:{
+       //      'email':email
+       //   },
+       //   dataType: 'json',
+       //   success:function(data){
+       //      if(data.error=="error"){
+       //       alert("subscriber already exists");
+       //       $("#mybtn").attr("disabled",true);}
+       //       else{
+       //          $("#mybtn").removeAttr("disabled");
+       //       }
+       //    }
+       // })
+      });
    </script>
 
       <script>
