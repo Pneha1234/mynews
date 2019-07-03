@@ -1,15 +1,12 @@
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	<h4 class="modal-title">Delete Advertisementposition</h4>
+	<h4 class="modal-title">Delete newscategory</h4>
 </div>
-<form method="post" action="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}" >
+<form method="post" action="{% url 'newsapp:adminnewscategorydelete' newscategories.pk %}">
 	<div class="modal-body">
-		{% csrf_token %}
+	{% csrf_token %}
 
-		<p>Are you sure !! You wanna delete {{object.position}} </p>
-
-
-
+	<p>Are you sure !! You wanna delete</p>
 
 	</div>
 	<div class="modal-footer">

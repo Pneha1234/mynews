@@ -77,7 +77,12 @@
       <div class="sidebar-wrapper">
         <div class="user">
           <div class="photo">
+            {% if user.editor.image %}
             <img src="{{ user.editor.image.url }}"  />
+            {% else %}
+            no image
+            {% endif %}
+            
           </div>
           <div class="user-info">
             <a data-toggle="collapse" href="#collapseExample" class="username">

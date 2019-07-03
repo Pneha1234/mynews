@@ -172,6 +172,7 @@
                      <div class="form-group form-group-lg">
                         <label class="col-sm-6 control-label" for="formGroupInputLarge">
                            <h1><span class="red-color">Subscribe</span> for the latest news</h1>
+
                         </label>
                         <div class="col-sm-3">
                            {{subform.email}}
@@ -295,7 +296,7 @@
                            <div class="media-body">
                               <span class="tag purple"><a href="category.html" target="_self">{{ newslist.main_category}}</a></span>
                               <h3 class="media-heading">
-                                 <a href="single.html">{{ newslist.title }}</a>
+                                 <a href="{% url 'newsapp:clientnewsdetail' newslist.pk %}">{{ newslist.title }}</a>
                               </h3>
                            <!--    <span class="rating">
                                  <i class="fa fa-star"></i>

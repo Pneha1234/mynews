@@ -19,7 +19,7 @@
 				</div>
 				<div>
 					<p class='text-left' style="display: inline-block;">{{clientnewsdetail.created_at|date}}
-					<span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></p>
+					<a href="{% url 'newsapp:editornewsdetail' clientnewsdetail.editor_id %}"><span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></a></p>
 				</div>
 			<!-- 	<div class="entity_rating">
 					<i class="fa fa-star"></i>
@@ -155,16 +155,18 @@
 	<div class="widget_title widget_black">
 		<h2>Popular News</h2>
 	</div>
-	{% for news in popularnews %}
+	{% for news in popularnews|slice:5 %}
+	{% if clientnewsdetail.title != news.title %}
+
 	<div class="media">
 		<div class="media-left">
-			<img class="media-object" src="{{news.image.url}}" alt="{{news.title}}" width="200">
+			<img class="media-object" src="{{news.image.url}}" alt="{{news.title}}" width="100" height="100">
 		</div>
 		<div class="media-body">
 			<h3 class="media-heading">
-				{{news.title}}
+				<a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}</a>
 			</h3>
-			<p>{{news.content|striptags|truncatechars:'40'}}</p>
+			<p>{{news.content|striptags|truncatechars:'30'}}</p>
 			<span class="media-date">{{news.created_at|date}}  
 				{% if not news.editor %}
 				{% else %}
@@ -178,6 +180,8 @@
 			</div>
 		</div>
 	</div>
+
+	{% endif %}
 	{% endfor %}
 
 <!-- 	
@@ -273,6 +277,7 @@
 				<h1>LatestNews</h1>
 			</div>
 			{% for  news in  latestnews|slice:4 %}
+			{% if clientnewsdetail.title != news.title %}
 			<div class="media">
 				<div class="media-left">
 					<img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" class="img-responsive" width="200">
@@ -289,6 +294,7 @@
 					
 				</div>
 			</div>
+			{% endif %}
 			{% endfor %}
 		
 			
