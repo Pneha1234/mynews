@@ -4,9 +4,10 @@ from django.views.generic import *
 from django.views.generic.edit import *
 from newsapp.forms import *
 from .models import *
-from .mixin import SuperUserMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+from .mixin import SuperUserMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from django.db.models import Q
@@ -105,10 +106,19 @@ class EditorNewsSubCategoryDelete(EditorRequiredMixin, DeleteView):
 # News Views
 # News Views
 
-class EditorNewsList(EditorRequiredMixin, ListView):
+
+class EditorNewsList(ListView):
     template_name = 'admintemplates/editornewslist.html'
     model = News
     context_object_name = 'newslist'
+
+    def get_queryset(self):
+        news = News.verified.all()
+        title = self.request.GET.get('title')
+        if title:
+            news = news.filter(title=title)
+
+        return news
 
 
 class EditorNewsDetailView(DetailView):
@@ -254,11 +264,6 @@ class AdminView(AdminRequiredMixin, ListView):
     template_name = 'admintemplates/adminhome.html'
     model = Admin
     context_object_name = 'editorname'
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['newslist'] = News.objects.all()
-    #     return context
 
 
 class AdminDetailView(AdminRequiredMixin, DetailView):
@@ -445,12 +450,6 @@ class AdminNewsSubCategoryDelete(SuccessMessageMixin, DeleteView):
 class AdminNewsList(ListView):
     template_name = 'admintemplates/adminnewslist.html'
     model = News
-    context_object_name = 'adminnewslist'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['active'] = 'news_list'
-        return context
 
 
 class AdminNewsDetailView(DetailView):
@@ -491,6 +490,9 @@ class AdminNewsDelete(SuccessMessageMixin, DeleteView):
     model = News
     success_url = reverse_lazy('newsapp:adminnewslist')
     success_message = 'Deleted successfully !!!!'
+
+    def get(self, *a, **kw):
+        return self.delete(*a, **kw)
 
 
 # admin editor View

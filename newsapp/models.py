@@ -101,18 +101,21 @@ class NewsSubCategory(TimeStamp):
     def __str__(self):
         return self.title
 
+class NewsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(active=True)
 
-
-# class NewsVerified(models.Manager):
-#     def get_queryset(self):
-#         return super().get_queryset().filter(is_verified=True)
+class NewsVerified(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_verified=True)
 
 
 class News(TimeStamp):
     title = models.CharField(max_length=500)
     main_category = models.ForeignKey(
         NewsCategory, on_delete=models.CASCADE)
-    sub_category = models.ForeignKey(NewsSubCategory, on_delete=models.CASCADE,  null=True, blank=True)
+    sub_category = models.ForeignKey(
+        NewsSubCategory, on_delete=models.CASCADE, null=True, blank=True)
     slug = models.SlugField(unique=True, null=True, blank=True)
     image = models.ImageField(upload_to="news/news", null=True, blank=True)
     video_link = models.URLField(max_length=500, null=True, blank=True)
@@ -123,9 +126,10 @@ class News(TimeStamp):
     admin = models.ForeignKey(
         Admin, on_delete=models.SET_NULL, null=True, blank=True)
     
+    active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
-    
-
+    objects = NewsManager()
+    verified = NewsVerified()
     def __str__(self):
         return self.title
 
