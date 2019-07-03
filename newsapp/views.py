@@ -9,6 +9,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import JsonResponse
 
 from .forms import *
 
@@ -594,7 +597,7 @@ class CommentCreateView(ClientMixin, OrganizationMixin, CreateView):
         return '/news/' + str(news_id) + '/detail/'
 
 
-class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
+class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
@@ -623,7 +626,8 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rootcategorylist'] = NewsCategory.objects.filter(root= not None)
+        context['rootcategorylist'] = NewsCategory.objects.filter(
+            root=not None)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
@@ -657,16 +661,25 @@ class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
         return context
 
 
-class SubscriberView(SuccessMessageMixin,OrganizationMixin, CreateView):
-    template_name = "clienttemplates/error.html"
+class SubscriberView(ClientMixin, SuccessMessageMixin, CreateView):
+    template_name = "clienttemplates/clientbase.html"
     form_class = SubscriberForm
-    success_url = reverse_lazy('newsapp:home')
-    success_message = "thank you for subscribing"
+    success_url = reverse_lazy('newsapp:clienthome')
+    # success_message = "thank you for subscribing"
 
     def form_valid(self, form):
+        self.success_url = self.request.META.get('HTTP_REFERER')
         email = form.cleaned_data["email"]
         if Subscriber.objects.filter(email=email).exists():
-            return render(self.request, ("clienttemplates/error.html"), {"error": "subscriber already exist"})
-        send_mail("Subscription mail", "Thank you for Subscribing our news site",
-                  settings.EMAIL_HOST_USER, [email, ], fail_silently=False),
+            data = {
+                'error': "Email already exists!"
+            }
+            return JsonResponse(data)
+        else:
+            form.save()
+            data = {
+                'success': "Thank you for subscribing us!"
+            }
+            return JsonResponse(data)
+
         return super().form_valid(form)

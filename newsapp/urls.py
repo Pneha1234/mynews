@@ -23,15 +23,12 @@ urlpatterns = [
          name='popularnewslist'),
     path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
          name='mostcommentednewslist'),
-    path('search/',SearchView.as_view(),name='searched'),
+    path('search/', SearchView.as_view(), name='searched'),
 
 
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
     path('subscriber/', SubscriberView.as_view(), name='subscriber'),
-
-    # path("subscriber/check/", SubscriberCheckView.as_view(),
-    #      name="subscribercheck"),
     path('commentcreate/<int:pk>/',
          CommentCreateView.as_view(), name='commentcreate'),
     # path('news/<int:pk>/detail/',
@@ -39,9 +36,6 @@ urlpatterns = [
 
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
-    # path('subscriber/', SubscriberView.as_view(), name='subscriber'),
-
-    # path("subscriber/check/", SubscriberCheckView.as_view(), name="subscribercheck"),
     # editor url
     # editor url
     # editor url
@@ -97,7 +91,8 @@ urlpatterns = [
     path('login/',
          LoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(), name="edit-user-profile"),
+    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(),
+         name="edit-user-profile"),
 
 
     # admin url
