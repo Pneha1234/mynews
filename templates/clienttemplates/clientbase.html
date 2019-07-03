@@ -118,11 +118,7 @@
                                              <div class="m-menu-content">
                                                 <ul class="col-sm-12">
                                                    {% for root in category.newscategory_set.all %}
-<<<<<<< HEAD
-                                                   <li><a {% if root.title == clientcategorydetail.title %} class='active'{% endif %} href="{% url 'newsapp:clientcategorydetail' category.pk %}">{{root.title}}</a></li>
-=======
                                                    <li><a {% if root.title == clientcategorydetail.title %} class='active'{% endif %} href="{% url 'newsapp:clientcategorydetail' root.pk %}">{{ root.title }}</a></li>
->>>>>>> 196e62289b8f549e5597feafde2638fdf4c5ddde
                                                    {% endfor %} 
                                                 </ul>
                                              </div>
@@ -170,7 +166,7 @@
 
             <section id="subscribe_section" class="subscribe_section">
                <div class="row">
-                  <form style="padding-left: 100px" action="{% url 'newsapp:subscriber' %}" method="POST" class="subform1">
+                  <form action="{% url 'newsapp:subscriber' %}" method="POST" class="subform1 form-horizontal">
                      {% csrf_token %}
                      <div class="form-group form-group-lg">
                         <label class="col-sm-6 control-label" for="formGroupInputLarge">
