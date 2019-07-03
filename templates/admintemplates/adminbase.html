@@ -213,8 +213,16 @@
 
 
       {% block content %}
-      {% endblock %}
+      {% endblock %}  
+      <div class="modal" id="myModal">
+       <div class="modal-dialog">
+         <div class="modal-content">
 
+         </div>
+       </div>
+     </div>
+
+   
 
 
 
@@ -237,7 +245,7 @@
       <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
       <script src='https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js'></script>
       <script src="{%static 'adminstatic/js/plugins/bootstrap-datetimepicker.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    
 
               <!--  DataTables.net Plugin, full documentation here: https://datatables.net/
               -->
@@ -270,6 +278,19 @@
               <!-- Material Dashboard DEMO methods, don't include it in your project! -->
               
               <script src="{%static 'adminstatic/demo/demo.js' %}"></script>
+
+               <script type="text/javascript">
+                $('#myModal').on('show.bs.modal', function (e) {
+                  var button = $(e.relatedTarget);
+                  var modal = $(this);
+                  modal.find('.modal-content').load(button.data("remote"));
+
+                });
+                $('#myModal').on('hidden.bs.modal', function () {
+                  $('#refresh-section').load('{{request.build_absolute_uri}}' + ' #refresh-section');
+                });
+              </script>
+
               
               <script type="text/javascript">
                 setTimeout(function() {

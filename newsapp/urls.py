@@ -158,9 +158,9 @@ urlpatterns = [
          AdminNewsCategoryList.as_view(), name='adminnewscategory'),
     path('admin/newscategoryadd',
          AdminNewsCategoryCreate.as_view(), name='adminnewscategoryadd'),
-    path('admin/<slug:slug>/newscategoryupdate/',
+    path('admin/<int:pk>/newscategoryupdate/',
          AdminNewsCategoryUpdate.as_view(), name='adminnewscategoryupdate'),
-    path('admin/<slug:slug>/newscategorydelete/',
+    path('admin/<int:pk>/newscategorydelete/',
          AdminNewsCategoryDelete.as_view(), name='adminnewscategorydelete'),
 
     # admin newssubcategory

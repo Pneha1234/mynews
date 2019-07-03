@@ -301,7 +301,7 @@ class AdminAdvertizementPositionUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminAdvertizementPositionDelete(AdminRequiredMixin, SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/adminadvertizementpositionlist.html'
+    template_name = 'admintemplates/adminadvertizementpositiondelete.html'
 
     model = AdvertizementPosition
     success_url = reverse_lazy('newsapp:advertizementposition')
@@ -337,7 +337,7 @@ class AdminAdvertizementUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminAdvertizementDelete(SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/adminadvertizementlist.html'
+    template_name = 'admintemplates/adminadvertizementdelete.html'
     model = Advertizement
     success_url = reverse_lazy('newsapp:advertizement')
     success_message = 'Deleted successfully !!!!'
@@ -402,7 +402,7 @@ class AdminNewsCategoryUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminNewsCategoryDelete(SuccessMessageMixin, DeleteView):
-    template_name = "admintemplates/adminnewscategorylist.html"
+    template_name = "admintemplates/adminnewscategorydelete.html"
 
     model = NewsCategory
     success_url = reverse_lazy('newsapp:adminnewscategory')
@@ -438,7 +438,7 @@ class AdminNewsSubCategoryUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminNewsSubCategoryDelete(SuccessMessageMixin, DeleteView):
-    template_name = "admintemplates/adminnewssubcategorylist.html"
+    template_name = "admintemplates/adminnewssubcategorydelete.html"
     model = NewsSubCategory
     success_url = reverse_lazy('newsapp:adminnewssubcategorylist')
     success_message = 'Deleted successfully !!!!'
@@ -488,14 +488,10 @@ class AdminNewsUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminNewsDelete(SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/adminnewslist.html'
+    template_name = 'admintemplates/adminewsdelete.html'
     model = News
     success_url = reverse_lazy('newsapp:adminnewslist')
     success_message = 'Deleted successfully !!!!'
-
-    def get(self, *a, **kw):
-        return self.delete(*a, **kw)
-
 
 # admin editor View
 # admin editor View
@@ -532,7 +528,7 @@ class EditorUpdate(SuccessMessageMixin, UpdateView):
 
 
 class EditorDelete(SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/admineditorlist.html'
+    template_name = 'admintemplates/admineditordelete.html'
     model = Editor
     success_url = reverse_lazy('newsapp:editorlist')
     success_message = 'Deleted  successfully !!!!'

@@ -46,32 +46,11 @@
                 <td class="text-right">
                   <a href="{% url 'newsapp:advertizementpositionupdate' advertizementposition.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                 
-                  <a href="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
+                  <a data-remote="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}" href="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
                     <i class="material-icons">close</i></a>
                   </button>
 
-                  <!-- The Modal -->
-                  <div class="modal" id="myModal">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                          <h4 class="modal-title">Are You Sure !! You Wanna Delete {{advertizementposition.position }}</h4>
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        
-                        
-                        
-                        <!-- Modal footer -->
-                        <form action="{% url 'newsapp:advertizementpositiondelete' advertizementposition.pk %}" method="POST">
-                         {% csrf_token %}
-                         <button class="btn">Delete</button>
-                       </form>
-                       
-                     </div>
-                   </div>
-                 </div>
                  
                </div>
              </td>
@@ -91,5 +70,7 @@
 <!-- end row -->
 </div>
 </div>
+
+             
 
 {% endblock %}

@@ -62,7 +62,7 @@
                 <td>{{editorlist.about}}</td>
                 <td class="text-right">
                   <a href="{% url 'newsapp:editorupdate' editorlist.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
-                  <a href="{% url 'newsapp:editordelete' editorlist.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
+                  <a data-remote="{% url 'newsapp:editordelete' editorlist.pk %}"href="{% url 'newsapp:editordelete' editorlist.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
                     <i class="material-icons">close</i></a>
                     
 
