@@ -28,6 +28,7 @@ urlpatterns = [
     path('search/',SearchView.as_view(),name='searched'),
 
 
+
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
     path('subscriber/', SubscriberView.as_view(), name='subscriber'),
@@ -99,7 +100,8 @@ urlpatterns = [
     path('login/',
          LoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(), name="logout"),
-    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(), name="edit-user-profile"),
+    path('admin/<int:pk>/edit/', EditUserProfileView.as_view(),
+         name="edit-user-profile"),
 
 
     # admin url
@@ -186,7 +188,7 @@ urlpatterns = [
 
     path('admin/newslist',
          AdminNewsList.as_view(), name='adminnewslist'),
-
+    path('admin/newslist/<int:pk>/', AdminDetailView.as_view(), name='newslist'),
     path('admin/<int:pk>/newsdetail',
          AdminNewsDetailView.as_view(), name='adminnewsdetail'),
     path('admin/newsadd/',

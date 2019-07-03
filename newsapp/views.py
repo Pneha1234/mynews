@@ -6,6 +6,8 @@ from newsapp.forms import *
 from .models import *
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User
+from .mixin import SuperUserMixin
+from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from django.db.models import Q
@@ -104,10 +106,19 @@ class EditorNewsSubCategoryDelete(EditorRequiredMixin, DeleteView):
 # News Views
 # News Views
 
-class EditorNewsList(EditorRequiredMixin, ListView):
+
+class EditorNewsList(ListView):
     template_name = 'admintemplates/editornewslist.html'
     model = News
     context_object_name = 'newslist'
+
+    def get_queryset(self):
+        news = News.verified.all()
+        title = self.request.GET.get('title')
+        if title:
+            news = news.filter(title=title)
+
+        return news
 
 
 class EditorNewsDetailView(DetailView):
@@ -249,8 +260,16 @@ class AdminRequiredMixin(object):
 # admin advertizementposition view
 
 
-class AdminView(AdminRequiredMixin, TemplateView):
+class AdminView(AdminRequiredMixin, ListView):
     template_name = 'admintemplates/adminhome.html'
+    model = Admin
+    context_object_name = 'editorname'
+
+
+class AdminDetailView(AdminRequiredMixin, DetailView):
+    template_name = 'admintemplates/adminnews.html'
+    model = Admin
+    context_object_name = 'newslist'
 
 
 class AdminAdvertizementPositionList(AdminRequiredMixin, ListView):
@@ -431,7 +450,6 @@ class AdminNewsSubCategoryDelete(SuccessMessageMixin, DeleteView):
 class AdminNewsList(ListView):
     template_name = 'admintemplates/adminnewslist.html'
     model = News
-    context_object_name = 'adminnewslist'
 
 
 class AdminNewsDetailView(DetailView):
@@ -472,6 +490,9 @@ class AdminNewsDelete(SuccessMessageMixin, DeleteView):
     model = News
     success_url = reverse_lazy('newsapp:adminnewslist')
     success_message = 'Deleted successfully !!!!'
+
+    def get(self, *a, **kw):
+        return self.delete(*a, **kw)
 
 
 # admin editor View
@@ -633,6 +654,13 @@ class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
         context['commentlist'] = Comment.objects.all()
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
+
+        print(context['relatednewslist'], '*************************')
+        # form = CommentForm(self.request.POST or None)
+        # if form.is_valid():
+        #     form.save()
+        #     return render(self.request, 'newsapp:clienthome', {"form": form })
+
         return context
 
 
