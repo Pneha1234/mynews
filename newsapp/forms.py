@@ -86,7 +86,7 @@ class EditorNewsForm(forms.ModelForm):
             'content': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
-          
+
         }
 
     def __init__(self, *args, **kwargs):
@@ -130,39 +130,44 @@ class AdminOrgnizationalInformation(forms.ModelForm):
 
 
 class EditorForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput)
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter  username....'
+    }))
+    full_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter your full name ....'
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'email....'
+    }))
+    contact_no = forms.CharField(widget=forms.NumberInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'phone no...'
+    }))
+    address = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter you address..'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter password....'
+    }))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'confirm password....'
+    }))
+    image = forms.FileField(widget=forms.ImageField),
+    about = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'write abour yourself.........'
+    }))
 
     class Meta:
         model = Editor
         fields = [
             "full_name", "contact_no", "address", "email", "image", "about"]
-        widgets = {
-
-
-
-            'full_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'enter full name...'
-            }),
-            'contact_no': forms.TextInput(attrs={
-                'class': 'form-control',
-            }),
-            'address': forms.TextInput(attrs={
-                'class': 'form-control',
-            }),
-            'email': forms.URLInput(attrs={
-                'class': 'form-control',
-            }),
-
-            'image': forms.FileInput(attrs={
-                'class': 'form-control',
-            }),
-            'about': forms.TextInput(attrs={
-                'class': 'form-control',
-            }),
-        }
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
@@ -183,38 +188,74 @@ class EditorForm(forms.ModelForm):
 
 
 class AdminForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput)
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter  username....'
+    }))
+    full_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter your full name ....'
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'email....'
+    }))
+    contact_no = forms.CharField(widget=forms.NumberInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'phone no...'
+    }))
+    address = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter you address..'
+    }))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'enter password....'
+    }))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'confirm password....'
+    }))
+    image = forms.FileField(widget=forms.ImageField),
+    about = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'write abour yourself.........'
+    }))
 
     class Meta:
-        model = Admin
-        fields = ["username", "password", "confirm_password",
-                  "full_name", "contact_no", "address", "email", "image", "about"]
+        model = Editor
+        fields = [
+            "full_name", "contact_no", "address", "email", "image", "about"]
 
     def clean_username(self):
         username = self.cleaned_data.get("username")
         user = User.objects.filter(username=username)
         if user.exists():
             raise forms.ValidationError(
-                "user with this username already exists"
-            )
+                "user with this username already exist")
+
         return username
 
-    def clen_confirm_password(self):
+    def clean_confirm_password(self):
         password = self.cleaned_data.get("password")
         c_password = self.cleaned_data.get("confirm_password")
         if password != c_password:
-            raise forms.ValidationError(
-                "password didn't match"
-            )
+            raise forms.ValidationError("password didn't match")
 
         return c_password
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput)
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'username..'
+    }))
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control input-lg',
+        'placeholder': 'password'
+    }))
+    fields = ["username", "email", "password"]
 
 
 ##############
@@ -227,10 +268,10 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ["commenter", "email", "comment"]
-        widgets={
-        'commenter':forms.TextInput(attrs={'class':'form-control','placeholder':'name'}),
-        'email':forms.EmailInput(attrs={'class':'form-control','placeholder':'email'}),
-        'comment':forms.Textarea(attrs={'class':'form-control','placeholder':'comment'}),
+        widgets = {
+            'commenter': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'comment'}),
 
         }
 

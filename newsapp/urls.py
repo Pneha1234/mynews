@@ -23,18 +23,17 @@ urlpatterns = [
          name='popularnewslist'),
     path('news/mostcommented/list/', MostCommentedNewsListView.as_view(),
          name='mostcommentednewslist'),
-    path('search/', SearchView.as_view(), name='searched'),
     path('client/subcategory/<int:pk>/detail/',
          ClientSubcategoryDetailView.as_view(), name='clientsubcategory'),
     path('editor/<int:pk>/detail/',
          EditorDetailView.as_view(), name='editornewsdetail'),
+    path('search/', SearchView.as_view(), name='searched'),
+
+
 
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
     path('subscriber/', SubscriberView.as_view(), name='subscriber'),
-
-    # path("subscriber/check/", SubscriberCheckView.as_view(),
-    #      name="subscribercheck"),
     path('commentcreate/<int:pk>/',
          CommentCreateView.as_view(), name='commentcreate'),
     # path('news/<int:pk>/detail/',
@@ -42,9 +41,6 @@ urlpatterns = [
 
     path('', TemplateView.as_view(
          template_name='admintemplates/editorhome.html'), name='home'),
-    # path('subscriber/', SubscriberView.as_view(), name='subscriber'),
-
-    # path("subscriber/check/", SubscriberCheckView.as_view(), name="subscribercheck"),
     # editor url
     # editor url
     # editor url
@@ -189,7 +185,7 @@ urlpatterns = [
 
     path('admin/newslist',
          AdminNewsList.as_view(), name='adminnewslist'),
-
+    path('admin/newslist/<int:pk>/', AdminDetailView.as_view(), name='newslist'),
     path('admin/<int:pk>/newsdetail',
          AdminNewsDetailView.as_view(), name='adminnewsdetail'),
     path('admin/newsadd/',

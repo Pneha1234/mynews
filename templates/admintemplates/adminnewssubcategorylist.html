@@ -14,8 +14,8 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <a href="{% url 'newsapp:adminnewssubcategoryadd'%}" class="btn btn-link btn-warning btn-just-icon edit" style ='float:right;'><i class="material-icons">add</i></a>
-              <h4 class="card-title">News SubCategory</h4>
+              <a href="{% url 'newsapp:adminnewssubcategoryadd'%}" class="btn btn-link btn-warning btn-just-icon edit " style ='margin-left:87%; margin-top:30px; margin-right: 2px;'><i class="material-icons" style="font-size:50px;">add_box</i></a>
+              
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -29,18 +29,18 @@
                   <tr>
                     <th>Title</th>
                     <th>main_category</th>
-                    <th>image</th>
+                    
                     <th>icon_character</th>
-                    <th class="disabled-sorting text-right">Actions</th>
+                    <th class="disabled-sorting ">Actions</th>
                   </tr>
                 </thead>
                 <tfoot>
                   <tr>
                     <th>Title</th>
                     <th>main_category</th>
-                    <th>image</th>
+                    
                     <th>icon_character</th>
-                    <th class="text-right">Actions</th>
+                    <th class="">Actions</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -48,9 +48,7 @@
                  <tr>
                   <td>{{newssubcategory.title}}</td>
                   <td>{{newssubcategory.main_category}}</td>
-                  <td>{% if newssubcategory.image%}<img src="{{newssubcategory.image.url}}" class="img-responsive" style="width:30%">{% else %}
-                    No Image
-                    {% endif %}</td>
+                  
                   <td>{{newssubcategory.icon_character}}</td>
                   <td class="text-right">
                     <a href="{% url 'newsapp:adminnewssubcategoryupdate' newssubcategory.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
