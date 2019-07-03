@@ -3,6 +3,7 @@
 <section id="entity_section" class="entity_section">
 <div class="container">
 	<div class="row">
+		<h1 class="text-success">Search Results</h1>
 		{% for news in searchednews %}
 		<div class="col-md-8">
 			<div class="entity_wrapper">
@@ -11,12 +12,13 @@
 				</div>
 
 				<div class="entity_content">
-					{{news.content|truncatechars:'100'}}
+					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.content|truncatechars:'50'}}</a></h1>
 				</div>
+				<h1><hr size="30px"></h1>
 			</div>
 		</div>
 		{% empty %}
-		<h1>no news found</h1>
+		<h1 class="text-danger">no news found</h1>
 {% endfor %}
 
 	</div>

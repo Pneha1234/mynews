@@ -120,7 +120,6 @@ class EditorNewsList(ListView):
         title = self.request.GET.get('title')
         if title:
             news = news.filter(title=title)
-
         return news
 
 
@@ -569,11 +568,12 @@ class OrganizationMixin(object):
         context['organizations'] = OrgnizationalInformation.objects.all()
         return context
 
+
 class EditorMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['editornewslist'] = News.objects.all()
+        context['editornewslist'] = Editor.objects.all()
         return context
 
 
@@ -581,7 +581,7 @@ class RootNewsMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rootnewslist'] = News.objects.filter(root = self.object.root)
+        context['rootnewslist'] = News.objects.filter(root=self.object.root)
         return context
 # class ClientHomeView(ClientMixin, TemplateView):
 
@@ -603,13 +603,13 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class EditorNewsListView(ClientMixin, OrganizationMixin, EditorMixin, ListView):
+class EditorNewsDetailView(ClientMixin, OrganizationMixin, EditorMixin, DetailView):
     template_name = 'clienttemplates/editornewslist.html'
     model = Editor
-    context_object_name = 'editornewslist'
+    context_object_name = 'editornewsdetail'
 
 
-class SearchView(ClientMixin, OrganizationMixin,TemplateView):
+class SearchView(ClientMixin, OrganizationMixin, TemplateView):
     template_name = 'clienttemplates/searchresult.html'
 
     def get_context_data(self, **kwargs):
@@ -654,15 +654,10 @@ class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
         context['latestnews'] = News.objects.order_by('-id')
         context['newseditor'] = Editor.objects.all()
         context['commentform'] = CommentForm
-        context['commentlist'] = Comment.objects.all()
+        context['commentlist'] = Comment.objects.all().order_by('-id')
+        context['commentlist1'] = str(Comment.objects.all().count())
         context['relatednewslist'] = News.objects.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
-
-        print(context['relatednewslist'], '*************************')
-        # form = CommentForm(self.request.POST or None)
-        # if form.is_valid():
-        #     form.save()
-        #     return render(self.request, 'newsapp:clienthome', {"form": form })
 
         return context
 
@@ -675,12 +670,25 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['rootcategorylist'] = NewsCategory.objects.filter(root = self.object.root)
+        context['rootcategorylist'] = NewsCategory.objects.filter(
+            root=self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
         context['popularnews'] = News.objects.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         context['newseditor'] = Editor.objects.all()
         return context
+
+
+class EditorDetailView(ClientMixin, OrganizationMixin, DetailView):
+    template_name = 'clienttemplates/editordetail.html'
+    model = Editor
+    context_object_name = 'editordetail'
+
+
+class ClientSubcategoryDetailView(ClientMixin, DetailView):
+    template_name = 'clienttemplates/clientsubcategorydetail.html'
+    model = NewsSubCategory
+    context_object_name = 'clientsubcategorydetail'
 
 
 class PopularNewsListView(ClientMixin, OrganizationMixin, ListView):

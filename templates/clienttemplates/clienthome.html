@@ -25,10 +25,10 @@
 					<div class="feature_article_inner">
 						<div class="tag_lg red"><a>Hot News</a></div>
 						<div class="feature_article_title">
-							<h1><a  href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }} </a></h1>
+							<h1><a  href="{% url 'newsapp:clientnewsdetail' news.id %}" target="_self">{{ news.title }} </a></h1>
 						</div>
 
-						<div class="feature_article_date"><a href="{% url 'newsapp:editornewslist' %}" target="_self">{{ news.editor }}</a><a target="_self">{{ news.created_at }}</a></div>
+						<div class="feature_article_date"><a href="{% url 'newsapp:editornewsdetail' news.editor.id %}" target="_self">{{ news.editor }}</a>&nbsp;<a target="_self">{{ news.created_at|date }}</a></div>
 
 						<div class="feature_article_content">
 							{{  news.content |truncatechars:150  }}
@@ -58,10 +58,10 @@
 					<div class="feature_article_inner" >
 						<div class="tag_lg purple"><a>Top Viewed</a></div>
 						<div class="feature_article_title">
-							<h1><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title |truncatechars:40}}</a></h1>
+							<h1><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title|truncatechars:40}}</a></h1>
 						</div>
 
-						<div class="feature_article_date"><a href="{% url 'newsapp:editornewslist' %}" target="_self">{{ news.editor}}</a><a target="_self">{{ news.created_at }}</a></div>
+						<div class="feature_article_date"><a href="{% url 'newsapp:editornewsdetail' news.editor.id %}" target="_self">{{ news.editor}}</a><a target="_self">{{ news.created_at }}</a></div>
 
 						<div class="feature_article_content">
 							{{ news.content |truncatechars:40}}
@@ -117,7 +117,7 @@
 									<h2><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }}</a></h2>
 								</div>
 
-								<div class="category_article_date">by: <a href="{% url 'newsapp:editornewslist' %}">{{ news.editor }}</a></div>
+								<div class="category_article_date">by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></div>
 
 								<div class="category_article_content">
 									{{ news.content |truncatechars:150}}
@@ -154,7 +154,7 @@
 									<div class="media-body">
 										<span class="tag purple">{{news.main_category}}</span>
 										<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{news.title}}</a></h3>
-										<span class="media-date"><a>{{news.created_at}}</a> by: <a href="{% url 'newsapp:editornewslist' %}">{{news.editor}}</a></span>
+										<span class="media-date"><a>{{news.created_at}}</a> by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{news.editor}}</a></span>
 										<div class="media_social">
 											<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
 											<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span> -->
@@ -181,7 +181,7 @@
 									<div class="media-body">
 										<span class="tag purple">{{news.main_category}}</span>
 										<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{news.title}}</a></h3>
-										<span class="media-date"><a>{{news.created_at}}</a>, by: <a href="{% url 'newsapp:editornewslist' %}">{{news.editor}}</a></span>
+										<span class="media-date"><a>{{news.created_at}}</a>, by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{news.editor}}</a></span>
 										<div class="media_social">
 											<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
 											<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span> -->
@@ -228,7 +228,7 @@
 											<h2><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }} </a></h2>
 										</div>
 
-										<div class="article_date"><a>{{ news.created_at }}</a>, by: <a href="{% url 'newsapp:editornewslist' %}">{{ news.editor}}</a></div>
+										<div class="article_date"><a>{{ news.created_at }}</a>, by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor}}</a></div>
 
 
 										<div class="category_article_content">
@@ -276,7 +276,7 @@
 															</h2>
 														</div>
 
-														<div class="article_date">by: <a href="{% url 'newsapp:editornewslist' %}">{{ news.editor }}</a></div>
+														<div class="article_date">by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></div>
 
 														<div class="category_article_content">
 															{{ news.content |truncatechars:150 }}
@@ -305,7 +305,7 @@
 															</div>
 															<div class="media-body">
 																<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }}</a></h3>
-																<span class="media-date"><a>10Aug- 2015</a>, by: <a href="{% url 'newsapp:editornewslist' %}">{{ news.editor }}</a></span>
+																<span class="media-date"><a>10Aug- 2015</a>, by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></span>
 																<div class="media_social">
 																	<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
 																	<span><a><i class="fa fa-comments-o"></i>4</a> Comments</span>
@@ -347,7 +347,7 @@
 															<h2><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }}</a></h2>
 														</div>
 
-														<div class="article_date">by: <a href="{% url 'newsapp:editornewslist' %}">{{ news.editor }}</a></div>
+														<div class="article_date">by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></div>
 
 														<div class="category_article_content">
 															{{ news.content |truncatechars:300 }}
@@ -384,20 +384,20 @@
 					<div class="media">
 
 						<div class="media-left">
-						<a>
+						
 							{% if news.image %}
 							<img class="media-object" src="{{ news.image.url }}" style = "height:100px; width:100px;" alt="Generic placeholder image">
 							{% else %}
 							no image
 							{% endif %}
-						</a>
+						
 						</div>
 
 						<div class="media-body">
 							<h3 class="media-heading">
-								<a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self"> {{ news.title |truncatechars:60 }}</a>
+								<a href="{% url 'newsapp:clientnewsdetail' news.id %}" target="_self"> {{ news.title |truncatechars:60 }}</a>
 							</h3> 
-							<span class="media-date"><a>{{ news.created_at }}</a>, by: <a href="{% url 'newsapp:editornewslist' %}">{{ news.editor }}</a></span>
+							<span class="media-date">{{ news.created_at }}, by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></span>
 							<div class="widget_article_social">
 								<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
 										<!-- <span>
