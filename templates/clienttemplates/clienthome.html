@@ -24,7 +24,7 @@
 							<h1><a  href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{ news.title }} </a></h1>
 						</div>
 
-						<div class="feature_article_date"><a href="{% url 'newsapp:editornewslist' %}" target="_self">{{ news.editor }}</a><a target="_self">{{ news.created_at }}</a></div>
+						<div class="feature_article_date"><a href="{% url 'newsapp:editornewslist' %}" target="_self">{{ news.editor }}</a>&nbsp;<a target="_self">{{ news.created_at|date }}</a></div>
 
 						<div class="feature_article_content">
 							{{  news.content |truncatechars:150  }}

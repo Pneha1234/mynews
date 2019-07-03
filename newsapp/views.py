@@ -117,7 +117,6 @@ class EditorNewsList(ListView):
         title = self.request.GET.get('title')
         if title:
             news = news.filter(title=title)
-
         return news
 
 
@@ -570,7 +569,7 @@ class EditorMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['editornewslist'] = News.objects.all()
+        context['editornewslist'] = Editor.objects.all()
         return context
 
 
@@ -600,10 +599,10 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class EditorNewsListView(ClientMixin, OrganizationMixin, EditorMixin, ListView):
+class EditorNewsDetailView(ClientMixin, OrganizationMixin, EditorMixin, DetailView):
     template_name = 'clienttemplates/editornewslist.html'
     model = Editor
-    context_object_name = 'editornewslist'
+    context_object_name = 'editornewsdetail'
 
 
 class SearchView(ClientMixin, OrganizationMixin,TemplateView):
