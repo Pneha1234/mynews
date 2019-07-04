@@ -71,7 +71,7 @@
 							<div class="media-body">
 								<span class="tag purple"><a href="" target="_self">{{newslist.main_category}}</a></span>
 								<a href="{% url 'newsapp:clienthome' %}" target="_self"><h3 class="media-heading">{{newslist.content|truncatechars:'50'}}</h3></a>
-								<span class="media-date"><a href="">{{newslist.created_at}}</a>, by: <a href="#">{{newslist.editor}}</a></span>
+								<span class="media-date"><a href="">{{newslist.created_at|date}}</a>, by: <a href="#">{{newslist.editor}}</a></span>
 								<div class="media_social">
 							
 								</div>
@@ -102,8 +102,8 @@
 						<h2 class="media-heading">{{comment.commenter}}</h2>
 						{{comment.comment}}
 						<div class="entity_vote">
-						<i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a>
+						<!-- <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
+						<a href="#"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> -->
 
 						
 						</div>
@@ -164,7 +164,8 @@
 		</div>
 		<div class="media-body">
 			<h3 class="media-heading">
-				<a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}</a>
+				<a href="{% url 'newsapp:clientnewsdetail' news.id %}">
+				{{news.title}}
 			</h3>
 			<p>{{news.content|striptags|truncatechars:'30'}}</p>
 			<span class="media-date">{{news.created_at|date}}  
