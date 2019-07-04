@@ -51,7 +51,7 @@
                   <td>{{news.main_category}}</td>
                   <td>{{news.sub_category}}</td>
                   
-                  <td>{% if news.video_link %}{{news.video_link}}
+                  <td>{% if news.video_link %}{{news.video_link| truncatechars:'30'}}
                     {% else %}
                     No Video
                     {% endif %}
