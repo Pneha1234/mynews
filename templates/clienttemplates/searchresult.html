@@ -8,17 +8,17 @@
 		<div class="col-md-8">
 			<div class="entity_wrapper">
 				<div class="entity_title">
-					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}</a></h1>
+					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}<span class="text-success" style="margin-top: 100px">|News</span></a></h1>
 				</div>
 
 				<div class="entity_content">
-					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.content|truncatechars:'50'}}</a></h1>
+					<p>{{news.content|truncatechars:'50'}}</p>
 				</div>
-				<h1><hr size="30px"></h1>
+				<h1><hr class="line"></h1>
 			</div>
 		</div>
 		{% empty %}
-		<h1 class="text-danger">no news found</h1>
+		<h1 class="text-danger">no results found</h1>
 {% endfor %}
 
 	</div>
