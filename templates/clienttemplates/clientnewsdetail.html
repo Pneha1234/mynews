@@ -19,7 +19,9 @@
 				</div>
 				<div>
 					<p class='text-left' style="display: inline-block;">{{clientnewsdetail.created_at|date}}
-					<a href="{% url 'newsapp:editornewsdetail' clientnewsdetail.editor_id %}"><span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></a></p>
+						{% if not news.editor %}
+						{% else %}
+					<a href="{% url 'newsapp:editornewsdetail' clientnewsdetail.editor_id %}">{% endif %}<span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></a></p>
 				</div>
 			<!-- 	<div class="entity_rating">
 					<i class="fa fa-star"></i>
