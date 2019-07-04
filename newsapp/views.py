@@ -494,6 +494,8 @@ class AdminNewsDelete(SuccessMessageMixin, DeleteView):
 # admin editor View
 # admin editor View
 # admin editor View
+
+
 class EditorDashboardList(ListView):
     template_name = 'admintemplates/admineditorlist.html'
     model = Editor
@@ -585,7 +587,7 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['newslist'] = News.objects.all()
-        context['clientcategorylist'] = NewsCategory.objects.all()
+        context['clientcategorylist'] = NewsCategory.objects.filter(root=None)
         context['topviewednews'] = News.objects.order_by('-view_count')
         context['popularnews'] = News.objects.order_by('-view_count')
         context['hotnews'] = News.objects.order_by('created_at')
@@ -593,6 +595,7 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         context['newseditor'] = Editor.objects.all()
         context['advertiselist'] = Advertizement.objects.all()
         context['subform'] = SubscriberForm
+
         return context
 
 
@@ -631,7 +634,7 @@ class CommentCreateView(ClientMixin, OrganizationMixin, CreateView):
         return '/news/' + str(news_id) + '/detail/'
 
 
-class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
+class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
@@ -662,7 +665,6 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rootcategorylist'] = NewsCategory.objects.filter(root = self.object.root)
         context['rootcategorylist'] = NewsCategory.objects.filter(
             root=self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
@@ -710,7 +712,7 @@ class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
         return context
 
 
-class SubscriberView(SuccessMessageMixin,OrganizationMixin, CreateView):
+class SubscriberView(SuccessMessageMixin, OrganizationMixin, CreateView):
     template_name = "clienttemplates/error.html"
     form_class = SubscriberForm
     success_url = reverse_lazy('newsapp:home')
