@@ -15,6 +15,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.http import JsonResponse
 
+
 from .forms import *
 
 
@@ -569,7 +570,7 @@ class EditorMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['editornewslist'] = Editor.objects.all()
+        context['editornewsdetail'] = Editor.objects.all()
         return context
 
 
@@ -599,10 +600,10 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class EditorNewsDetailView(ClientMixin, OrganizationMixin, EditorMixin, DetailView):
+class EditorNewsListView(ClientMixin, OrganizationMixin, EditorMixin, ListView):
     template_name = 'clienttemplates/editornewslist.html'
     model = Editor
-    context_object_name = 'editornewsdetail'
+    context_object_name = 'editornewslist'
 
 
 class SearchView(ClientMixin, OrganizationMixin, TemplateView):
@@ -634,7 +635,7 @@ class CommentCreateView(ClientMixin, OrganizationMixin, CreateView):
         return '/news/' + str(news_id) + '/detail/'
 
 
-class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
+class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
@@ -665,7 +666,7 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        context['rootcategorylist'] = NewsCategory.objects.filter(root = self.object.root)
         context['rootcategorylist'] = NewsCategory.objects.filter(
             root=self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
@@ -713,12 +714,11 @@ class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
         return context
 
 
-class SubscriberView(ClientMixin, SuccessMessageMixin, CreateView):
+class SubscriberView(SuccessMessageMixin,CreateView):
     template_name = "clienttemplates/clientbase.html"
     form_class = SubscriberForm
     success_url = reverse_lazy('newsapp:clienthome')
-    # success_message = "thank you for subscribing"
-
+    # success_message = "thank you for subscribing" 
     def form_valid(self, form):
         self.success_url = self.request.META.get('HTTP_REFERER')
         email = form.cleaned_data["email"]

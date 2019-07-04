@@ -27,7 +27,11 @@ nav-item active
                               <tr>
                                 <td>
                                   <div class="flag">
+                                    {% if editor.image %}
                                     <img src="{{editor.image.url}}" ></div>
+                                    {% else %}
+                                    no image
+                                    {% endif %}
                                 </td>
                                 <td><a href="{% url 'newsapp:newslist' editor.id %}">{{editor.full_name}}</a></td>
                                 <td class="text-right">
