@@ -14491,6 +14491,7 @@ thead.thead-inverse th {
 .dataTable>thead>tr>td,
 .dataTable>thead>tr>th {
     padding: 5px
+    table-layout:fixed;
 }
 
 .info {

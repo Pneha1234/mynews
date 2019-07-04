@@ -11,9 +11,6 @@ from django.contrib.auth.mixins import AccessMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib. auth import authenticate, login, logout
 from django.db.models import Q
-from django.core.mail import send_mail
-from django.conf import settings
-from django.http import JsonResponse
 
 from .forms import *
 
@@ -301,7 +298,7 @@ class AdminAdvertizementPositionUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminAdvertizementPositionDelete(AdminRequiredMixin, SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/adminadvertizementpositionlist.html'
+    template_name = 'admintemplates/adminadvertizementpositiondelete.html'
 
     model = AdvertizementPosition
     success_url = reverse_lazy('newsapp:advertizementposition')
@@ -337,7 +334,7 @@ class AdminAdvertizementUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminAdvertizementDelete(SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/adminadvertizementlist.html'
+    template_name = 'admintemplates/adminadvertizementdelete.html'
     model = Advertizement
     success_url = reverse_lazy('newsapp:advertizement')
     success_message = 'Deleted successfully !!!!'
@@ -402,7 +399,7 @@ class AdminNewsCategoryUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminNewsCategoryDelete(SuccessMessageMixin, DeleteView):
-    template_name = "admintemplates/adminnewscategorylist.html"
+    template_name = "admintemplates/adminnewscategorydelete.html"
 
     model = NewsCategory
     success_url = reverse_lazy('newsapp:adminnewscategory')
@@ -438,7 +435,7 @@ class AdminNewsSubCategoryUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminNewsSubCategoryDelete(SuccessMessageMixin, DeleteView):
-    template_name = "admintemplates/adminnewssubcategorylist.html"
+    template_name = "admintemplates/adminnewssubcategorydelete.html"
     model = NewsSubCategory
     success_url = reverse_lazy('newsapp:adminnewssubcategorylist')
     success_message = 'Deleted successfully !!!!'
@@ -488,14 +485,10 @@ class AdminNewsUpdate(SuccessMessageMixin, UpdateView):
 
 
 class AdminNewsDelete(SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/adminnewslist.html'
+    template_name = 'admintemplates/adminewsdelete.html'
     model = News
     success_url = reverse_lazy('newsapp:adminnewslist')
     success_message = 'Deleted successfully !!!!'
-
-    def get(self, *a, **kw):
-        return self.delete(*a, **kw)
-
 
 # admin editor View
 # admin editor View
@@ -532,7 +525,7 @@ class EditorUpdate(SuccessMessageMixin, UpdateView):
 
 
 class EditorDelete(SuccessMessageMixin, DeleteView):
-    template_name = 'admintemplates/admineditorlist.html'
+    template_name = 'admintemplates/admineditordelete.html'
     model = Editor
     success_url = reverse_lazy('newsapp:editorlist')
     success_message = 'Deleted  successfully !!!!'
@@ -573,7 +566,7 @@ class EditorMixin(object):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['editornewslist'] = Editor.objects.all()
+        context['editornewsdetail'] = Editor.objects.all()
         return context
 
 
@@ -603,10 +596,10 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         return context
 
 
-class EditorNewsDetailView(ClientMixin, OrganizationMixin, EditorMixin, DetailView):
+class EditorNewsListView(ClientMixin, OrganizationMixin, EditorMixin, ListView):
     template_name = 'clienttemplates/editornewslist.html'
     model = Editor
-    context_object_name = 'editornewsdetail'
+    context_object_name = 'editornewslist'
 
 
 class SearchView(ClientMixin, OrganizationMixin, TemplateView):
@@ -638,7 +631,7 @@ class CommentCreateView(ClientMixin, OrganizationMixin, CreateView):
         return '/news/' + str(news_id) + '/detail/'
 
 
-class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
+class ClientNewsDetailView(ClientMixin,OrganizationMixin, DetailView):
     template_name = 'clienttemplates/clientnewsdetail.html'
     model = News
     context_object_name = 'clientnewsdetail'
@@ -669,7 +662,7 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        context['rootcategorylist'] = NewsCategory.objects.filter(root = self.object.root)
         context['rootcategorylist'] = NewsCategory.objects.filter(
             root=self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
@@ -717,25 +710,16 @@ class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
         return context
 
 
-class SubscriberView(ClientMixin, SuccessMessageMixin, CreateView):
-    template_name = "clienttemplates/clientbase.html"
+class SubscriberView(SuccessMessageMixin,OrganizationMixin, CreateView):
+    template_name = "clienttemplates/error.html"
     form_class = SubscriberForm
-    success_url = reverse_lazy('newsapp:clienthome')
-    # success_message = "thank you for subscribing"
+    success_url = reverse_lazy('newsapp:home')
+    success_message = "thank you for subscribing"
 
     def form_valid(self, form):
-        self.success_url = self.request.META.get('HTTP_REFERER')
         email = form.cleaned_data["email"]
         if Subscriber.objects.filter(email=email).exists():
-            data = {
-                'error': "Email already exists!"
-            }
-            return JsonResponse(data)
-        else:
-            form.save()
-            data = {
-                'success': "Thank you for subscribing us!"
-            }
-            return JsonResponse(data)
-
+            return render(self.request, ("clienttemplates/error.html"), {"error": "subscriber already exist"})
+        send_mail("Subscription mail", "Thank you for Subscribing our news site",
+                  settings.EMAIL_HOST_USER, [email, ], fail_silently=False),
         return super().form_valid(form)

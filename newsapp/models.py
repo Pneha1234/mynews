@@ -95,7 +95,7 @@ class NewsSubCategory(TimeStamp):
     title = models.CharField(max_length=500)
     slug = models.SlugField(unique=True, null=True, blank=True)
     main_category = models.ForeignKey(NewsCategory, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="news/sub_category")
+    image = models.ImageField(upload_to="news/sub_category" )
     icon_character = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
