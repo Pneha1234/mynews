@@ -7,10 +7,10 @@
 <div class="row">
   <div class="col-md-6">
     <div class="card card-product" style="margin-left:230px;">
-      <div class="card-header " data-header-animation="true" style="margin-left: 140px;" >
+      <div class="card-header " data-header-animation="true" >
         <a href="#pablo">
           {% if adminnewsdetail.image %}
-          <img class="img" src="" >
+          <img class="img" style="margin-left:60px; width:80%; height:100%" src="{{adminnewsdetail.image.url}}" >
         </a>
         {% else %}
         No Image
