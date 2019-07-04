@@ -323,7 +323,7 @@ class AdminAdvertizementCreate(SuccessMessageMixin, CreateView):
     template_name = "admintemplates/adminadvertizementadd.html"
     model = Advertizement
     form_class = AdminAdvertizement
-    success_url = reverse_lazy('newsapp:advertizementadd')
+    success_url = reverse_lazy('newsapp:advertizement')
     success_message = 'Created successfully !!!!'
 
 
