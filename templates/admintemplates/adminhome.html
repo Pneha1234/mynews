@@ -30,7 +30,8 @@ nav-item active
                                     {% if editor.image %}
                                     <img src="{{editor.image.url}}" ></div>
                                     {% else %}
-                                    No image
+                                    no image
+
                                     {% endif %}
                                 </td>
                                 <td><a href="{% url 'newsapp:newslist' editor.id %}">{{editor.full_name}}</a></td>

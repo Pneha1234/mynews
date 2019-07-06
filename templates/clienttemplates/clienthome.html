@@ -46,7 +46,7 @@
 				{% endfor %}
 			</div>
 			
-				{% for news in topviewednews|slice:":2" %}
+			{% for news in topviewednews|slice:":2" %}
 			<div class="col-md-5">	
 				<div class="feature_static_wrapper">		
 					<div class="feature_article_img">
@@ -78,7 +78,7 @@
 				</div>
 				<br>
 			</div>
-				{% endfor %}
+			{% endfor %}
 		</div>
 	</div>
 </section>
@@ -136,7 +136,7 @@
 
 					<div class="category_article_wrapper">
 						<div class="row">
-							{% elif news|slice:'2:4' %}
+							{% elif news|slice:'2:6' %}
 							<div class="col-md-6">
 								<div class="media">
 
@@ -162,31 +162,6 @@
 								</div>
 							</div>
 
-							{% else %}
-
-							<div class="col-md-6">
-								<div class="media">
-									<div class="media-left">
-										<a href="{% url 'newsapp:clientnewsdetail' news.pk %}"><img class="media-object" src="{{news.image.url}}" width=150 height=150 alt="Generic placeholder image"></a>
-									</div>
-									<div class="media-body">
-										<span class="tag purple">{{news.main_category}}</span>
-										<h3 class="media-heading"><a href="{% url 'newsapp:clientnewsdetail' news.pk %}" target="_self">{{news.title}}</a></h3>
-										<span class="media-date"><a>{{news.created_at}}</a>
-											{% if not news.editor %}
-											{% else %}
-										 by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{news.editor}}</a>
-										 {% endif %}
-										</span>
-										<div class="media_social">
-											<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
-											<!-- <span><a href="#"><i class="fa fa-share-alt"></i>424</a> Shares</span> -->
-											<span><a ><i class="fa fa-comments-o"></i>4</a> Comments</span>
-										</div>
-									</div>
-								</div>
-							</div>
-
 							{% endif %}
 
 							{% endfor %}
@@ -198,7 +173,7 @@
 
 					</div>
 
-					{% elif forloop.counter == 2%}			
+					{% elif forloop.counter == 2 %}			
 					<div class="category_section tablet">
 						<div class="article_title header_pink">
 							<h2><a href="{% url 'newsapp:clientcategorydetail' maincategory.pk %}" target="_self">{{ maincategory.title }}</a></h2>
@@ -370,9 +345,6 @@
 				{% endif %}
 				{% endif %}
 				{% endfor %}	
-			</div>
-		</div>
-
 
 			<div class="col-md-4">
 				<div class="widget">

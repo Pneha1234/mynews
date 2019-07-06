@@ -49,9 +49,7 @@ class NewsSubCategoryForm(forms.ModelForm):
             'main_category': forms.Select(attrs={
                 'class': 'form-control',
             }),
-            'image': forms.FileInput(attrs={
-                'class': 'form-control',
-            }),
+            'image': forms.FileInput(),
 
             'icon_character': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -158,7 +156,7 @@ class EditorForm(forms.ModelForm):
         'class': 'form-control input-lg',
         'placeholder': 'confirm password....'
     }))
-    image = forms.FileField(widget=forms.ImageField),
+    image = forms.FileInput(),
     about = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control input-lg',
         'placeholder': 'write abour yourself.........'
@@ -223,7 +221,7 @@ class AdminForm(forms.ModelForm):
     }))
 
     class Meta:
-        model = Editor
+        model = Admin
         fields = [
             "full_name", "contact_no", "address", "email", "image", "about"]
 
