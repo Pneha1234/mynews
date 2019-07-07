@@ -64,7 +64,7 @@
 							<a href="{% url 'newsapp:editornewsdetail' news.editor.id %}" target="_self">{{ news.created_at|date}}</a>
 							{% endif %}
 							<a href="{% url 'newsapp:clientnewsdetail' news.id %}" target="_self">&nbsp;&nbsp; By:{{ news.editor }}</a></div>
-							}
+							
 
 						<div class="feature_article_content">
 							{{ news.content |truncatechars:40}}
@@ -167,10 +167,10 @@
 							{% endfor %}
 						</div>
 
-						{% for category in clientcategorylist|slice:':1' %}
+				<!-- 		{% for category in clientcategorylist|slice:':1' %}
 						<p class="divider"><a href="{% url 'newsapp:clientcategorydetail' category.pk %}">More News&nbsp;&raquo;</a></p>
 						{% endfor %}
-
+ -->
 					</div>
 
 					{% elif forloop.counter == 2 %}			
@@ -351,7 +351,7 @@
 					<div class="widget_title widget_black">
 						<h2><a>Popular News</a></h2>
 					</div>
-					{% for news in popularnews|slice:':4' %}
+					{% for news in popularnews|slice:'4' %}
 					<div class="media">
 						<div class="media-left">
 							<a><img class="media-object" src="{{ news.image.url }}" style = "height:100px; width:100px;" alt="Generic placeholder image"></a>
@@ -382,8 +382,9 @@
 							</div>
 							{% endif %}
 							{% endfor %}
-							<p class="widget_divider"><a href="{% url 'newsapp:popularnewslist' %}" target="_self">More News&nbsp;&raquo;</a></p>
+							<!-- <p class="widget_divider"><a href="{% url 'newsapp:popularnewslist' %}" target="_self">More News&nbsp;&raquo;</a></p> -->
 						</div>
+		
 
 				<!-- <!-- <!-- 		<!-- <div class="widget hidden-xs m30">
 							<img class="img-responsive adv_img" src="{% static 'clientstatic/img/right_add4.jpg'%}" alt="add_one">
@@ -426,18 +427,18 @@
 					-->
 
 
-						{% for company in advertiselist %}
+						<!-- {% for company in advertiselist %}
 						{% if forloop.counter == 1 %}
 						<div class="widget hidden-xs m30">
 							<img class="img-responsive widget_img" src="{{ company.image.url }}" alt="add_one">
 						</div>
 						{% endif %}
 						{% endfor %}
+ -->
 
 
 
-
-						<div class="widget m30">
+					<!-- 	<div class="widget m30">
 							<div class="widget_title widget_black">
 								<h2><a href="#">Editor Corner</a></h2>
 								<span>
@@ -445,24 +446,24 @@
 								</span>
 
 							</div>
-						</div>
-					</div>
-				
-					<p class="widget_divider"><a href="{% url 'newsapp:popularnewslist' %}" target="_self">More News&nbsp;&raquo;</a></p>
-				</div>
-				<div class="widget hidden-xs m30">
+						</div> -->
+			
+				<!-- 
+					<p class="widget_divider"><a href="{% url 'newsapp:popularnewslist' %}" target="_self">More News&nbsp;&raquo;</a></p> -->
+			
+				<!-- <div class="widget hidden-xs m30">
 					{% for company in advertiselist %}
 					{% if forloop.counter == 1 %}
 					<img class="img-responsive widget_img" src="{{ company.image.url }}" alt="add_one">
 					{% endif %}
 					{% endfor %}
-				</div>
-				<div class="widget hidden-xs m30">
+				</div> -->
+				<!-- <div class="widget hidden-xs m30">
 					{% for company in advertiselist|slice:'2:' %}
 					<img class="img-responsive add_img" src="{{ company.image.url }}"  style = "height:190px; width:175px;" alt="add_one">
 					{% endfor %}
 				</div>
-			</div>
+			</div> -->
 		</div>	
 	</div>	
 </section>

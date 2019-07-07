@@ -594,7 +594,7 @@ class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
         context['clientcategorylist'] = NewsCategory.objects.filter(root=None)
         context['topviewednews'] = News.objects.order_by('-view_count')
         context['popularnews'] = News.objects.order_by('-view_count')
-        context['hotnews'] = News.objects.order_by('created_at')
+        context['hotnews'] = News.objects.order_by('-created_at')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         context['newseditor'] = Editor.objects.all()
         context['advertiselist'] = Advertizement.objects.all()
