@@ -35,16 +35,11 @@ urlpatterns = [
 
 
 
-    path('', TemplateView.as_view(
-         template_name='admintemplates/editorhome.html'), name='home'),
     path('subscriber/', SubscriberView.as_view(), name='subscriber'),
     path('commentcreate/<int:pk>/',
          CommentCreateView.as_view(), name='commentcreate'),
     # path('news/<int:pk>/detail/',
     #      ClientNewsDetailView.as_view(), name='clientnewsdetail'),
-
-    path('', TemplateView.as_view(
-         template_name='admintemplates/editorhome.html'), name='home'),
     # editor url
     # editor url
     # editor url
@@ -103,6 +98,8 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path('admin/<int:pk>/edit/', EditUserProfileView.as_view(),
          name="edit-user-profile"),
+    path("password/change/",
+         PasswordChangeView.as_view(), name="passwordchange"),
 
 
     # admin url
@@ -213,6 +210,10 @@ urlpatterns = [
          EditorUpdate.as_view(), name='editorupdate'),
     path('admin/<int:pk>/editordelete/',
          EditorDelete.as_view(), name='editordelete'),
+    path('admin/<int:pk>/editordetail/',
+         AdminEditorDetailView.as_view(), name='admineditordetail'),
+    path('admin/<int:pk>/detail/',
+         AdminDetailsView.as_view(), name='admindetails'),
 
     # admin admin
     # admin admin
@@ -222,6 +223,12 @@ urlpatterns = [
     path('admin/adminlist',
          AdminList.as_view(), name='adminlist'),
 
+
+    path('admineditor/<int:pk>/news-list/',
+         AdminEditorNewsListView.as_view(), name='admineditornewslist'),
+    path('admineditor/<int:pk>/news-list/detail/',
+         AdminEditorNewsListDetailView.as_view(), name='admineditornewslistdetail'),
+    path('ajaxadminhome/', AjaxAdminHome.as_view(), name='ajaxadminhome'),
 
 
 ]

@@ -1,7 +1,7 @@
 {% extends 'admintemplates/adminbase.html' %}
 {% load static %}
 
-  {% block new %}nav-item active{% endblock %}
+{% block new %}nav-item active{% endblock %}
 {% block content %}
 <div class="content">
 	<div class="container-fluid">
@@ -13,7 +13,8 @@
 							<i class="material-icons">assignment</i>
 						</div>
 						<div>
-							<h3>Add NewsSubCategory</h3>
+							<h4 style="color: #000000">Add NewsSubCategory</h4>
+							<br>
 
 							<form method="post" enctype="multipart/form-data" id ="EditorNewsForm" subcategories-url="{% url 'newsapp:load_subcategories' %}" novalidate>
 								{% csrf_token %}
@@ -21,7 +22,8 @@
 								{{form.as_p}}
 
 								
-								<input type="submit" value="Save">
+								<!-- <input type="submit" value="Save"> -->
+								<span style="padding-left: 35%"><button type="submit" style="width: 150px;height: 35px">save</button></span>
 
 							</form>
 						</div>
