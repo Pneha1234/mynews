@@ -13,12 +13,13 @@
 						</div>
 						<h1>hello</h1>
 
-						<form method="post" action="" >
+						<form method="post" enctype="multipart/form-data" >
 							{% csrf_token %}
 
 							{{form.as_p}}
 
-							<input type="submit" value="Update">
+							<!-- <input type="submit" value="Update"> -->
+							<button type="submit" class="btn btn-large ">Update</button>
 
 						</form>
 					</div>

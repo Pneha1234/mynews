@@ -34,7 +34,7 @@
 
 
 				<div class="entity_content">
-					{{ news.content |truncatechars:200 }}
+					{{ news.content |truncatechars:200|safe }}
 				</div>
 
 				<div class="entity_social">
@@ -76,7 +76,7 @@
 					</div>
 
 					<div class="category_article_content">
-						{{ news.content|truncatechars:150 }}
+						{{ news.content|truncatechars:150|safe }}
 					</div>
 
 					<div class="article_social">
@@ -111,7 +111,7 @@
 					</div>
 
 					<div class="category_article_content">
-						{{ news.content|truncatechars:150 }}
+						{{ news.content|truncatechars:150|safe }}
 					</div>
 
 					<div class="article_social">

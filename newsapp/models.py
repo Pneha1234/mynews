@@ -17,7 +17,7 @@ class OrgnizationalInformation(TimeStamp):
     logo = models.ImageField(upload_to="organization")
     address = models.CharField(max_length=500)
     slogan = models.CharField(max_length=500, null=True, blank=True)
-    contact_no = models.CharField(max_length=500)
+    contact_no = models.CharField(max_length=15)
     alt_contact_no = models.CharField(max_length=500, null=True, blank=True)
     map_location = models.CharField(max_length=500)
     email = models.EmailField(null=True, blank=True)
@@ -43,7 +43,7 @@ class OrgnizationalInformation(TimeStamp):
 class Admin(TimeStamp):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=500)
-    contact_no = models.CharField(max_length=500)
+    contact_no = models.CharField(max_length=15)
     address = models.CharField(max_length=500)
     email = models.EmailField(null=True, blank=True)
     image = models.ImageField(
@@ -62,7 +62,7 @@ class Admin(TimeStamp):
 class Editor(TimeStamp):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=500)
-    contact_no = models.CharField(max_length=500)
+    contact_no = models.CharField(max_length=15)
     address = models.CharField(max_length=500)
     email = models.EmailField(null=True, blank=True)
     image = models.ImageField(
@@ -73,6 +73,11 @@ class Editor(TimeStamp):
         group, group_created = Group.objects.get_or_create(name="Editor")
         self.user.groups.add(group)
         super().save(*args, **kwargs)
+
+    def verified_news(self):
+        verified_news = self.news_set.filter(is_verified=True)
+        print(verified_news.count())
+        return verified_news.count()
 
     def __str__(self):
         return self.full_name
@@ -124,8 +129,7 @@ class News(TimeStamp):
     editor = models.ForeignKey(
         Editor, on_delete=models.SET_NULL, null=True, blank=True)
     admin = models.ForeignKey(
-        Admin, on_delete=models.SET_NULL, null=True, blank=True)
-    
+        Admin, on_delete=models.SET_NULL, null=True, blank=True)   
     active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
     objects = NewsManager()

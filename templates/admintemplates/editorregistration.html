@@ -62,6 +62,19 @@
     })(window, document, 'script', 'dataLayer', 'GTM-NKDMSK6');
   </script>
   <!-- End Google Tag Manager -->
+
+    <!-- numberinput arrow disable -->
+<style type="text/css">
+  input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+ 
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+</style>
+  <!-- numberinput arrow disable end -->
 </head>
 
 <body class="off-canvas-sidebar">
@@ -115,16 +128,16 @@
 
   <!-- End Navbar -->
   <div class="wrapper wrapper-full-page"> 
-    <div class="page-header register-page header-filter" filter-color="black" style="background-image: url({% static 'adminstatic/img/register.jpg' %}")>
+    <div class="page-body register-page" filter-color="black" style="background-image: url({% static 'adminstatic/img/register.jpg' %}")>
       <div class="container">
         <div class="row">
-          <div class="col-md-8 ml-auto mr-auto">
+          <div class="col-md-9 ml-auto mr-auto">
             <div class="card card-signup">
               <h2 class="card-title text-center">Register</h2>
               <div class="card-body">
                 <div class="row">
 
-                  <div class="col-md-10 ml-auto">
+                  <div class="col-md-12 ml-auto">
                   	<div class="social text-center">
                       <button class="btn btn-just-icon btn-round btn-twitter">
                         <i class="fa fa-twitter"></i>
@@ -196,16 +209,7 @@
 	                        </div>
 	                      </div>
 
-	                      <div class="form-group has-default">
-	                        <div class="input-group">
-	                          <div class="input-group-prepend">
-	                            <span class="input-group-text">
-	                              <i class="material-icons">person</i>
-	                            </span>
-	                          </div>
-	                          {{form.about}}
-	                        </div>
-	                      </div>
+
 	                      <br>
 	                      <div>
 	                      	<div class="input-group">
@@ -239,6 +243,18 @@
                             </div>
                             {{form.confirm_password}}
                             {{form.confirm_password.errors}}
+                          </div>
+                        </div>
+
+                        <div class="form-group has-default">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="material-icons">person</i>
+                              </span>
+                            </div>
+                            <h4>About</h4>
+                            {{form.about}}
                           </div>
                         </div>
 
@@ -600,6 +616,41 @@
       md.checkFullPageBackgroundImage();
     });
   </script>
+
+        <script>     jQuery(document).ready( function($) {
+
+    // Disable scroll when focused on a number input.
+    $('form').on('focus', 'input[type=number]', function(e) {
+        $(this).on('wheel', function(e) {
+            e.preventDefault();
+        });
+    });
+
+    // Restore scroll on number inputs.
+    $('form').on('blur', 'input[type=number]', function(e) {
+        $(this).off('wheel');
+    });
+
+    // Disable up and down keys.
+    $('form').on('keydown', 'input[type=number]', function(e) {
+        if ( e.which == 38 || e.which == 40 )
+            e.preventDefault();
+    });  
+      
+});
+</script>
+         <!-- numberinput arrow disable -->
+              <script type="text/javascript">
+                jQuery(document).ready( function($) {
+ 
+                // Disable scroll when focused on a number input.
+                $('form').on('focus', 'input[type=number]', function(e) {
+                    $(this).on('wheel', function(e) {
+                        e.preventDefault();
+                    });
+                });
+              </script>
+          <!-- numberinput arrow disable end-->
 </body>
 
 

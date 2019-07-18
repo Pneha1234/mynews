@@ -12,7 +12,8 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <a href="{% url 'newsapp:adminnewsadd'%}" class="btn btn-link btn-warning btn-just-icon edit " style ='margin-left:87%; margin-top:30px; margin-right: 2px;'><i class="material-icons" style="font-size:50px;">add_box</i></a>
+              <h4 class="card-title">News Table</h4>
+              <a href="{% url 'newsapp:adminnewsadd'%}" class="btn btn-lg btn-link btn-success btn-just-icon edit pull-right"><i class="material-icons" style="font-size:50px;">add_box</i></a>
             </div>
             <div class="card-body">
               <div class="toolbar">
@@ -21,48 +22,39 @@
                </div>
              </div>
              <div class="material-datatables">
-              <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0"style="width:100%">
+              <table id="datatables" class="table table-no-bordered table-hover" cellspacing="0"style="width:100%">
                 <thead>
-                  <tr>
+                  <tr style="text-align: center;background-color: #2F4F4F;color: #ffffff" class="table table-bordered">
+                    <th>Sn.</th>
+                    <th class="disabled-sorting">editor</th>
                     <th>Title</th>
                     <th>main_category</th>
-                    <th>sub_category</th>
-                    
-                    <th>video_link</th>
-                    
-                    <th class="disabled-sorting text-right">Actions</th>
+                    <th>news verified</th>                   
+                    <th class="disabled-sorting text-right">video_link</th>                    
+                    <th style="width: 25%;" class="disabled-sorting">Actions</th>
                   </tr>
                 </thead>
-                <tfoot>
-                  <tr>
-                    <th>Title</th>
-                    <th>main_category</th>
-                    <th>sub_category</th>
-                    
-                    <th>video_link</th>
-                    
-                    <th class="text-right">Actions</th>
-                  </tr>
-                </tfoot>
                 <tbody>
                  {% for news in object_list %}
-                 <tr>
-                  <td>{{news.title| truncatechars:'30'}}</td>
+                 <tr style="text-align: center">
+                  <td>{{forloop.counter}}</td>
+                  <td>{% if news.editor %}<b>{{news.editor}}</b>{% else %}<b>{{news.admin}}(admin)</b>{% endif %}</td>
+                  <td><a href="{% url 'newsapp:adminnewsdetail' news.pk %}">{{news.title| truncatechars:'30'}}</a></td>
                   <td>{{news.main_category}}</td>
-                  <td>{{news.sub_category}}</td>
+                  <td style="color: blue">{{news.is_verified}}</td>
                   
-                  <td>{% if news.video_link %}{{news.video_link| truncatechars:'30'}}
+                  <td>{% if news.video_link %}
+                    <a href="{{news.video_link}}" target="_blank">click for video</a>
                     {% else %}
                     No Video
                     {% endif %}
                   </td>
                   
-                  <td class="text-right">
-                    <a href="{% url 'newsapp:adminnewsupdate' news.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
+                  <td style="width: 25%;" class="text-right">
+                    <a href="{% url 'newsapp:adminnewsupdate' news.pk %}" class="btn btn-link btn-primary btn-just-icon edit"><i class="material-icons">edit</i></a>
                     <a href="{% url 'newsapp:adminnewsdetail' news.pk %}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">info</i></a>
                     <a data-remote="{% url 'newsapp:adminnewsdelete' news.pk %}" href="{% url 'newsapp:adminnewsdelete' news.pk %}"class="btn btn-link btn-danger btn-just-icon remove" data-toggle="modal" data-target="#myModal">
                       <i class="material-icons">close</i></a>
-                    </button>
 
                     
                    

@@ -1,343 +1,161 @@
-
 {% extends 'clienttemplates/clientbase.html' %}
 
 {% load static %}
 
 {% block content %}
 
-
-
 <section id="entity_section" class="entity_section">
-<div class="container">
-	<div class="row">
-		<div class="col-md-8">
-			<div class="entity_wrapper">
-				<div class="entity_title">
-
-					<h1> {{clientnewsdetail.title}}</h1>
-			
-				</div>
-				<div>
-					<p class='text-left' style="display: inline-block;">{{clientnewsdetail.created_at|date}}
-						{% if not news.editor %}
-						{% else %}
-					<a href="{% url 'newsapp:editornewsdetail' clientnewsdetail.editor_id %}">{% endif %}<span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></a></p>
-				</div>
-			<!-- 	<div class="entity_rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star-half-full"></i>
-				</div>
- --><!-- 
-				<div class="entity_social">
-					<a href="#" class="icons-sm sh-ic">
-						<i class="fa fa-share-alt"></i>
-						<b>424</b> <span class="share_ic">Shares</span>
-					</a>
-					<a href="#" class="icons-sm fb-ic"><i class="fa fa-facebook"></i></a>
-
-					<a href="#" class="icons-sm tw-ic"><i class="fa fa-twitter"></i></a>
-
-					<a href="#" class="icons-sm inst-ic"><i class="fa fa-google-plus"> </i></a>
-
-					<a href="#" class="icons-sm tmb-ic"><i class="fa fa-ge"> </i></a>
-
-					<a href="#" class="icons-sm rss-ic"><i class="fa fa-rss"> </i></a>
-				</div> -->
-
-				<div class="entity_thumb">
-					<!-- <img class="img-responsive" src="{% static 'clientstatic/img/category_img_top.jpg' %}" alt="feature-top"> -->
-					<img src={{clientnewsdetail.image.url}} class="img-responsive" style="width: 100%; object-fit: contain;">
-				</div>
-				<div class="entity_content">
-					{{clientnewsdetail.content}}
-				</div>
-			</div>
-
-			<div class="related_news">
-				<div class="entity_inner__title header_purple">
-					<h2>Related News</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="entity_wrapper">
+					<div class="entity_title">
+						<h1> {{clientnewsdetail.title}}</h1>
+					</div>
+					<div>
+						<p class='text-left' style="display: inline-block;">{{clientnewsdetail.created_at|date}}
+							{% if not news.editor %}
+							{% else %}
+							<a href="{% url 'newsapp:editornewsdetail' clientnewsdetail.editor_id %}"><span class="text-right" style="margin-left: 10px;">By: {{clientnewsdetail.editor.full_name}}</span></a>
+							{% endif %}
+						</p>
+					</div>
+					<div class="entity_thumb">
+						<img src={{clientnewsdetail.image.url}} class="img-responsive" style="width: 75%; object-fit: contain;">
+					</div>
+					<div class="entity_content">
+						{{clientnewsdetail.content|safe}}
+					</div>
 				</div>
 
-				<div class="row">
-					{% for newslist in relatednewslist|slice:'4' %}
-					<div class="col-md-6">
-						<div class="media">
+				<div class="related_news">
+					<div class="entity_inner__title header_purple">
+						<h2>Related News</h2>
+					</div>
+					<div class="row">
+						{% for newslist in relatednewslist|slice:'4' %}
+						<div class="col-md-6">
+							<div class="media">
 
 
-							<div class="media-left">
-								<a href="#"><img class="media-object" src="{{newslist.image.url}}" alt="Generic placeholder image" class='img-responsive' width='200'></a>
-							</div>
-							<div class="media-body">
-								<span class="tag purple"><a href="" target="_self">{{newslist.main_category}}</a></span>
-								<a href="{% url 'newsapp:clienthome' %}" target="_self"><h3 class="media-heading">{{newslist.content|truncatechars:'50'}}</h3></a>
-								<span class="media-date"><a href="">{{newslist.created_at|date}}</a>, by: <a href="#">{{newslist.editor}}</a></span>
-								<div class="media_social">
-							
+								<div class="media-left">
+									<a href="#"><img class="media-object" src="{{newslist.image.url}}" alt="Generic placeholder image" class='img-responsive' width='200'></a>
+								</div>
+								<div class="media-body">
+									<span class="tag purple"><a href="" target="_self">{{newslist.main_category}}</a></span>
+									<a href="{% url 'newsapp:clienthome' %}" target="_self"><h3 class="media-heading">{{newslist.content|truncatechars:'50'|safe}}</h3></a>
+									<span class="media-date"><a href="">{{newslist.created_at|date}}</a>, by: <a href="#">{{newslist.editor}}</a></span>
+									<div class="media_social">
+
+									</div>
 								</div>
 							</div>
 						</div>
+						{% endfor %}
 					</div>
-					{% endfor %}
 				</div>
-			</div>
-<!-- 
-			<div class="widget_advertisement">
-				<img class="img-responsive" src="{% static 'clientstatic/img/category_advertisement.jpg' %}" alt="feature-top">
-			</div> -->
-
-			<div class="readers_comment">
-				<div class="entity_inner__title header_purple">
-					<h2>Readers Comment</h2>
-				</div>
+				<div class="readers_comment">
+					<div class="entity_inner__title header_purple">
+						<h2>Readers Comment</h2>
+					</div>
 
 					{% for comment in commentlist %}
-				<div class="media">
-					<div class="media-left">
-					
-						<img alt="64x64" class="media-object" data-src="{% static 'clientstatic/img/reader_img1.jpg' %}" src="{% static 'clientstatic/img/reader_img1.jpg' %}" data-holder-rendered="true">
-						
-					</div>
-					<div class="media-body">
-						<h2 class="media-heading">{{comment.commenter}}</h2>
-						{{comment.comment}}
-						<div class="entity_vote">
-						<!-- <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
-						<a href="#"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> -->
+					<div class="media">
+						<div class="media-left">
 
-						
+							<img alt="64x64" class="media-object" data-src="{% static 'clientstatic/img/reader_img1.jpg' %}" src="{% static 'clientstatic/img/reader_img1.jpg' %}" data-holder-rendered="true">
+							
+						</div>
+						<div class="media-body">
+							<h2 class="media-heading">{{comment.commenter}}</h2>
+							{{comment.comment}}
 						</div>
 					</div>
-				</div>
 					{% endfor %}
 					<div>
-					<h1>	total comment:{{commentlist1}}</h1>
+						<h1>	total comment:{{commentlist1}}</h1>
 					</div>
-
-				
-			</div>
-
-			<div class="widget_advertisement">
-				<img class="img-responsive" src="{% static 'clientstatic/img/category_advertisement.jpg' %}" alt="feature-top">
-			</div>
-
-			<div class="entity_comments">
-				<div class="entity_inner__title header_black">
-					<h2>Add a Comment</h2>
 				</div>
 
-				<div class="entity_comment_from">
-					<form method="post" action="{% url 'newsapp:commentcreate' clientnewsdetail.id %}">
-						{% csrf_token %}
-						<div class="form-group">
-							<!-- <input type="text" class="form-control" id="inputName" placeholder="Name"> -->
-							{{commentform.commenter}}
+				<div class="widget_advertisement">
+					<img class="img-responsive" src="{% static 'clientstatic/img/category_advertisement.jpg' %}" alt="feature-top">
+				</div>
+				<div class="entity_comments">
+					<div class="entity_inner__title header_black">
+						<h2>Add a Comment</h2>
+					</div>
+					<div class="entity_comment_from">
+						<form method="post" action="{% url 'newsapp:commentcreate' clientnewsdetail.id %}">
+							{% csrf_token %}
+							<div class="form-group">
+								<!-- <input type="text" class="form-control" id="inputName" placeholder="Name"> -->
+								{{commentform.commenter}}
+							</div>
+							<div class="form-group">
+								{{commentform.email}}
+							</div>
+							<div class="form-group comment">
+								{{commentform.comment}}
+							</div>
+							<button type="submit" class="btn btn-submit red">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="widget">
+					<div class="widget_title widget_black">
+						<h2>Popular News</h2>
+					</div>
+					{% for news in popularnews|slice:'5' %}
+					{% if clientnewsdetail.title != news.title %}
+					<div class="media">
+						<div class="media-left">
+							<img class="media-object" src="{{news.image.url}}" alt="{{news.title}}" width="100" height="100">
 						</div>
-						<div class="form-group">
-<!-- <input type="text" class="form-control" id="inputEmail" placeholder="Email">
--->
-{{commentform.email}}
-</div>
-<div class="form-group comment">
-<!-- <textarea class="form-control" id="inputComment" placeholder="Comment"></textarea> -->
-{{commentform.comment}}
-</div>
-<button type="submit" class="btn btn-submit red">Submit</button>
-</form>
-</div>
-
-</div>
-
-</div>
-
-<div class="col-md-4">
-<div class="widget">
-	<div class="widget_title widget_black">
-		<h2>Popular News</h2>
-	</div>
-	{% for news in popularnews|slice:5 %}
-	{% if clientnewsdetail.title != news.title %}
-
-	<div class="media">
-		<div class="media-left">
-			<img class="media-object" src="{{news.image.url}}" alt="{{news.title}}" width="100" height="100">
-		</div>
-		<div class="media-body">
-			<h3 class="media-heading">
-				<a href="{% url 'newsapp:clientnewsdetail' news.id %}">
-				{{news.title}}
-			</h3>
-			<p>{{news.content|striptags|truncatechars:'30'}}</p>
-			<span class="media-date">{{news.created_at|date}}  
-				{% if not news.editor %}
-				{% else %}
-				<br>
-				by:
-				<a href="{% url 'newsapp:editornewsdetail' news.editor_id %}">{{news.editor}}</a>
-				{% endif %}
-			</span>
-			<div class="widget_article_social">
-				
-			</div>
-		</div>
-	</div>
-
-	{% endif %}
-	{% endfor %}
-
-<!-- 	
-</div>
-
-<div class="widget hidden-xs m30">
-	<img class="img-responsive adv_img" src="{% static 'clientstatic/img/right_add1.jpg' %}" alt="add_one">
-	<img class="img-responsive adv_img" src="{% static 'clientstatic/img/right_add2.jpg' %}" alt="add_one">
-	<img class="img-responsive adv_img" src="{% static 'clientstatic/img/right_add3.jpg' %}" alt="add_one">
-	<img class="img-responsive adv_img" src="{% static 'clientstatic/img/right_add4.jpg' %}" alt="add_one">
-</div>
-
-<div class="widget hidden-xs m30">
-	<img class="img-responsive widget_img" src="{% static 'clientstatic/img/right_add5.jpg' %}" alt="add_one">
-</div> -->
-<!-- 
-<div class="widget reviews m30">
-	<div class="widget_title widget_black">
-		<h2><a href="#">Reviews</a></h2>
-	</div>
-	<div class="media">
-		<div class="media-left">
-			<a href="#"><img class="media-object" src="{% static 'clientstatic/img/pop_right1.jpg' %}" alt="Generic placeholder image"></a>
-		</div>
-		<div class="media-body">
-			<h3 class="media-heading">
-				<a href="single.html" target="_self">DSLR is the most old camera at this time readmore about new
-				products</a>
-			</h3>
-			<span class="rating">
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-half-full"></i>
-			</span>
-		</div>
-	</div>
-	<div class="media">
-		<div class="media-left">
-			<a href="#"><img class="media-object" src="{% static 'clientstatic/img/pop_right2.jpg' %}" alt="Generic placeholder image"></a>
-		</div>
-		<div class="media-body"><h3 class="media-heading"><a href="single.html" target="_self">Samsung is the best
-		mobile in the android market.</a></h3> <span class="rating">
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star"></i>
-			<i class="fa fa-star-half-full"></i>
-		</span></div>
-	</div>
-	<div class="media">
-		<div class="media-left">
-			<a href="#"><img class="media-object" src="{% static 'clientstatic/img/pop_right3.jpg' %}" alt="Generic placeholder image"></a>
-		</div>
-		<div class="media-body">
-			<h3 class="media-heading">
-				<a href="single.html" target="_self">Apple launches photo-centric wrist watch for Android</a>
-			</h3>
-			<span class="rating">
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star"></i>
-				<i class="fa fa-star-half-full"></i>
-			</span></div>
-		</div>
-		<div class="media">
-			<div class="media-left">
-				<a href="#"><img class="media-object" src="{% static 'clientstatic/img/pop_right4.jpg' %}" alt="Generic placeholder image"></a>
-			</div>
-			<div class="media-body">
-				<h3 class="media-heading">
-					<a href="single.html" target="_self">Yasaki camera launches new generic hi-speed shutter camera.</a>
-				</h3>
-				<span class="rating">
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star"></i>
-					<i class="fa fa-star-half-full"></i>
-				</span></div>
-			</div>
-			<p class="widget_divider"><a href="#" target="_self">More News&nbsp;&raquo;</a></p>
-		</div> -->
-<!-- 
-		<div class="widget hidden-xs m30">
-			<img class="img-responsive widget_img" src="{% static 'clientstatic/img/right_add6.jpg' %}" alt="add_one">
-		</div> -->
-
-		<div class="widget m30">
-			<div class="widget_title widget_black">
-				<h1>LatestNews</h1>
-			</div>
-			{% for  news in  latestnews|slice:4 %}
-			{% if clientnewsdetail.title != news.title %}
-			<div class="media">
-				<div class="media-left">
-					<img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" class="img-responsive" width="200">
-				</div>
-				<div class="media-body">
-					<h3 class="media-heading">
-						<a href="{% url 'newsapp:clientnewsdetail' news.id %}" target="_self">{{news.title}}</a>
-
-						
-			
-
-					</h3>
-					<p>{{news.content|truncatechars:'50'}}</p>
-					
+						<div class="media-body">
+							<h3 class="media-heading">
+								<a href="{% url 'newsapp:clientnewsdetail' news.id %}">
+									{{news.title}}</a>
+							</h3>
+							<p>{{news.content|striptags|truncatechars:'30'}}</p>
+							<span class="media-date">{{news.created_at|date}}  
+								{% if not news.editor %}
+								{% else %}
+								<br>
+								by:
+								<a href="{% url 'newsapp:editornewsdetail' news.editor_id %}">{{news.editor}}</a>
+								{% endif %}
+							</span>
+						</div>
+					</div>
+					{% endif %}
+					{% endfor %}
+					<div class="widget m30">
+						<div class="widget_title widget_black">
+							<h1>LatestNews</h1>
+						</div>
+						{% for  news in  latestnews|slice:'4' %}
+						{% if clientnewsdetail.title != news.title %}
+						<div class="media">
+							<div class="media-left">
+								<img class="media-object" src="{{news.image.url}}" alt="Generic placeholder image" class="img-responsive" width="200">
+							</div>
+							<div class="media-body">
+								<h3 class="media-heading">
+									<a href="{% url 'newsapp:clientnewsdetail' news.id %}" target="_self">{{news.title}}</a>
+								</h3>
+								<p>{{news.content|truncatechars:'50'}}</p>
+								
+							</div>
+						</div>
+						{% endif %}
+						{% endfor %}
+					</div>
 				</div>
 			</div>
-			{% endif %}
-			{% endfor %}
-		
-			
 		</div>
-
-		
-
-		<!-- <div class="widget hidden-xs m30">
-			<img class="img-responsive add_img" src="{% static 'clientstatic/img/right_add7.jpg' %}" alt="add_one">
-			<img class="img-responsive add_img" src="{% static 'clientstatic/img/right_add7.jpg' %}" alt="add_one">
-			<img class="img-responsive add_img" src="{% static 'clientstatic/img/right_add7.jpg' %}" alt="add_one">
-			<img class="img-responsive add_img" src="{% static 'clientstatic/img/right_add7.jpg' %}" alt="add_one">
-		</div>
-
-		<div class="widget m30">
-			<div class="widget_title widget_black">
-				<h2><a href="#">Readers Corner</a></h2>
-			</div>
-			<div class="widget_body"><img class="img-responsive left" src="{% static 'clientstatic/img/reader.jpg' %}" alt="Generic placeholder image">
-				<p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
-				users after installed base benefits. Dramatically visualize customer directed convergence without</p>
-				<p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
-					users after installed base benefits. Dramatically visualize customer directed convergence without
-				revolutionary ROI.</p>
-				<button class="btn pink">Read more</button>
-			</div>
-		</div>
-
-		<div class="widget hidden-xs m30">
-			<img class="img-responsive widget_img" src="{% static 'clientstatic/img/podcast.jpg' %}" alt="add_one">
-		</div>
-
 	</div>
- -->
-</div>
-
-</div>
-
 </section>
-
-
 
 {% endblock %}
