@@ -8,12 +8,13 @@
 		<div class="col-md-8">
 			<div class="entity_wrapper">
 				<div class="entity_title">
-					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}<span class="text-success" style="margin-top: 100px">|News</span></a></h1>
+					<h1><a href="{% url 'newsapp:clientnewsdetail' news.id %}">{{news.title}}<span class="text-success" style="margin-top: 100px">|News|Category|{{news.main_category.title}}</span></a></h1>
 				</div>
 
 				<div class="entity_content">
 					<p>{{news.content|truncatechars:'50'}}</p>
 				</div>
+				<img src="{{news.image.url}}" width="200px">
 				<h1><hr class="line"></h1>
 			</div>
 		</div>

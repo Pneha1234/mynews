@@ -15,7 +15,7 @@
 				{% for news in hotnews|slice:":1" %}
 				<div class="feature_article_wrapper">
 					<div class="feature_article_img">
-						<img class="img-responsive top_static_article_img" src="{{ news.image.url }}"  style = "height:500px" alt="feature-top">
+						<img class="img-responsive top_static_article_img" src="{{ news.image.url }}"  style = "height:500px" alt="feature-top" class="img-fluid">
 					</div>
 
 					<div class="feature_article_inner">
@@ -197,13 +197,13 @@
 
 										<div class="article_date"><a>{{ news.created_at }}</a>, by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor}}</a></div>
 										{% endif %}
-										<div class="article_date"><a>{{ news.created_at }}</a>
+									<!-- 	<div class="article_date"><a>{{ news.created_at }}</a>
 											{% if not news.editor %}
 											{% else %}
 										 by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor}}</a>
 										 {% endif %}
 										</div>
-
+ -->
 
 										<div class="category_article_content">
 											{{ news.content |truncatechars:150 }}
@@ -250,20 +250,20 @@
 
 										<div class="article_date">by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></div>
 										{% endif %}
-										<div class="article_date">
+									<!-- 	<div class="article_date">
 											{% if not news.editor %}
 											{% else %}
 											by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a>
 											{% endif %}
 										</div>
-
+ -->
 										<div class="category_article_content">
 											{{ news.content |truncatechars:150 }}
 										</div>
 
 										<div class="media_social">
 											<span><a><i class="fa fa-share-alt"></i>424 </a> Shares</span>
-											<span><i class="fa fa-comments-o"></i><a>4</a> Comments</span>
+									
 										</div>
 
 									</div>
@@ -289,7 +289,7 @@
 											</span>
 											<div class="media_social">
 												<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
-												<span><a><i class="fa fa-comments-o"></i>4</a> Comments</span>
+								
 											</div>
 										</div>
 									</div>
@@ -312,8 +312,8 @@
 									{% if not news.editor %}
 									{% else %}
 
-									<div class="article_date">by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></div>
-									{% endif %}
+								<!-- 	<div class="article_date">by: <a href="{% url 'newsapp:editornewsdetail' news.editor.id %}">{{ news.editor }}</a></div>
+									{% endif %} -->
 									<div class="article_date">
 										{% if not news.editor %}
 											{% else %}
@@ -327,7 +327,7 @@
 
 									<div class="article_social">
 										<span><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8000%2Fnews%2F16%2Fdetail%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore"><i id="countshares" class="fa fa-share-alt" data-href="http://127.0.0.1:8000/news/{{news.id}}/detail/" data-layout="button" data-size="small"></i></a>Shares</span>
-										<span><i class="fa fa-comments-o"></i><a>4</a>Comments</span>
+				
 									</div>
 
 								</div>
@@ -339,7 +339,7 @@
 
 					</div>
 
-					<p class="divider"><a href="#">More News&nbsp;&raquo;</a></p>
+				<!-- 	<p class="divider"><a href="#">More News&nbsp;&raquo;</a></p> -->
 				</div>
 				</div>
 				{% endif %}
@@ -352,6 +352,7 @@
 						<h2><a>Popular News</a></h2>
 					</div>
 					{% for news in popularnews|slice:'4' %}
+
 					<div class="media">
 						<div class="media-left">
 							<a><img class="media-object" src="{{ news.image.url }}" style = "height:100px; width:100px;" alt="Generic placeholder image"></a>

@@ -112,7 +112,7 @@ class AdminAdvertizementPosition(forms.ModelForm):
 class AdminAdvertizement(forms.ModelForm):
     class Meta:
         model = Advertizement
-        fields = ['organization', 'image', 'link','position']
+        fields = ['organization', 'image', 'link', 'position']
 
     def __init__(self, *args, **kwargs):
         super(AdminAdvertizement, self).__init__(*args, **kwargs)
@@ -270,6 +270,20 @@ class CommentForm(forms.ModelForm):
             'commenter': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'email'}),
             'comment': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'comment'}),
+
+        }
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'enter your name'}),
+            'mobile': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'enter your mobile number ','id':'mynumber','type':'number'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'enter you email'}),
+            'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'enter subject'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'write your message'}),
 
         }
 

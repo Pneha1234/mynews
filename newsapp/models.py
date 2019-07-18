@@ -134,6 +134,7 @@ class News(TimeStamp):
         return self.title
 
 
+
 class Comment(TimeStamp):
     news = models.ForeignKey(News, on_delete=models.CASCADE)
     commenter = models.CharField(max_length=500)
@@ -171,3 +172,14 @@ class Subscriber(TimeStamp):
 
     def __str__(self):
         return self.email
+
+class Contact(TimeStamp):
+    name=models.CharField(max_length=100)
+    email=models.EmailField(null=True,blank=True)
+    mobile=models.CharField(max_length=50)
+    subject=models.CharField(max_length=200)
+    message=models.TextField()
+
+    def __str__(self):
+        return self.name
+

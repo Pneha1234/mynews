@@ -557,6 +557,7 @@ class ClientMixin(object):
         context['categories'] = NewsCategory.objects.filter(root=None)
         context['subform'] = SubscriberForm
         context['latestnews'] = News.objects.order_by('-id')
+        context['testnewslist'] = News.objects.all()
         return context
 
 
@@ -582,24 +583,65 @@ class RootNewsMixin(object):
         context = super().get_context_data(**kwargs)
         context['rootnewslist'] = News.objects.filter(root=self.object.root)
         return context
+
+# class NewsVerified(object):
+#     def get_context_data(self,**kwargs):
+#         context=super().get_context_data(**kwargs)
+#         news=News.objects.filter(is_verified=True)
+#         context['news']=news
+#         return context
 # class ClientHomeView(ClientMixin, TemplateView):
 
 
 class ClientHomeView(ClientMixin, OrganizationMixin, TemplateView):
-    template_name = 'clienttemplates/clienthome.html'
+    template_name = 'clienttemplates/clienthome1.html'
 
     def get_context_data(self, **kwargs):
+        news = News.objects.filter(is_verified=True)
         context = super().get_context_data(**kwargs)
-        context['newslist'] = News.objects.all()
+        context['videolist'] = news.exclude(video_link=None)
         context['clientcategorylist'] = NewsCategory.objects.filter(root=None)
-        context['topviewednews'] = News.objects.order_by('-view_count')
-        context['popularnews'] = News.objects.order_by('-view_count')
-        context['hotnews'] = News.objects.order_by('-created_at')
+        context['topviewednews'] = news.order_by('-view_count')
+        context['popularnews'] = news.order_by('-view_count')
+        context['hotnews'] = news.order_by('-created_at')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         context['newseditor'] = Editor.objects.all()
         context['advertiselist'] = Advertizement.objects.all()
         context['subform'] = SubscriberForm
+        context['latestnews'] = news.order_by('-id')
+        context['topviews'] = news.order_by('-view_count')
+        context['categorys'] = NewsCategory.objects.filter(root=None)
+        categories = NewsCategory.objects.filter(root=None)
+        
+        return context
 
+
+class ClientAboutView(ClientMixin, OrganizationMixin, TemplateView):
+    template_name = 'clienttemplates/clientabout.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['organizations'] = OrgnizationalInformation.objects.all()
+        return context
+
+
+class VideoGalleryView(ClientMixin, OrganizationMixin, TemplateView):
+    template_name = 'clienttemplates/videogallery.html'
+
+    def get_context_data(self, **kwargs):
+        news = News.objects.filter(is_verified=True)
+        context = super().get_context_data(**kwargs)
+        context['videogallerys'] = news.exclude(video_link=None)
+        print('--', context['videogallerys'])
+        return context
+
+
+class OrganizationPrivacyView(ClientMixin, OrganizationMixin, TemplateView):
+    template_name = 'clienttemplates/privacypolicy.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['privacypolicy'] = OrgnizationalInformation.objects.all()
         return context
 
 
@@ -613,10 +655,11 @@ class SearchView(ClientMixin, OrganizationMixin, TemplateView):
     template_name = 'clienttemplates/searchresult.html'
 
     def get_context_data(self, **kwargs):
+        news1 = News.objects.filter(is_verified=True)
         context = super().get_context_data(**kwargs)
         keyword = self.request.GET.get('search')
         print(keyword, '***********')
-        news = News.objects.filter(Q(title__icontains=keyword) | Q(
+        news = news1.filter(Q(title__icontains=keyword) | Q(
             content__icontains=keyword) | Q(main_category__title__icontains=keyword))
         context['searchednews'] = news
         return context
@@ -644,22 +687,30 @@ class ClientNewsDetailView(ClientMixin, OrganizationMixin, DetailView):
     context_object_name = 'clientnewsdetail'
 
     def get_context_data(self, **kwargs):
+        news = News.objects.filter(is_verified=True)
         context = super().get_context_data(**kwargs)
         news_id = self.kwargs["pk"]
         clientnewsdetail = News.objects.get(id=news_id)
         clientnewsdetail.view_count += 1
         clientnewsdetail.save()
         context['advertiselist'] = Advertizement.objects.all()
-        context['popularnews'] = News.objects.order_by('-view_count')
-        context['latestnews'] = News.objects.order_by('-id')
+        context['popularnews'] = news.order_by('-view_count')
+        context['latestnews'] = news.order_by('-id')
         context['newseditor'] = Editor.objects.all()
         context['commentform'] = CommentForm
         context['commentlist'] = Comment.objects.all().order_by('-id')
         context['commentlist1'] = str(Comment.objects.all().count())
-        context['relatednewslist'] = News.objects.filter(
+        context['relatednewslist'] = news.filter(
             main_category=self.object.main_category).exclude(slug=self.object.slug)
 
         return context
+
+
+class ClientContactView(ClientMixin, OrganizationMixin, SuccessMessageMixin, CreateView):
+    template_name = 'clienttemplates/clientcontact.html'
+    form_class = ContactForm
+    success_message = 'thank you,we will contact '
+    success_url = '/'
 
 
 class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
@@ -668,13 +719,19 @@ class ClientCategoryDetailView(ClientMixin, OrganizationMixin, DetailView):
     context_object_name = 'clientcategorydetail'
 
     def get_context_data(self, **kwargs):
+        news=News.objects.filter(is_verified=True)
         context = super().get_context_data(**kwargs)
+        news1 = News.objects.filter(
+            main_category=self.object).exclude(is_verified=False)
+        context['filtered_news'] = news1
         context['rootcategorylist'] = NewsCategory.objects.filter(
             root=self.object.root)
         context['advertiselist'] = Advertizement.objects.all()
-        context['popularnews'] = News.objects.order_by('-view_count')
+        context['popularnews'] = news.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         context['newseditor'] = Editor.objects.all()
+        context['latestnews'] = news.order_by('-id')
+        context['videolist'] = news.exclude(video_link=None)
         return context
 
 
@@ -696,9 +753,10 @@ class PopularNewsListView(ClientMixin, OrganizationMixin, ListView):
     context_object_name = 'popularnewslist'
 
     def get_context_data(self, **kwargs):
+        news = News.objects.filter(is_verified=True)
         context = super().get_context_data(**kwargs)
         context['advertiselist'] = Advertizement.objects.all()
-        context['popularnews'] = News.objects.order_by('-view_count')
+        context['popularnews'] = news.order_by('-view_count')
         context['mostcommented'] = Comment.objects.order_by('-comment')
         return context
 
@@ -709,10 +767,11 @@ class MostCommentedNewsListView(ClientMixin, OrganizationMixin, ListView):
     context_object_name = 'mostcommentednewslist'
 
     def get_context_data(self, **kwargs):
+        news = News.objects.filter(is_verified=True)
         context = super().get_context_data(**kwargs)
         context['advertiselist'] = Advertizement.objects.all()
-        context['popularnews'] = News.objects.order_by('-view_count')
-        context['mostcommented'] = News.objects.order_by('-comment')
+        context['popularnews'] = news.order_by('-view_count')
+        context['mostcommented'] = news.order_by('-comment')
         return context
 
 

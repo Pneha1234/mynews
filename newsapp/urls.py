@@ -15,6 +15,7 @@ urlpatterns = [
     # client url
     # path('base/',ClientBaseView.as_view(),name='clientbase'),
     path('', ClientHomeView.as_view(), name='clienthome'),
+    path('video/',VideoGalleryView.as_view(),name='videogallery'),
     path('news/<int:pk>/detail/',
          ClientNewsDetailView.as_view(), name='clientnewsdetail'),
     path('news/category/<int:pk>/detail/', ClientCategoryDetailView.as_view(),
@@ -28,6 +29,9 @@ urlpatterns = [
     path('editor/<int:pk>/detail/',
          EditorDetailView.as_view(), name='editornewsdetail'),
     path('search/', SearchView.as_view(), name='searched'),
+    path('contact/', ClientContactView.as_view(), name='clientcontact'),
+    path('about/',ClientAboutView.as_view(),name='clientabout'),
+    path('privacy/policy/',OrganizationPrivacyView.as_view(),name='organizationprivacy'),
 
 
 
